@@ -1,3 +1,11 @@
+<!--
+ * @Author: Hongliang Lu, lhl@pku.edu.cn
+ * @Date: 2024-07-24 15:33:36
+ * @LastEditTime: 2024-07-24 16:58:50
+ * @FilePath: /AuroraLHL.github.io/_includes/sidebar.html
+ * @Description: 
+ * Organization: College of Engineering,Peking University.
+-->
 <!-- The Side Bar -->
 
 <aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end">
@@ -55,9 +63,13 @@
 
     {% for entry in site.data.contact %}
       {% case entry.type %}
-        {% when 'github', 'twitter' %}
+        {% when 'github' %}
           {%- capture url -%}
             https://{{ entry.type }}.com/{{ site[entry.type].username }}
+          {%- endcapture -%}
+        {% when 'csdn' %}
+          {%- capture url -%}
+          https://blog.csdn.net/v20000727?spm=1000.2115.3001.5343
           {%- endcapture -%}
         {% when 'email' %}
           {% assign email = site.social.email | split: '@' %}

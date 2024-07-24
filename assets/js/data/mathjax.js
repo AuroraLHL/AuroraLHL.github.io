@@ -1,9 +1,3 @@
-/*
- * @Author: LHL
- * @Date: 2024-07-24 09:00:51
- * @LastEditTime: 2024-07-24 14:08:26
- * @FilePath: /undefined/Users/luhongliang/Desktop/AuroraLHL.github.io/assets/js/data/mathjax.js
- */
 ---
 layout: compress
 # WARNING: Don't use '//' to comment out code, use '{% comment %}' and '{% endcomment %}' instead.

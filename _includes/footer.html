@@ -1,3 +1,11 @@
+<!--
+ * @Author: Hongliang Lu, lhl@pku.edu.cn
+ * @Date: 2024-07-24 15:33:36
+ * @LastEditTime: 2024-07-24 15:55:47
+ * @FilePath: /AuroraLHL.github.io/_includes/footer.html
+ * @Description: 
+ * Organization: College of Engineering,Peking University.
+-->
 <!-- The Footer -->
 
 <footer
@@ -28,6 +36,11 @@
     {% endif %}
   </p>
 
+  <!-- 站点统计 -->
+<p> 
+  {% include footer-busuanzi.html %}
+</p>
+
   <p>
     {%- capture _platform -%}
       <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a>
@@ -46,4 +59,5 @@
 
     {{ site.data.locales[include.lang].meta | replace: ':PLATFORM', _platform | replace: ':THEME', _theme }}
   </p>
+
 </footer>
