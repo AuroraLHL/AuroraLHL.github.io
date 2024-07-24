@@ -108,3 +108,19 @@
     }
   }
 }
+
+/* 覆盖主题的博客帖子边框样式 */
+.card-wrapper.card {
+  border: 3px solid #e3e5e7 !important; /* 使用更显眼的蓝色边框 */
+  padding: 2px; /* 适中的内边距 */
+  margin-bottom: 2px; /* 适中的下边距 */
+  border-radius: 8px; /* 适中的圆角 */
+  background-color: #f9f9f9; /* 淡灰色背景，增强边框的对比 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 轻微的阴影 */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* 添加平滑过渡效果 */
+}
+
+.card-wrapper.card:hover {
+  transform: translateY(-5px); /* 鼠标悬停时轻微上移 */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* 增加阴影效果 */
+}
