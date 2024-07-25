@@ -26,7 +26,7 @@ MathJax = {
         'ZZ': '\\mathbb{Z}',
         'QQ': '\\mathbb{Q}',
       },
-  }
+  },
   options: {
     lazyMargin: '200px',
   },
