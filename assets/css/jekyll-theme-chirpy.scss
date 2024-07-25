@@ -1,11 +1,14 @@
 ---
 ---
 
-@import 'main
+@import 'main';
+
 {%- if jekyll.environment == 'production' -%}
-  .bundle
+  .bundle {
+    /* 生产环境特有的样式 */
+  }
 {%- endif -%}
-';
+
 
 /* append your custom style below */
 
@@ -96,12 +99,13 @@
           --circle-background: rgba(#{random_range(0, 255)}, #{random_range(0, 255)}, #{random_range(0, 255)}, 0.06); // 最后一个数为透明度
           --circle-side-length: #{random_range(20px, 200px)};
           --circle-time: #{random_range(10s, 45s)};
-          --circle-delay: #{random_range(0s, 25s)};
+          --circle-delay: #{random_range(0s, 2s)};
         }
       }
     }
   }
 
+/*当屏幕宽度大于等于 1200px 时，显示动画，当屏幕宽度小于 1200px 时，隐藏动画。*/
   @media all and (max-width: 1199px) {
     .animation-circle {
       display: none;
@@ -123,4 +127,83 @@
 .card-wrapper.card:hover {
   transform: translateY(-5px); /* 鼠标悬停时轻微上移 */
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* 增加阴影效果 */
+}
+
+
+/* colorbox 样式设计 */
+/* 定义了 box-info, box-tip, box-warning, box-danger 四种 colorbox */
+@mixin colorbox($border-color, $icon-color, $icon-content, $bg-color, $fa-style: 'solid') {
+  border-left: .2rem solid $border-color;
+  border-radius: 0.25rem;
+  color: var(--text-color);
+  padding: .6rem 1rem .6rem 1.5rem;
+  box-shadow: var(--language-border-color) 1px 1px 2px 1px;
+  position: relative;
+  margin-bottom: 1rem;
+
+  > div.title::before {
+    content: $icon-content;
+    color: $icon-color;
+    font: var(--fa-font-#{$fa-style});
+    text-align: center;
+    width: 3rem;
+    position: absolute;
+    left: .2rem;
+    margin-top: .4rem;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  > div.title {
+    background-color: $bg-color;
+    color: $icon-color;
+    padding: .5rem .6rem .5rem 3rem; 
+    margin: -.6rem -1rem .6rem -1.5rem;
+    font-weight: 600;
+  }
+  
+  > p:last-child{
+      margin-bottom: 0;
+  }
+}
+
+/* box-info 蓝色 */
+.box-info {
+@include colorbox(
+  var(--prompt-info-icon-color),
+  var(--prompt-info-icon-color),
+  "\f06a",
+  var(--prompt-info-bg)
+);
+}
+
+/* box-tip 绿色 */
+.box-tip {
+@include colorbox(
+  var(--prompt-tip-icon-color),
+  var(--prompt-tip-icon-color),
+  "\f0eb",
+  var(--prompt-tip-bg),
+  'regular'
+);
+}
+
+/* box-warning 黄色 */
+.box-warning {
+@include colorbox(
+  var(--prompt-warning-icon-color),
+  var(--prompt-warning-icon-color),
+  "\f06a",
+  var(--prompt-warning-bg)
+);
+}
+
+/* box-danger 红色 */
+.box-danger {
+@include colorbox(
+  var(--prompt-danger-icon-color),
+  var(--prompt-danger-icon-color),
+  "\f071",
+  var(--prompt-danger-bg)
+);
 }

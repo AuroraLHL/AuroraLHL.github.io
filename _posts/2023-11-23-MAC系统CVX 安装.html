@@ -1,0 +1,25 @@
+---
+layout: post
+status: publish
+published: true
+title: MAC系统CVX 安装
+date: '2023-11-23 15:44:00 +0800'
+date_gmt: '2023-11-23 07:44:00 +0800'
+categories:
+- 各种教程
+- Mac
+tags: [凸优化]
+comments: []
+---
+<p>CVX是一个用于凸优化建模的MATLAB工具箱。CVX是基于Matlab的建模语言，允许使用标准Matlab表达式语法来描述凸优化问题的约束和目标函数。</p>
+<h3>下载CVX</h3>
+<p>首先在<a href="http://cvxr.com/cvx/download/">CVX官网</a>下载对应版本的CVX，下载任意一个压缩包都行，下载后解压。</p>
+<p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202311231536094.png" alt="截屏2023-11-23 15.33.37" /></p>
+<h3>申请licence</h3>
+<p>如果需要调用Mosek和Gurobi这两个商用软件，需要申请一个<a href="http://cvxr.com/cvx/academic/">cvx professional licese</a>，填写学校的邮箱申请即可，然后将邮箱里cvx_license.dat文件移动到cvx文件夹里。<img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202311231539851.png" alt="截屏2023-11-23 15.38.59" /></p>
+<h3>激活</h3>
+<p>打开MATLAB，在命令行中输入如下两条命令（需要换成自己的路径，进入cvx文件夹）</p>
+<pre><code class="language-bash"> cd /path/to/cvx
+cvx_setup cvx_license.dat</code></pre>
+<p>如果最后看到如下界面，则说明安装成功！</p>
+<p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202311231543865.png" alt="截屏2023-11-23 15.43.06" /></p>

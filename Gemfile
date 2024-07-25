@@ -7,3 +7,10 @@ gem "jekyll-theme-chirpy", "~> 7.0", ">= 7.0.1"
 group :test do
   gem "html-proofer", "~> 5.0"
 end
+
+
+gem 'jekyll-compose', group: [:jekyll_plugins]
+gem 'sequel'
+gem "unidecode"
+gem 'mysql2'
+gem 'htmlentities'

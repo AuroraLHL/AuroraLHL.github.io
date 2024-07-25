@@ -16,10 +16,10 @@ timezone: Asia/Shanghai
 
 title: Hongliang Lu # the main title
 
-tagline: Entia non sunt multiplicanda praeter necessitatem # it will display as the sub-title
+tagline: Everything is nothing # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
-  A minimal, responsive and feature-rich Jekyll theme for technical writing.
+  This is a website dedicated to recording study notes and sharing knowledge, covering areas such as machine learning, deep learning, and large language models. By sharing practical experiences and theoretical knowledge, it aims to help readers better understand and apply these technologies.
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.

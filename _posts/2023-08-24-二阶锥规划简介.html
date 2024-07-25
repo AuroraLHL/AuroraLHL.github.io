@@ -1,0 +1,156 @@
+---
+layout: post
+status: publish
+published: true
+title: 二阶锥规划简介
+date: '2023-08-24 14:28:28 +0800'
+date_gmt: '2023-08-24 06:28:28 +0800'
+categories:
+- 凸优化
+tags: [凸优化]
+comments: []
+---
+<p><!-- wp:paragraph --></p>
+<p>​</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:heading {"level":4} --></p>
+<h4 class="wp-block-heading">（1）锥</h4>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p><strong>定义1：</strong></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:quote --></p>
+<blockquote class="wp-block-quote"><p><!-- wp:paragraph --></p>
+<p>对于一个向量空间 $R^n$​ 与它的一个子集 C ，如果子集 C中的任意一点 x 与任意<strong>正数</strong>&theta;​ 的乘积仍然属于子集 C ， 则称 C为一个锥（cone）</p>
+<p><!-- /wp:paragraph --></p></blockquote>
+<p><!-- /wp:quote --></p>
+<p><!-- wp:paragraph --></p>
+<p><strong>定义2:</strong></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:quote --></p>
+<blockquote class="wp-block-quote"><p><!-- wp:paragraph --></p>
+<p>对于集合，，C&sube;$R^n$，&forall;x&isin;C，&theta;&ge;0​，有 &theta;x&isin;C​，则x构成的集合称为锥</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>由上述定义我们知道锥不一定是连续的，可以是数条过原点的射线的集合，并且锥总是无界的。</p>
+<p><!-- /wp:paragraph --></p></blockquote>
+<p><!-- /wp:quote --></p>
+<p><!-- wp:heading {"level":4} --></p>
+<h4 class="wp-block-heading">（2) 凸锥</h4>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p><strong>定义：</strong></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:quote --></p>
+<blockquote class="wp-block-quote"><p><!-- wp:paragraph --></p>
+<p>对于$ C&sube;R^n,&forall;x_1,x_2,&hellip;,x_n&isin;C,&theta;_i&ge;0​$, 若 $&theta;_1x_1+&theta;_2x_2+&hellip;+&theta;_nx_n&isin;C​$, 则 C​ 是凸锥。</p>
+<p><!-- /wp:paragraph --></p></blockquote>
+<p><!-- /wp:quote --></p>
+<p><!-- wp:paragraph --></p>
+<p>简单来说：一个集合既是凸集又是锥，则是凸锥。</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><strong>闭凸锥</strong></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:quote --></p>
+<blockquote class="wp-block-quote"><p><!-- wp:paragraph --></p>
+<p>如果一个集合既是凸集，又是闭集，同时又是锥，则称为闭凸锥</p>
+<p><!-- /wp:paragraph --></p></blockquote>
+<p><!-- /wp:quote --></p>
+<p><!-- wp:heading {"level":4} --></p>
+<h4 class="wp-block-heading">（3）标准锥</h4>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>n​ 维<strong>标准锥(norm cone)</strong>的定义:$C={(x,t)∣∥x∥&le;t,x&isin;R^{n&minus;1},t&isin;R}$</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:quote --></p>
+<blockquote class="wp-block-quote"><p><!-- wp:paragraph --></p>
+<p>Note:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list {"ordered":true} --></p>
+<ol><!-- wp:list-item --></p>
+<li>标准锥是一个<strong>凸锥</strong>, 变量包括 x​ 和 t​;</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>用定义可以证明是一个锥；</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>利用范数的三角不等式可以证明是一个凸集.</li>
+<p><!-- /wp:list-item --></ol>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p>下图是一个3维的标准锥：</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:image {"id":13,"sizeSlug":"large","linkDestination":"none"} --></p>
+<figure class="wp-block-image size-large"><img src="https://www.aurora-lhl.xyz/wp-content/uploads/2023/08/image-1024x738.png" alt="" class="wp-image-13"/></figure>
+<p><!-- /wp:image --></p></blockquote>
+<p><!-- /wp:quote --></p>
+<p><!-- wp:heading {"level":4} --></p>
+<h4 class="wp-block-heading">（4）二阶锥</h4>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>二阶锥规划是一种非常特殊的非线性优化，有非常高效的求解算法。所谓二阶是指锥里面用到的是二范数，下面的表达式表示一个<strong>二阶锥(second order cone)</strong>：</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>$∥Ax+b∥^2&le;c^Tx+d$</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>二阶锥相当于对标准锥 $C={(x,t)∣∥x∥^2&le;t,t&ge;0}​$ 做了仿射变换 :$∥Ax+b∥^2&le;c^Tx+d&hArr;(Ax+b,c^Tx+d)&isin;C$</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>根据仿射变换的性质, 变换后凹凸性不变, 因此二阶锥仍然是一个凸锥。 注: 对向量 x​ 仿射变换（相当于将一个图形平移、变大变小、旋转或倒影）: y=Ax+b​, 其 中 Ax​ 表示对 x​ 变大变小或旋转倒影, 而 +b​ 表示平移。</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:heading {"level":4} --></p>
+<h4 class="wp-block-heading">（5）二阶锥规划</h4>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p><strong>二阶锥规划 (SOCP，Second Order Cone Programming )</strong>的一般形式如下：</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>$\begin{array}{ll}\operatorname{minimize} &amp; f^T x \\ \text { subject to } &amp; ∥A_i x+b_i∥_2 \leqslant c_i^T x+d_i, \quad i=1, \cdots, m \\ &amp; F x=g,\end{array}$</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>其中,$ x&isin;R^n​$ 为优化变量, $A_i&isin;R^{ni&times;n}​ 且 F&isin;R^{p&times;n​} $。我们称这种形式中的约束：$∥A_ix+b_i∥2⩽c_i^Tx+d_i ，=1,⋯,m$为二阶锥约束。</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><strong>Note:</strong></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list {"ordered":true} --></p>
+<ol><!-- wp:list-item --></p>
+<li>目标函数为仿射函数；</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>当Ai​ = 0, 问题退化为LP;</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>当ci​ = 0, 问题退化为QCQP(二次约束二次规划)；</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>问题形式比LP与QCQP更常规；</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>一些其他优化问题也可以转化为 SOCP，例如<strong>二次规划可以转化为SOCP</strong>。</li>
+<p><!-- /wp:list-item --></ol>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:heading {"level":3} --></p>
+<h3 class="wp-block-heading">参考资料</h3>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list {"ordered":true} --></p>
+<ol><!-- wp:list-item --></p>
+<li><a href="https://blog.csdn.net/robert_chen1988/article/details/78828727">锥、二阶锥</a></li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>《最优化：建模、算法与理论》.刘浩洋、户将、李勇锋、文再文编著</li>
+<p><!-- /wp:list-item --></p>
+<p><!-- wp:list-item --></p>
+<li>《凸优化》.Boyd</li>
+<p><!-- /wp:list-item --></ol>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>

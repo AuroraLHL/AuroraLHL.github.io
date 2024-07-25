@@ -1,0 +1,107 @@
+---
+layout: post
+status: publish
+published: true
+title: MAC系统zsh及环境变量简介
+date: '2023-12-17 16:27:19 +0800'
+date_gmt: '2023-12-17 08:27:19 +0800'
+categories:
+- 各种教程
+- Mac
+tags: [Mac]
+comments: []
+---
+<h2>Zsh简介</h2>
+<p>从 macOS Catalina 开始，Mac 使用 zsh 作为默认登录 Shell 和交互式 Shell。默认情况下，Mac 使用 zsh 或 bash 作为登录 Shell 和交互式 Shell 的命令行解释器：</p>
+<ul>
+<li><strong>从 macOS Catalina 开始，zsh</strong> (Z shell) 是所有新建用户帐户的默认 Shell。</li>
+<li><strong>bash</strong> 是 <a href="https://support.apple.com/HT201260">macOS Mojave 及更早版本</a>中的默认 Shell。</li>
+</ul>
+<p>zsh 与 Bourne Shell (sh) 高度兼容，并且与 bash 基本兼容（存在一些差别）。要进一步了解 zsh 及其全面的命令行完成系统，请在&ldquo;终端&rdquo;中输入：</p>
+<pre><code class="language-bash">man zsh</code></pre>
+<p>总的来说，Zsh是一个<strong>UNIX命令解释器(shell)</strong>，可以作为交互式登录shell和shell脚本命令处理器使用。在标准shell中，zsh最类似于ksh，但包含许多增强功能。Zsh具有命令行编辑、内置拼写纠正、可编程命令补全、shell功能(具有自动加载)、历史机制和许多其他功能。</p>
+<h2>环境变量</h2>
+<p>shell 使用<strong>环境变量</strong>储存信息，例如当前用户的名称、主机名称以及任何命令的默认路径。在 shell 上下文中执行的所有命令都会继承环境变量，部分命令取决于环境变量。</p>
+<p>你可以创建环境变量并用来控制命令行为，无需修改命令本身。例如，你可以使用环境变量来让命令将调试信息打印到控制台。若要查看所有环境变量，请输入：</p>
+<pre><code class="language-bash">env</code></pre>
+<p>当你从 shell 启动 App 时，该 App 将继承大部分的 shell 环境，包括导出的环境变量。这种形式的继承有利于进行 App 的动态配置。例如，你的 App 可以检查某个环境变量的存在（或值），并据此更改其行为。</p>
+<h3>设置环境变量</h3>
+<p><code>export</code> 命令用于设置或显示环境变量，格式为：<code>export</code>[变量名]=[变量值]，例如：</p>
+<pre><code class="language-bash">export PATH="/opt/homebrew/bin:$PATH"</code></pre>
+<p>上面PATH设置时，路径后面加了":$PATH"，表示之前PATH的值 ，不加入使得PATH为设置的值（唯一）。注：冒号表示并列。</p>
+<p><strong>shell的环境变量一般都保存在配置文件中</strong>，下面简要介绍一下各种shell的配置文件。</p>
+<h2>配置文件</h2>
+<p>shell的配置文件有两种，一种是全局配置文件，一种是用户配置文件。<strong>推荐设置用户个人自己的环境变量，尽量不破坏Mac系统全局变量</strong>。比如若是zsh，那么推荐改动<code>~/.zshrc</code>文件。(注意下面有些文件可能没有，每个电脑不一样)</p>
+<h3>全局配置文件</h3>
+<table>
+<thead>
+<tr>
+<th><strong>配置文件</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/etc/profile</td>
+<td>系统级别</td>
+</tr>
+<tr>
+<td>/etc/paths</td>
+<td>系统级别</td>
+</tr>
+<tr>
+<td>/etc/bashrc</td>
+<td>基于bash</td>
+</tr>
+<tr>
+<td>/etc/zprofile</td>
+<td>基于zsh</td>
+</tr>
+<tr>
+<td>/etc/zshrc</td>
+<td>基于zsh</td>
+</tr>
+</tbody>
+</table>
+<h3>用户配置文件</h3>
+<table>
+<thead>
+<tr>
+<th><strong>配置文件</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>~/bash_profile</td>
+<td>基于bash（shell）</td>
+</tr>
+<tr>
+<td>~/etc/zprofile</td>
+<td>基于zsh（shell）</td>
+</tr>
+<tr>
+<td>~/.zshrc</td>
+<td>基于（shell）</td>
+</tr>
+</tbody>
+</table>
+<p>以zsh为例，介绍一下不同文件的作用。<code>.zprofile</code> 和 <code>.zshrc</code> 这两个文件都是与 Zsh shell 相关的配置文件，它们的作用略有不同：</p>
+<ol>
+<li><strong>.zprofile</strong>:
+<ul>
+<li><code>zprofile</code> 文件是在登录时（login shell）被执行的。当您从登录管理器或远程登录时，Zsh 将被作为登录 shell 启动，并且会执行 <code>.zprofile</code> 中的命令。这通常用于设置一些与登录会话相关的环境变量和执行初始化命令。</li>
+</ul>
+</li>
+<li><strong>.zshrc</strong>:
+<ul>
+<li><code>.zshrc</code> 文件则是在交互式 non-login shell 启动时被执行的。也就是说，当您在一个已经登录的终端中启动新的 Zsh shell 时，会执行 <code>.zshrc</code> 中的命令。这个文件通常包含了定制提示符、别名、自定义函数等与交互式使用相关的设置。</li>
+</ul>
+</li>
+</ol>
+<p>因此，<code>zprofile</code> 主要用于设置登录会话相关的环境变量和执行初始化命令，而 <code>.zshrc</code> 则主要用于定制交互式 shell 的行为和环境设置。</p>
+<h2>参考资料</h2>
+<ol>
+<li><a href="https://support.apple.com/zh-cn/guide/terminal/apd382cc5fa-4f58-4449-b20a-41c53c006f8f/2.14/mac/14.0">在Mac上的&ldquo;终端&rdquo;使用环境变量</a></li>
+<li><a href="https://blog.csdn.net/weixin_41606115/article/details/129030458">Mac系统 - Mac的环境变量</a></li>
+</ol>
