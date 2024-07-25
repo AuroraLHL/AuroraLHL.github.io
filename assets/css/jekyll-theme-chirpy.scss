@@ -1,13 +1,12 @@
 ---
 ---
 
-@import 'main';
-
+@import 'main
 {%- if jekyll.environment == 'production' -%}
-  .bundle {
-    /* 生产环境特有的样式 */
-  }
+  .bundle
 {%- endif -%}
+';
+
 
 
 /* append your custom style below */
