@@ -1,0 +1,412 @@
+[
+  
+  {
+    "title": "Transformer图文详解【Attention is all you need】",
+    "url": "/posts/transformer/",
+    "categories": "人工智能, 大语言模型",
+    "tags": "机器学习, LLM",
+    "date": "2024-07-26 11:50:00 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "🚀在自然语言处理（NLP）领域，Transformer架构已经成为最先进的技术之一，其核心概念是自注意力机制（Self-Attention Mechanism）。📚在前面的两小节中，我们已经介绍了注意力机制的基础知识，包括RNN、Seq2Seq等传统方法的基本概念和实现。此外，我们详细讨论了自注意力机制（Self-Attention）及其在现代NLP模型中的重要性。自注意力机制允许模型在处理...",
+    "content": "🚀在自然语言处理（NLP）领域，Transformer架构已经成为最先进的技术之一，其核心概念是自注意力机制（Self-Attention Mechanism）。📚在前面的两小节中，我们已经介绍了注意力机制的基础知识，包括RNN、Seq2Seq等传统方法的基本概念和实现。此外，我们详细讨论了自注意力机制（Self-Attention）及其在现代NLP模型中的重要性。自注意力机制允许模型在处理每个输入时“关注”输入序列的不同部分，从而理解单词与其他单词之间的关系，而不是逐个地线性处理输入。🔥在理解了自注意力机制的基础上，我们来介绍大语言模型的基础——Transformer结构，Attention is all you need！一、Transformer框架Transformer 的核心概念是 自注意力机制（Self-Attention Mechanism），它允许模型在处理每个输入时“关注”输入序列的不同部分。这种机制让模型能够理解每个单词或符号与其他单词或符号之间的关系，而不是逐个地线性处理输入。原始论文给出的Transformer结构如下图所示：上图所示的Transformer 主要由两个部分组成：  编码器（Encoder）：将输入序列转换为一个隐表示（向量表示）；  解码器（Decoder）：从隐表示生成输出序列.编码器 和 解码器 都由多个层（layers) 组成，每层都包括:  一个 多头自注意力机制 ;  一个 前馈神经网络（Feed-Forward Neural Network, FFN）；  残差结构以及层归一化操作.下面详细分析Transformer结构每个部分的作用及计算过程。二、Encoder（1）自注意力机制在上一小节我们详细介绍了注意力机制，本节我们仅介绍其在Transformer结构中的计算过程。对于输入序列$\\mathbf{X}=[x_1,x_2,\\ldots,x_n]$,每个元素$x_i$首先被投影到三个不同的向量 :  查询向量(Query)Q  键向量( Key) K  值向量( Value) V这些向量的计算公式如下：\\[\\mathbf{Q}=\\mathbf{X}\\mathbf{W}^Q,\\quad\\mathbf{K}=\\mathbf{X}\\mathbf{W}^K,\\quad\\mathbf{V}=\\mathbf{X}\\mathbf{W}^V\\]其中，$\\mathbf{W}^Q,\\mathbf{W}^K,\\mathbf{W}^V$是可学习的权重矩阵。自注意力的核心公式是计算每个查询向量与所有键向量之间的相似度，原文采用的是缩放点积模型 :\\[\\text{Attention}(\\mathbf{Q},\\mathbf{K},\\mathbf{V})=\\text{softmax}\\biggl(\\frac{\\mathbf{Q}\\mathbf{K}^T}{\\sqrt{d_k}}\\biggr)\\mathbf{V}\\]这里，$\\frac1{\\sqrt{d_k}}$是缩放因子，用于避免相似度值过大。softmax 函数将相似度转换为权重，最后乘以 V 得到加权的值向量。下面用一个实例的图示来描述这个计算过程，并且能够清晰的看到各个部分的维度：如上图所示，$X_1,X_2$分别与$\\mathbf{W}^Q,\\mathbf{W}^K,\\mathbf{W}^V$相乘可以得到$q、k、v$，下面假设一些值进行计算：可以看到最后得到的注意力值$z_i$维度和$v_i$的维度一致.如果$X_1,X_2$拼接成矩阵，那么其计算过程图示如下：可以看到最后的$Z$就是由$z_1,z_2$拼接得到，并且$Z$与$V$的维度仍保持一致.（2）多 头 注 意 力 机 制 ( Multi- Head Attention )为了让模型捕捉到不同子空间的特征，多头注意力机制将上述注意力机制应用多个头( head ) :\\[\\mathrm{MultiHead}( \\mathbf{Q} , \\mathbf{K} , \\mathbf{V} ) = [ \\mathrm{head}_1, \\mathrm{head}_2, \\ldots , \\mathrm{head}_h] \\mathbf{W} ^O\\]其中，每个 head$_i$是一个独立的自注意力机制 :\\[\\mathrm{head}_i=\\mathrm{Attention}(\\mathbf{QW}_i^Q,\\mathbf{KW}_i^K,\\mathbf{VW}_i^V)\\\\\\]$\\mathbf{W}^O$是用于连接各个头结果的权重矩阵.下面用一个图例来描述多头注意力机制的计算过程：如上图所示，$h=2$，左右两边结构完全一样，每个head的计算方式也完全一样。当$h=8$时，我们可以计算得到8个$Z_i$：多头注意力机制就是将多个head的输出拼接起来，同时再乘以一个大的参数矩阵$W^O$由上图可知，最后得到的$Z$的维度与$X$的维度保持一致.这是为了方便后面的layer当作输入，在Encoder结构中，只有第一层需要将输入Embedding成$X$，后面的层直接使用上一层的输出当作输入.下图是一个多头注意力机制计算过程的完整图示：到目前为止介绍的多头注意力机制结构存在两个问题：  与循环神经网络不同，自注意力机制并不按顺序构建信息，这个结构没有对输入顺序的内在表示，也就是说，输入的顺序完全不影响网络输出，但是我们知道句子里单词的顺序是重要的。所以Transformer结构中中引入了一个技巧——位置编码（Positional Encoding）.  注意到在上面的计算过程中，除了Softmax都是线性计算，使得网络的表达能力受限，Transformer中在每个多头注意力机制后引入一个前 馈 神 经 网 络 ( Feed- Forward Network ）来增强网络的表示能力.（3）位置编码（Positional Encoding）为了编码每个词的位置信息，原始论文中提出用一个新的向量$p_i$来编码位置信息，其维度和Embedding的维度一致，在编码器的第一层，我们将$p_i$与$x_i$叠加得到最终的输入向量矩阵$X$.这个位置向量怎么得到呢？有以下几种方法：      绝对位置编码:正弦位置表示，原论文给的计算公式如下：\\[\\begin{aligned}PE_{(pos,2i)}&amp;=\\sin(pos/10000^{2i/d_{\\mathrm{model}}})\\\\PE_{(pos,2i+1)}&amp;=\\cos(pos/10000^{2i/d_{\\mathrm{model}}})\\end{aligned}\\]    其中：          pos表示单词在句子中的绝对位置，pos=0，1，2…，例如：Jerry在”Tom chase Jerry”中的pos=2；      $d_{model}$表示词向量的维度，在这里$d_{model}$=512；      2i和2i+1表示奇偶性，i表示词向量中的第几维，例如这里$d_{model}$=512，故i=0，1，2…255.            绝对位置编码:通过学习表示，$p_i$是一个可学习的参数，通过训练来学习到每个词的位置表示.  （4）残差（Residuals)由Transformer的结构我们可以看到，在经过Multi-Head Attention得到矩阵$Z$之后，并没有直接传入全连接神经网络FNN，而是经过了一步：Add＆Normalize。Add，就是在Z的基础上加了一个残差块X，加入残差块X的目的是为了防止在深度神经网络训练中发生退化问题，退化的意思就是深度神经网络通过增加网络的层数，Loss逐渐减小，然后趋于稳定达到饱和，然后再继续增加网络层数，Loss反而增大。（5）层归一化在进行了残差连接后，还要对数据进行层归一化，其目的有二：  能够加快训练的速度;  提高训练的稳定性.为什么使用Layer Normalization（LN）而不使用Batch Normalization（BN）呢？，LN是在同一个样本中不同神经元之间进行归一化，而BN是在同一个batch中不同样本之间的同一位置的神经元之间进行归一化。对多个词向量进行BN归一化没有意义，但是可以对每个词向量的数据进行归一化，加快训练速度。对于给定的输入$x$,其维度为$(N,L)$,其中$N$是批量大小(词的个数），$L$是特征维度（词向量维度）。层归一化的计算公式为：\\[\\mu=\\frac1L\\sum_{j=1}^Lx_{ij}\\\\\\sigma^2=\\frac1L\\sum_{j=1}^L(x_{ij}-\\mu)^2\\\\\\hat{x}_{ij}=\\frac{x_{ij}-\\mu}{\\sqrt{\\sigma^2+\\epsilon}}\\\\y_{ij}=\\gamma\\hat{x}_{ij}+\\beta\\]其中，$\\gamma$和$\\beta$是可训练参数，$\\epsilon$是防止除零的小常数。（6）前 馈 神 经 网 络 ( Feed- Forward Network ）每个编码器和解码器层还包括一个前馈神经网络：\\[\\mathrm{FFN}(\\mathbf{x})=\\max(0,\\mathbf{x}\\mathbf{W}_1+\\mathbf{b}_1)\\mathbf{W}_2+\\mathbf{b}_2\\]这里的全连接层是一个两层的神经网络，先线性变换，然后ReLU非线性，再线性变换。这里的x就是我们Multi-Head Attention的输出Z，若Z是(2,64)维的矩阵，假设W1是(64,1024)，其中W2与W1维度相反(1024,64)，那么按照上面的公式：\\[FFN(Z)=(2,64)\\times(64,1024)\\times(1024,64)=(2,64)\\]我们发现维度没有发生变化，这两层网络就是为了将输入的Z映射到更加高维的空间中(2,64)x(64,1024)=(2,1024)，然后通过非线性函数ReLU进行筛选，筛选完后再变回原来的维度。然后经过Add＆Normalize，输入下一个encoder中，经过6个encoder后输入到decoder中.三、Decoder接下来来看Decoder部分，其结构如下所示，和Encoder很像，但是多了一个Masked Multi-Head Attention层，这是干嘛用的呢？这是为了防止Decoder在训练的时候“作弊”，在每个时间步t只允许看到这之前的信息，不能利用t+1后的信息。下面来详细的介绍每个部分。（1）解码器的输入Decoder的输入分为两类：一种是训练时的输入，一种是预测时的输入。  训练时的输入就是已经对准备好对应的target数据。例如翻译任务，Encoder输入”Tom chase Jerry”，Decoder输入”汤姆追逐杰瑞”。  预测时的输入，一开始输入的是起始符，然后每次输入是上一时刻Transformer的输出。例如，输入”“，输出”汤姆”，输入”汤姆”，输出”汤姆追逐”，输入”汤姆追逐”，输出”汤姆追逐杰瑞”，输入”汤姆追逐杰瑞”，输出”汤姆追逐杰瑞”结束。下面动图所示是解码器的第一个时间步，输入是起始符，不过也会用到编码器的信息：下面动图展示了Decoder后面几个时间步的输入，是上一个时间步解码器的输入：（2）Masked Multi-Head Attention与Encoder的Multi-Head Attention计算原理一样，只是多加了一个mask码。mask 表示掩码，它对某些值进行掩盖，使其在参数更新时不产生效果。两种模型的结构对比如下图所示：Transformer 模型里面涉及两种 mask，分别是 padding mask 和 sequence mask。为什么需要添加这两种mask码呢？==1.padding mask==什么是 padding mask 呢？因为每个批次输入序列长度是不一样的也就是说，我们要对输入序列进行对齐。具体来说，就是给在较短的序列后面填充 0。但是如果输入的序列太长，则是截取左边的内容，把多余的直接舍弃。因为这些填充的位置，其实是没什么意义的，所以我们的attention机制不应该把注意力放在这些位置上，所以我们需要进行一些处理。具体的做法是，把这些位置的值加上一个非常大的负数(负无穷)，这样的话，经过 softmax，这些位置的概率就会接近0！==2.sequence mask==sequence mask 是为了使得 decoder 不能看见未来的信息。对于一个序列，在 time_step 为 t 的时刻，我们的解码输出应该只能依赖于 t 时刻之前的输出，而不能依赖 t 之后的输出。因此我们需要想一个办法，把 t 之后的信息给隐藏起来。这在训练的时候有效，因为训练的时候每次我们是将target数据完整输入进decoder中地，预测时不需要，预测的时候我们只能得到前一时刻预测出的输出。通过sequence mask，可以使得网络进行并行计算.具体做法是在每个时间步t，我们屏蔽对未来词的注意力，将对未来的词（token）的attention值设置为-∞，其余部分的Attention值计算同前面介绍的方法一致，下图给出了一个示例：Decoder中的Multi-Head Attention层的工作原理和Encoder一样，只是它从下面的Masked Multi-Head Attention层创建查询矩阵Q，并从编码器堆栈的输出中获取键和值矩阵（K、V）。（3）Decoder的输出解码器输出一个浮点数向量，如何将其转化为一个单词呢？这就是最终的线性层（Linear layer）和后续的Softmax层的工作。线性层是一个简单的全连接神经网络，它将解码器生成的向量投射到一个更大得多的向量上，这个向量称为logits向量。假设我们的模型知道10,000个独特的英文单词（模型的“输出词汇”），这些单词是从训练数据集中学习到的。这将使logits向量为10,000维，每维对应一个唯一单词的得分。这就是我们通过线性层解释模型输出的方式。然后，Softmax层将这些得分转化为概率（所有概率都是正数，总和为1.0）。选择概率最高的index，并将其对应的单词作为该时间步的输出。四、复杂度分析及改进方法介绍总的来说，自注意力模型的时间和空间复杂度与输入序列长度$N$呈2次关系，可以不严格的表示为$O(N^2)$.（1）时间复杂度（2）空间复杂度（3）改进方法通过上面两小节的分析，我们知道Self Attention的时间和空间复杂度是输入序列的$O(N^2)$，这对于处理长文本来说效率太低了，目前学界提出了很多改进Self Attention模型的方法：参考资料  Attention is all you need  The Illustrated Transformer  https://blog.csdn.net/Tink1995/article/details/105080033"
+  },
+  
+  {
+    "title": "深入理解注意力机制【Self-Attention,自注意力模型】",
+    "url": "/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/",
+    "categories": "人工智能, 大语言模型",
+    "tags": "机器学习, LLM",
+    "date": "2024-07-26 11:39:00 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "在自然语言处理领域，注意力机制（Attention Mechanism）已经成为提升模型性能的重要工具。传统的Encoder-Decoder结构在处理长序列时，常常因为统一语义特征向量的长度限制而导致性能瓶颈。然而，注意力机制通过引入动态上下文向量，成功解决了这一问题，使得模型能够在每个时间步选择与当前输出最相关的信息。  本篇博客将详细介绍注意力机制的基本原理、一般形式以及自注意力模型，并...",
+    "content": "在自然语言处理领域，注意力机制（Attention Mechanism）已经成为提升模型性能的重要工具。传统的Encoder-Decoder结构在处理长序列时，常常因为统一语义特征向量的长度限制而导致性能瓶颈。然而，注意力机制通过引入动态上下文向量，成功解决了这一问题，使得模型能够在每个时间步选择与当前输出最相关的信息。  本篇博客将详细介绍注意力机制的基本原理、一般形式以及自注意力模型，并通过具体例子和图示来更好地理解这些关键概念。一、语言模型实例在Encoder-Decoder结构中，Encoder把所有的输入序列都编码成一个统一的语义特征c再解码：因此， c中必须包含原始序列中的所有信息，它的长度就成了限制模型性能的瓶颈。如机器翻译问题，当要翻译的句子较长时，一个c可能存不下那么多信息，就会造成翻译精度的下降。Attention机制通过在每个时间输入不同的c来解决这个问题，下图是带有Attention机制的Decoder：每一个c会自动去选取与当前所要输出的y最合适的上下文信息。具体来说:  用 $a_{i j}$ 衡量 Encoder中第j阶段的$h_j$和解码时第i阶段的相关性;  最终Decoder中第i阶段的输入的上下文信息 $c_{i}$ 就来自于所有 $h_{j}$ 对 $a_{i j}$ 的加权和。以机器翻译为例（将中文翻译成英文）：输入的序列是“我爱中国”:  因此, Encoder中的h1、h2、h3、h4就可以分别看做是“我”、 “爱”、“中”、“国”所代表的信息;  在翻译成英语时, 第一个上下文$c_1$应该和“我”这个字最相关, 因此对应的 $a_{11}$ 就比较大, 而相应的 $a_{12} 、 a_{13} 、 a_{14}$ 就比较小;  c2应该和“爱”最相关, 因此对应的 $a_{22}$ 就比较大;  最后的$c_3$和$h_3、h_4$最相关, 因此 $a_{33} 、 a_{34}$ 的值就比较大。这些权重 $a_{i j}$ 是怎么来的?事实上, $a_{i j}$ 同样是从模型中学出的, 它实际和Decoder的第i阶段的隐状态、Encoder第j个阶段的隐状态有关，在下面一小节我们会介绍$a_{ij}$如何计算.  这里的$c_1,c_2,c_3$就是attention值;二、一般模型刚刚我们是基于Encoder-Decoder模型来介绍attention机制的，下面我们更一般的来介绍注意力机制.用$X=[x_1,\\cdots,x_N]\\in\\mathbb{R}^{D\\times N}$ 表示$N$组输入信息，其中$D$ 维向量 $\\boldsymbol{x}_n\\in$ $\\mathbb{R}^D,n\\in[1,N]$表示一组输入信息.为了节省计算资源，不需要将所有信息都输入神经网络，只需要从$\\boldsymbol X$ 中选择一些和任务相关的信息.注意力机制的计算可以分为两步：  一是在所有输入信息上计算注意力分布；  二是根据注意力分布来计算输入信息的加权平均.为了从$N$个输入向量$[\\boldsymbol x_1,\\cdotp\\cdotp\\cdotp,\\boldsymbol x_N]$中选择出和某个特定任务相关的信息，我们需要引入一个和任务相关的表示，称为查询向量(Query Vector), 并通过一个打分函数来衡量每个输入向量和查询向量之间的相关性.给定一个和任务相关的查询向量$\\boldsymbol q$,我们用注意力变量$z\\in[1,N]$来表示被选择信息的索引位置，即$z=n$ 表示选择了第$n$ 个输入向量.为了方便计算，我们采用一种“软性”的信息选择机制.首先计算在给定$q$和$X$下，选择第$n$个输入向量的概率$\\alpha_n$,\\[\\begin{aligned}\\alpha_{n}&amp;=p(z=n|X,\\boldsymbol{q})\\\\&amp;=\\operatorname{softmax}\\left(s(\\boldsymbol{x}_n,\\boldsymbol{q})\\right)\\\\&amp;=\\frac{\\exp\\left(s(\\boldsymbol{x}_n,\\boldsymbol{q})\\right)}{\\sum_{j=1}^N\\exp\\left(s(\\boldsymbol{x}_j,\\boldsymbol{q})\\right)},\\end{aligned}\\]其中$\\alpha_n$ 称为注意力分布( Attention Distribution),$s(\\boldsymbol x,\\boldsymbol{q})$ 为注意力打分函数.  注意力打分函数$\\mathbf{s}(\\mathbf{x},\\mathbf{q})$：计算输入向量和查询向量之间的相关性，常用如下模型\\[\\begin{aligned}&amp;\\bullet\\text{ 加性模型: }\\mathbf{s}(\\mathbf{x},\\mathbf{q})=\\mathbf{v}^{T}\\mathrm{tanh}(\\mathbf{W}\\mathbf{x}+\\mathbf{U}\\mathbf{q}).\\\\&amp;\\bullet\\text{ 点积模型: }\\mathbf{s}(\\mathbf{x},\\mathbf{q})=\\mathbf{x}^{T}\\mathbf{q}.\\\\&amp;\\bullet\\text{ 缩放点积模型: }\\mathbf{s}(\\mathbf{x},\\mathbf{q})=\\frac{\\mathbf{x}^{T}\\mathbf{q}}{\\sqrt{D}}.\\\\&amp;\\bullet\\text{ 双线性模型: }\\mathbf{s}(\\mathbf{x},\\mathbf{q})=\\mathbf{x}^{T}\\mathbf{W}\\mathbf{q}.\\end{aligned}\\]  这里$\\mathbf{W},\\mathbf{U},\\mathbf{v}$为可学习的参数，$D$为输入向量的维度.Note:  在前面的例子中，$h_1,h_2,h_3,h_4$就是输入向量$X$;  $h’_1,h’_2,h’_3$就是查询向量$q$;  $a_{ij}$就是注意力分布，这里我们给出了注意力分布怎么计算的.得到注意力分布后，对输入向量加权平均可以得到attention值：\\[\\begin{aligned}\\operatorname{att}(X,\\boldsymbol{q})&amp;=\\sum_{n=1}^N\\alpha_nx_n,\\\\&amp;=\\mathbb{E}_{z\\sim p(z|X,\\boldsymbol{q})}[x_z].\\end{aligned}\\]下图（a）清晰的描述了attention的计算过程.更一般地，我们可以用键值对( key-value pair)格式来表示输入信息，其中“键”用来计算注意力分布$\\alpha_n$,“值”用来计算聚合信息.用$\\left(\\boldsymbol{K},\\boldsymbol{V}\\right)=\\left[\\left(\\boldsymbol{k}_1,\\boldsymbol{\\upsilon}_1\\right),\\cdots,\\left(\\boldsymbol{k}_N,\\boldsymbol{\\upsilon}_N\\right)\\right]$表示$N$组输入信息，给定任务相关的查询向量$q$时，注意力函数为\\[\\begin{aligned}\\operatorname{att}\\Big((\\boldsymbol{K},\\boldsymbol{V}),\\boldsymbol{q}\\Big)&amp;=\\sum_{n=1}^N\\alpha_n\\boldsymbol{v}_n,\\\\&amp;=\\sum_{n=1}^N\\frac{\\exp\\left(s(\\boldsymbol{k}_n,\\boldsymbol{q})\\right)}{\\sum_j\\exp\\left(s(\\boldsymbol{k}_j,\\boldsymbol{q})\\right)}\\boldsymbol{v}_n,\\end{aligned}\\]其中 $s(\\boldsymbol{k}_n,\\boldsymbol{q})$ 为打分函数.图8.1给出键值对注意力机制的示例.当$K=V$时，键值对模式就等价于普通的注意力机制.三、自注意力模型(Self-Attention)由键值对注意力模式我们可以进一步引出 自注意力模型的概念，该模型通过注意力机制可以建立输入序列长距离依赖关系。自注意力模型计算过程如下图所示：🔥Note:  $X$为输入矩阵；  $W^Q、W^K、W^V$是可学习的参数矩阵；  最后得到的$Z$为attention值矩阵;  为什么叫自注意力模型呢？因为我们可以看到这里Q、K、V都是由$X$通过一个线性变换投影得到的，而矩阵$W$是可学习的，所以由$X$到$Z$的映射权重是可学习的，是动态调整的。如下图所示，红色表示当前的词，蓝色阴影表示与红色词的相关程度，通过自注意力模型，我们可以自动学到每个词与前面词的相关关系。四、Self-Attention模型的复杂度分析总的来说，自注意力模型的时间和空间复杂度与输入序列长度$N$呈2次关系，可以不严格的表示为$O(N^2)$.（1）时间复杂度（2）空间复杂度参考资料  深度学习500问  邱锡鹏，神经网络与深度学习，机械工业出版社，https://nndl.github.io/, 2020."
+  },
+  
+  {
+    "title": "详解注意力机制上篇【RNN,seq2seq等基础知识】",
+    "url": "/posts/nlp%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/",
+    "categories": "人工智能, 大语言模型",
+    "tags": "机器学习, LLM",
+    "date": "2024-07-26 11:28:00 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "🔥 在自然语言处理（NLP）领域，理解和生成自然语言的能力对于构建智能系统至关重要。从文本分类、机器翻译到对话系统，底层技术的不断进步推动了NLP的发展。在这些技术中，循环神经网络（RNN）及其变种如长短期记忆网络（LSTM）、Seq2Seq模型和注意力机制（Attention Mechanism）扮演了重要角色。📚 本系列博客将从基础知识开始，逐步深入探讨大语言模型在NLP中的应用。我们将...",
+    "content": "🔥 在自然语言处理（NLP）领域，理解和生成自然语言的能力对于构建智能系统至关重要。从文本分类、机器翻译到对话系统，底层技术的不断进步推动了NLP的发展。在这些技术中，循环神经网络（RNN）及其变种如长短期记忆网络（LSTM）、Seq2Seq模型和注意力机制（Attention Mechanism）扮演了重要角色。📚 本系列博客将从基础知识开始，逐步深入探讨大语言模型在NLP中的应用。我们将从RNN的经典结构出发，介绍其工作原理和局限性，接着探讨Seq2Seq模型及其在机器翻译中的应用，最后深入解读注意力机制及其在现代深度学习模型中的重要性。一、RNN经典结构循环神经网络（Recurrent Neural Network, RNN)是一类以序列数据为输入，在序列的演进方向进行递归且所有节点（循环单元）按链式连接的递归神经网络（recursive neural network）。对循环神经网络的研究始于二十世纪 80-90 年代，并在二十一世纪初发展为深度学习算法之一，其中双向循环神经网络和长短期记忆网络（Long Short-Term Memory networks，LSTM）是常见的循环神经网络。经典循环神经网络的单个神经元如下图所示，它由输入层、一个隐藏层和一个输出层组成：  $x_t$ 是一个向量，它表示t时刻输入层的值；  $h_{t-1},h_t$ 分别表示t-1时刻和t时刻隐藏层的值.其中$h_t$的计算如下：\\[h_t=f(Uh_{t-1}+Wx_t+b),\\]其中$\\mathbf{x}_t\\in\\mathbb{R}^M$ 为$t$时刻网络的输入，$\\mathbf{U}\\in\\mathbb{R}^{D\\times D}$ 为状态-状态权重矩阵，$\\mathbf{W}\\in\\mathbb{R}^{D\\times M}$为状态-输入权重矩阵，$\\mathbf{b}\\in\\mathbb{R}^D$ 为偏置向量，$f$为激活函数.上面是RNN网络中的单个结点，下面给出长度为$T$的RNN网络，我们可以更清晰的看到前一时刻对后一时刻的影响.现在看上去就比较清楚了, 这个网络在 $\\mathrm{t}$ 时刻接收到输入 $\\mathrm{x}{t}$ 之后, 隐藏层的值是 $h_t$, 输出值是 $\\mathrm{y}{t}$ 。关键一点是, $h_t$ 的值不仅仅取决于 $\\mathrm{x}{t}$, 还取决于 $\\mathrm{h}{t-1}$ 。可以用下面的公式来表示循环神经网络的计算方法:\\[\\mathrm{y}_{t}=V \\mathrm{h}_{t}\\quad (1)\\]\\[\\mathrm{h}_{t}=f\\left(W \\mathrm{x}_{t}+U \\mathrm{h}_{t-1}\\right)\\quad(2)\\]  式 1 是输出层的计算公式, 输出层是一个全连接层, 也就是它的每个节点都和隐藏层的每个节点相连，$\\mathrm{V}$ 是输出层的权重矩阵.  式 2 是隐藏层的计算公式, 它是循环层。 $\\mathrm{U}$ 是输入 $x$ 的权重矩阵, $\\mathrm{W}$ 是上一次的值 $\\mathrm{h}_{t-1}$ 作为这一次的输入的权重矩阵, $f$ 是激活函数.（这里我们省略$b$）从上面的公式可以看出, 循环层和全连接层的区别就是循环层多了一个权重矩阵 $\\mathrm{W}$ 。如果反复把式 2 带入到式 1 , 将得到:\\[\\begin{aligned}\\mathrm{y}_{t} &amp;=V \\mathrm{h}_{t} \\\\&amp;=V f\\left(W \\mathrm{x}_{t}+U \\mathrm{h}_{t-1}\\right) \\\\&amp;=V f\\left(W \\mathrm{x}_{t}+U f\\left(W \\mathrm{x}_{t-1}+U \\mathrm{h}_{t-2}\\right) \\right)\\\\&amp;=V f\\left(W \\mathrm{x}_{t}+U f\\left(W \\mathrm{x}_{t-1}+U f\\left(W \\mathrm{x}_{t-2}+U \\mathrm{h}_{t-3}\\right)\\right)\\right) \\\\&amp;=V f\\left(W \\mathrm{x}_{t}+U f\\left(W \\mathrm{x}_{t-1}+U f\\left(W \\mathrm{x}_{t-2}+U f\\left(W \\mathrm{x}_{t-3}+\\ldots\\right)\\right)\\right)\\right)\\end{aligned}\\]从上面可以看出, 循环神经网络的输出值$\\mathrm{y}t$, 是受前面历次输入值 $ x{t}, x_{t-1}, \\cdots,x_1$影响的, 这就是为什么循环神经网络可以往前看任意多个输入值的原因。Note:  从以上结构可看出，传统的RNN结构的输⼊和输出等⻓.  我们可以看到每个节点会共用参数$W,U,V$.二、vector-to-sequence结构有时我们要处理的问题输⼊是⼀个单独的值，输出是⼀个序列。此时，有两种主要建模⽅式：      ⽅式⼀：可只在其中的某⼀个序列进⾏计算，⽐如序列第⼀个进⾏输⼊计算，其建模⽅式如下：            把输⼊信息X作为每个阶段的输⼊，其建模⽅式如下：      三、sequence-to-vector结构有时我们要处理的问题输⼊是⼀个序列，输出是⼀个单独的值，此时通常在最后的⼀个序列上进⾏输出变换，其建模如下所⽰：四、Seq2Seq模型RNN最重要的一个变种：Seq2Seq，这种结构又叫Encoder-Decoder模型。原始的sequence-to-sequence结构的RNN要求序列等长，然⽽我们遇到的⼤部分问题序列都是不等长的，如机器翻译中，源语⾔和⽬标语⾔的句⼦往往并没有相同的长度。1 Encoder将输⼊数据编码成⼀个上下⽂向量 c，这部分称为Encoder，其⽰意如下所⽰：得到c有多种⽅式：  最简单的⽅法就是把Encoder的最后⼀个隐状态赋值给c ：$c=h_4$  还可以对最后的隐状态做⼀个变换得到 :$c=q(h_4)$  也可以对所有的隐状态做变换:$c=q(h_1+h_2+h_3+h_4)$2 Decoder拿到c之后，就用另一个RNN网络对其进行解码，这部分RNN网络被称为Decoder。具体做法就是将c当做初始状态输入到Decoder中：还可以将c作为Decoder的每⼀步输⼊，⽰意图如下所⽰：由于这种Encoder-Decoder结构不限制输入和输出的序列长度，因此应用的范围非常广泛，比如：  机器翻译，Encoder-Decoder的最经典应用，事实上这一结构就是在机器翻译领域最先提出的；  文本摘要，输入是一段文本序列，输出是这段文本序列的摘要序列；  阅读理解，将输入的文章和问题分别编码，再对其进行解码得到问题的答案；  语音识别，输入是语音信号序列，输出是文字序列。五、Embedding1 什么是 Embedding？Embedding 是一种将离散的、高维的输入数据（如单词或符号）转换为连续的、低维的向量表示的方法。其目的是捕捉输入数据中的语义和结构信息，使其在向量空间中具有有意义的分布。2 为什么需要 Embedding？在 NLP 中，原始的文本数据通常由单词、子词或字符组成，这些元素本质上是离散的符号。传统的处理方法（如 one-hot 编码）会将每个单词表示为一个高维的稀疏向量，缺点如下：  维度过高：词汇表中的每个单词都需要一个独立的维度，对于大型词汇表，这会导致向量的维度非常高。  稀疏性：大多数维度都是 0，只有一个维度是 1，这导致向量非常稀疏。  缺乏语义信息：one-hot 向量无法捕捉单词之间的语义关系，如“国王”与“王后”之间的关系。Embedding 方法通过学习一个低维的、连续的向量表示来解决这些问题。每个单词或符号都被表示为一个实数向量，这些向量在训练过程中被优化，以捕捉单词之间的语义和语法关系。3 Embedding 的实现在深度学习模型（如 Transformer）中，embedding 通常通过一个可训练的查找表实现。查找表的每一行对应一个词汇表中的单词，行中的值是该单词的嵌入向量。这些嵌入向量在模型训练过程中不断调整，以优化模型的性能。具体步骤如下：  初始化：将每个单词初始化为一个随机的或预训练的向量。  训练：在训练过程中，模型根据任务目标不断调整这些向量，使得它们能够更好地表示单词的语义和语法信息。  使用：训练完成后，这些向量就可以用于各种 NLP 任务，如文本分类、情感分析、机器翻译等。4 例子假设我们有一个简单的词汇表：[“猫”, “狗”, “鱼”]。通过 embedding 层，这些单词会被转换为低维的向量，如：  “猫” -&gt; [0.2, -1.3, 0.5]  “狗” -&gt; [0.3, -1.2, 0.4]  “鱼” -&gt; [-0.5, 0.8, -0.1]这些向量的维度通常比原始 one-hot 向量的维度小得多（如 300 维，而不是数万维），并且这些向量可以捕捉到单词之间的语义相似性。例如，“猫”与“狗”的向量可能比较接近，而“鱼”的向量则相对远一些。5 总结Embedding 是一种将离散的输入数据转换为连续的、低维向量表示的方法，广泛应用于自然语言处理任务中。它能够有效地捕捉单词之间的语义和语法关系，提高模型的处理能力和表现。在 Transformer 等深度学习模型中，embedding 层是关键组成部分，负责将输入序列转换为模型可以处理的向量形式。六、实例：机器翻译神经机器翻译（Neural Machine Translation, NMT）是一种基于深度学习技术的机器翻译方法。与传统的统计机器翻译（Statistical Machine Translation, SMT）不同，NMT 使用神经网络模型来直接建模源语言到目标语言之间的翻译过程。下图是Encoder编码的过程：Note:  在翻译的时候，我们需要对词进行Embedding，将其变成一个连续的向量表达.Decoder的过程如下图所示：Note:  用Softmax来得到预测的每个词的概率，概率最大的作为当前预测词参考资料  深度学习500问  邱锡鹏，神经网络与深度学习，机械工业出版社，https://nndl.github.io/, 2020."
+  },
+  
+  {
+    "title": "机器学习入门简介",
+    "url": "/posts/ML1/",
+    "categories": "人工智能, 机器学习",
+    "tags": "机器学习",
+    "date": "2024-07-24 00:00:00 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "一、基本概念什么是机器学习总的来说，机器学习就是大数据时代背景下处理数据的各种方法的总称。机器学习利用各种数理模型对数据进行建模，对数据进行预测和分析，在实际应用中指导决策。我们通常将用于学习的数据对象或者实例称为样例或者样本，每个样例x采用一个向量 $x=(x^{(1)},x^{(2)},\\cdots,x^{(n)})^T$来表示.  向量的每个分量对应样例的一个特征或者属性.  n为样例...",
+    "content": "一、基本概念什么是机器学习总的来说，机器学习就是大数据时代背景下处理数据的各种方法的总称。机器学习利用各种数理模型对数据进行建模，对数据进行预测和分析，在实际应用中指导决策。我们通常将用于学习的数据对象或者实例称为样例或者样本，每个样例x采用一个向量 $x=(x^{(1)},x^{(2)},\\cdots,x^{(n)})^T$来表示.  向量的每个分量对应样例的一个特征或者属性.  n为样例$x$的特征个数，也称为维数，$x^{(i)}$为样例x的第i 维属性的属性值.  属性张成的空间$\\chi$为特征空间，也称为样本空间或输入空间，记作$\\chi$.\\[x=(x^{(1)},x^{(2)},\\cdots,x^{(n)})^T\\in\\mathcal{X}\\]一般而言，数据对象的特征和学习任务相关，如果有不相关的特征可能会影响模型的预测能力。机器学习的分类机器学习一般包括监督学习、无监督学习、半监督学习、强化学习等。监督学习监督学习 (Supervised learning)基于给定的标记数据集$T={(x_i,y_i)}_{i=1}^N$学习从输入空间$\\chi$ 到输出空间$\\gamma$ 的映射 (模型)，并利用该映射对未见 (unseen) 实例x对应的输出y进行预测。监督学习有两个核心问题：      分类(classification)问题：输出空间$\\gamma$是一个离散值的集合(通常也是有限的).          $\\mathcal{Y}={c_1,c_2,\\cdots,c_M}$, 其中$M$为类别的个数.              二分类(binary classification)问题：$M=2.$                  $\\mathcal{Y}={+1,-1}.$          $\\mathcal{Y}={0,1}.$                    多分类(multi-class classification) 问题：$M&gt;2.$            回归 (regression) 问题：输出空间$\\gamma=\\mathbb{R}.$  无监督学习无监督学习( Unsupervised learning) 基于给定的无标记的数据集$T={x_i}_{i=1}^N$，发现数据中隐含的知识或者模式(interesting patterns)，并将学得的模式应用于未见实例。  无监督学习通常也被称为知识发现(knowledge discovery)；  通常没有明确的知识模式类型、衡量学习结果等的度量，依赖于具体学习场景和应用领域；  更具有主观性和挑战性.一个典型的无监督学习任务——聚类，聚类的目的是将无标记的数据集$T={x_i}_{i=1}^N$划分成若干子集。  这些子集通常互不相交，称每个子集为簇 N，每个簇对应于一个潜在的概念；  属于同一子集的样本数据尽可能相互相似；  不同子集的样本尽可能不同半监督学习和强化学习二、模型选择机器学习三要素机器学习方法都是由模型、策略和算法构成的，即机器学习方法由三要素构成，可以简单地表示为：  机器学习方法＝模型＋策略＋算法  模型：在监督学习过程中，模型就是所要学习的条件概率分布或决策函数。模型的假设空间包含所有可能的条件概率分布或决策函数；  策略：有了模型的假设空间，机器学习接着需要考虑的是按照什么样的准则学习或选择最优的模型；  算法：算法是指学习模型的具体计算方法；学习策略机器学习关心的问题是要学什么样的模型，在监督学习过程中，模型就是所要学习的条件概率分布或决策函数。模型的假设空间(hypothesis space)包含所有可能的条件概率分布或决策函数。例如，假设决策函数是输入变量的线性函数，那么模型的假设空间就是所有这些线性函数构成的函数集合，假设空间中的模型一般有无穷多个。那么怎么选出最好的模型呢，首先引入损失函数与风险函数的概念：  损失函数度量模型一次预测的好坏；  风险函数度量平均意义下模型预测的好坏。在假设空间$\\mathcal{F}$ 中选取模型 $f$ 作为决策函数，对于给定的输入 X,由 $f(X)$ 给出相应的输出$Y$,这个输出的预测值 $f(X)$ 与真实值$Y$ 可能一致也可能不一致，用一个损失函数(loss function)或代价函数(cost function)来度量预测错误的程度。损失函数是 $f(X)$ 和 Y 的非负实值函数，记作 $L(Y,f(X))$。机器学习常用的损失函数有以下几种：      0-1 损失函数(0-1 loss function)\\[L(Y,f(X))=\\begin{cases}&amp;1,\\quad Y\\neq f(X)\\\\&amp;0,\\quad Y=f(X)\\end{cases}\\]        平方损失函数(quadratic loss function)\\[L(Y,f(X))=(Y-f(X))^2\\]        对数损失函数(logarithmic loss function)或对数似然损失函数(log-likelihood loss function)  \\[\\begin{aligned}L(Y,P(Y|X))&amp;=-\\log P(Y|X)\\end{aligned}\\]损失函数值越小，模型就越好。由于模型的输入、输出 $(X,Y)$ 是随机变量，遵循联合分布$P(X,Y)$,所以损失函数的期望是:\\[\\begin{aligned}R_{\\mathrm{exp}}(f)&amp; =E_{P}[L(Y,f(X))]  \\\\&amp;=\\int_{\\mathcal{X}\\times\\mathcal{Y}}L(y,f(x))P(x,y)\\mathrm{d}x\\mathrm{d}y.\\end{aligned}\\]这是理论上模型 $f(X)$ 关于联合分布 $P(X,Y)$ 的平均意义下的损失，称为风险函数 (risk function) 或期望损失(expected loss)。由于联合分布$P(X,Y)$ 是不知道的，所以通常我们不会直接使用风险函数，而是用经验风险。给定一个训练数据集\\[T=\\left\\{\\left(x_1, y_1\\right),\\left(x_2, y_2\\right), \\cdots,\\left(x_N, y_N\\right)\\right\\}\\]模型 $f(X)$ 关于训练数据集的平均损失称为经验风险 (empirical risk) , 记作 $R_{\\text {emp }}$ :\\[R_{\\text {emp }}(f)=\\frac{1}{N} \\sum_{i=1}^N L\\left(y_i, f\\left(x_i\\right)\\right)\\]  期望风险 $R_{\\exp }(f)$ 是模型关于联合分布的期望损失；  经验风险 $R_{\\mathrm{emp}}(f)$ 是模型关于训练样本集的平均损失。根据大数定律, 当样本容量 $N$ 趋于无穷时, 经验风险 $R_{\\mathrm{emp}}(f)$ 趋于期望风险 $R_{\\exp }(f)$ 。所以一个很自然的想法是用经验风险估计期望风险。但是, 由于现实中训练样本数目有限, 甚至很小, 所以用经验风险估计期望风险常常并不理想, 要对经验风险进行一定的矫正。这就关系到监督学习的两个基本策略: 经验风险最小化和结构风险最小化。经验风险最小化在假设空间、损失函数以及训练数据集确定的情况下，经验风险函数式(1.14) 就可以确定。经验风险最小化 (empirical risk minimization, ERM) 的策略认为，经验风险最小的模型是最优的模型。根据这一策略，按照经验风险最小化求最优模型就是求解最优化问题：\\[\\min_{f\\in\\mathcal{F}}\\frac{1}{N}\\sum_{i=1}^{N}L(y_i,f(x_i))\\]其中$\\mathcal{F}$ 是假设空间。当样本容量足够大时，经验风险最小化能保证有很好的学习效果，在现实中被广泛采用。比如，极大似然估计(maximum likelihood estimation) 就是经验风险最小化的一个例子。当模型是条件概率分布、损失函数是对数损失函数时，经验风险最小化就等价于极大似然估计。但是，当样本容量很小时，经验风险最小化学习的效果就未必很好，会产生“过拟合” (over-fitting) 现象。结构风险最小化结构风险最小化 (structural risk minimization, SRM) 是为了防止过拟合而提出来的策略。结构风险最小化等价于正则化(regularization)。结构风险在经验风险上加上表示模型复杂度的正则化项(regularizer)或罚项(penalty term)。在假设空间、损失函数以及训练数据集确定的情况下，结构风险的定义是\\[R_{\\mathrm{srm}}(f)=\\frac1N\\sum_{i=1}^NL(y_i,f(x_i))+\\lambda J(f)\\]  其中，$J(f)$ 为模型的复杂度，是定义在假设空间$\\mathcal{F}$上的泛函；  模型 $f$ 越复杂，复杂度 $J(f)$ 就越大；反之，模型 $f$ 越简单，复杂度 $J(f)$ 就越小；  $\\lambda\\geqslant0$ 是系数，用以权衡经验风险和模型复杂度；  结构风险小需要经验风险与模型复杂度同时小，结构风险小的模型往往对训练数据以及未知的测试数据都有较好的预测。上图给出了模型复杂度与训练误差和测试误差的关系：  模型复杂度小，训练误差较大，被称为欠拟合现象；  模型复杂度过高，训练误差小，测试误差（泛化误差）大，被称为过拟合现象。比如，贝叶斯估计中的最大后验概率估计(maximum posterior probability estimation, MAP) 就是结构风险最小化的一个例子。当模型是条件概率分布、损失函数是对数损失函数、模型复杂度由模型的先验概率表示时，结构风险最小化就等价于最大后验概率估计。结构风险最小化的策略认为结构风险最小的模型是最优的模型，所以求最优模型就是求解最优化问题：\\[\\min_{f\\in\\mathcal{F}}\\frac1N\\sum_{i=1}^NL(y_i,f(x_i))+\\lambda J(f).\\]训练误差与泛化误差  训练误差：模型在训练集上的经验风险，记为：$\\hat{R}(f)=\\frac1N\\sum_{i=1}^NL(y_i,f(x_i))$；  泛化误差：学习的模型在对未知数据的预测能力，也就是期望风险，记为$R(f)=E[L(Y,f(X))]$；通过经验风险最小化，选出的模型记为：\\[f_N = \\arg \\min_{f\\in\\mathcal{F}} \\hat{R}(f).\\]$f_N$ 依赖训练数据集的样本容量 $N$。人们更关心的是 $f_N$ 的泛化能力\\[R(f_{N})=E[L(Y,f_{N}(X))].\\]下面讨论从有限集合$\\mathcal{F}={f_1,f_2,\\cdots,f_d}$ 中任意选出的函数 $f$ 的泛化误差上界。定理 (泛化误差上界)  对二类分类问题，当假设空间是有限个函数的集合 $\\mathcal{F}=$  ${f_1,f_2,\\cdots,f_d}$ 时，对任意一个函数 $f\\in\\mathcal{F}$, 至少以概率 $1-\\delta,0&lt;\\delta&lt;1$, 以下不等式成立：\\[R(f)\\leqslant\\hat{R}(f)+\\varepsilon(d,N,\\delta)\\]  其中：\\[\\varepsilon(d,N,\\delta) = \\sqrt{\\frac{1}{N}(\\log d+\\log\\frac{1}{\\delta})}.\\]从上述定理我们可以知道：  $R(f)$ 是泛化误差，右端即为泛化误差上界；  在泛化误差上界中，第1 项是训练误差，训练误差越小，泛化误差也越小；  第2 项 $\\varepsilon(d,N,\\delta)$ 是 N 的单调递减函数， 当$N$ 趋于无穷时趋于 0;  同时它也是 $\\sqrt{\\log d}$ 阶的函数，假设空间 $\\mathcal{F}$ 包含的函数越多，其值越大;  训练误差$\\hat{R}(f)$小并不能一定保证模型$f_N$的泛化性能好。泛化性能与学习算法捕获所有样本的共有知识模式的能力有关经验误差反映的是学习算法捕获训练数据蕴含的知识模式的能力。过小的训练误差可能导致所谓的过拟合 (Overfitting) 现象。泛化误差的偏差-方差分解我们知道随着模型复杂度的增加，学习算法的学习能力越来越强，训练误差越来越小。而泛化误差先是随着训练误差的缩小而减小，但随着模型复杂度的进一步增加泛化误差不降反升。泛化误差与模型复杂度的关系为什么这样？ 针对回归任务，进一步讨论泛化误差由哪几个部分构成. 我们设$h_\\mathrm{T}$是基于训练数据集$T$学习到的回归模型，对给定的$x$, 则学习算法的泛化误差为\\[E_T[(h_T(x)-c(x))^2].\\]其中，$c(x)$为真实标记。定义学习算法对数据$x$的期望输出为\\[\\bar{h}(x)=E_T[h_T(x)].\\]$x$的期望输出与真实标记c$(x)$之间的差别称为偏差，即\\[Bias(x)=E_T[(h_T(x)-c(x)]=\\bar{h}(x)-c(x).\\]  偏差描述了学习算法对$x$的预测期望相对于x的真实输出的偏离程度；  偏差反映了学习算法的学习能力，偏差越小，说明学习算法的学习能力越强.基于相同样本容量的不同训练数据集产生的预测方差为\\[Var(x)=E_T[(h_T(x)-\\bar{h}(x))^2].\\]  方差刻画学习算法使用相同容量的不同训练数据集所导致的学习性能的变动情况；  方差越小，说明学习算法对数据扰动的容忍能力越强.接下来，我们对泛化误差进行如下分解：\\[\\begin{aligned}E_T[(h_T(x)-c(x))^2] &amp;=E_T[h_T^2(x)-2h_T(x)c(x)+c^2(x)] \\\\&amp;=E_T[h_T^2(x)]-2E_T[h_T(x)]c(x)+c^2(x) \\\\&amp;= E_T[h_T^2(x)]-2\\bar{h}(x)c(x)+c^2(x)  \\\\&amp;=E_T[h_T^2(x)]-\\bar{h}^2(x)+\\bar{h}^2(x)-2\\bar{h}(x)c(x)+c^2(x) \\\\&amp;=E_T[(h_T(x)-\\bar{h}(x))^2]+(\\bar{h}(x)-c(x))^2 \\\\&amp;=-Var(x)+Bias^2(x). \\\\\\end{aligned}\\]这说明泛化误差可分解为方差和偏差的平方之和。由于噪声等的存在，使得$x$对应的观测$y$未必一定有\\[y=c(x).\\]我们不妨设\\[y=c(x)+\\varepsilon,\\]其中$\\varepsilon$为噪声，假定$\\varepsilon$服从分布$\\varepsilon$且其期望为0，即$E[\\varepsilon]=0$.那么可以得到：\\[E_{T\\sim D|T|,\\varepsilon\\sim\\mathcal{E}}[(h_T(x)-y)^2]=Var(x)+Bias^2(x)+E[\\varepsilon^2],\\]即泛化误差可以分解为方差、偏差和噪声三部分，其中噪声部分也称为不可约误差，反映了学习问题本身的难度.方差和偏差通常是相互抵触的:  当模型复杂度过于简单时，拟合能力比较弱，对数据扰动不敏感,此时偏差在泛化误差中起主导作用；  随着模型复杂度的提高，算法的拟合能力不断增强，偏差逐渐减少。但学习能力的提高也带来过拟合的风险，使得学习算法对数据扰动逐渐敏感，方差在泛化误差中的比重逐渐增大，最终导致泛化误差不断增大。正则化正则化一般具有如下形式:\\[\\min _{f \\in \\mathcal{F}} \\frac{1}{N} \\sum_{i=1}^N L\\left(y_i, f\\left(x_i\\right)\\right)+\\lambda \\Omega(f)\\]其中:  第 1 项是经验风险；  第 2 项是正则化项, $\\lambda \\geqslant 0$ 为正则化参数；正则化项可以取不同的形式。例如, 在回归问题中,  正则化项可以是参数向量的 $L_2$ 范数:\\[L(w)=\\frac{1}{N} \\sum_{i=1}^N\\left(f\\left(x_i ; w\\right)-y_i\\right)^2+\\frac{\\lambda}{2}\\|w\\|^2\\]这里, $|w|$ 表示参数向量 $w$ 的 $L_2$ 范数。正则化项也可以是参数向量的 $L_1$ 范数:\\[L(w)=\\frac{1}{N} \\sum_{i=1}^N\\left(f\\left(x_i ; w\\right)-y_i\\right)^2+\\lambda\\|w\\|_1\\]这里, $|w|_1$ 表示参数向量 $w$ 的 $L_1$ 范数。交叉验证如果给定的样本数据充足，进行模型选择的一种简单方法是随机地将数据集切分成三部分，分别为训练集（training set）、验证集（validation set）和测试集（test set）。训练集用来训练模型，验证集用于模型的选择，而测试集用于最终对学习方法的评估。但是，在许多实际应用中数据是不充足的。为了选择好的模型，可以采用交叉验证方法。交叉验证的基本想法是重复地使用数据，把给定的数据进行切分，将切分的数据集组合为训练集与测试集，在此基础上反复地进行训练、测试以及模型选择。1 简单交叉验证(留出法）  简单交叉验证方法是：      首先随机地将已给数据分为两部分，一部分作为训练集，另一部分作为测试集（例如，70％的数据为训练集，30％的数据为测试集）；    然后用训练集在各种条件下（例如，不同的参数个数）训练模型，从而得到不同的模型；    在测试集上评价各个模型的测试误差，选出测试误差最小的模型。  2 K 折交叉验证  应用最多的是 K 折交叉验证（K-fold cross validation），方法如下：      首先将数据集$D$随机划分为$k$个互不相交、大小相似的子集$D_1,D_2,\\cdots,D_k.$    然进行$k$次训练-测试过程，其中第$i$次训练-学习过程中以$D-D_i$为训练数据集学得模型$h_{D-D_i}$    以$D_i$为测试集对$h_{D-D_i}$进行测试评估，得到测试误差$\\hat{R}{test}(h{D-D_i}).$          以\\[\\frac1k\\sum_{i=1}^k\\hat{R}_{test}(h_{D-D_i})\\]      作为$h_D$在本次数据集随机划分下的测试评估结果。        将这一过程对可能的 K 种选择重复进行；最后选出 K 次评测中平均测试误差最小的模型。    比较耗时，每轮要训练K次。3 留一交叉验证  K 折交叉验证的特殊情形是 K = N，称为留一交叉验证（leave-one-out cross validation），往往在数据缺乏的情况下使用。这里，N 是给定数据集的容量。设数据集为$D$，其误差为：\\[\\hat{R}(f_D)=\\frac1{|D|}\\sum_{x\\in D}L(f_{D-\\{x\\}}(x),y).\\]      也就是说每次测试集只有一个数据    训练N次，数据量大时，计算开销大  自助法自助法是为了解决交叉验证法在模型选择阶段训练集规模比整个样本小的问题，采用有放回抽样对交叉验证法进行改造。其具体策略如下：                              先从 $D$ 中以有放回的抽样方式随机抽取 $          D          $ 个数据来构建训 练数据集 $T$,                      然后以 $D$ 中没有被抽中的数据构建测试数据集 $T^{\\prime}$.  自助法解决了交叉验证法中模型选择阶段和最终模型训练阶段的训练集规模差异问题.三、模型评估回归评价指标1 MSE回归问题最常用的评价指标是均方误差（Mean Square Error,MSE），其计算公式为：\\[MSE(y,\\hat y)=\\frac{1}{n}\\sum_{i=1}^{n}(y_i-\\hat y_i)^2\\]2 RMSE均方根误差（Root Mean Square Error,RMSE）：\\[RMSE(y,\\hat y)=\\sqrt{MSE(y,\\hat y)}=\\sqrt{\\frac{1}{n}\\sum_{i=1}^{n}(y_i-\\hat y_i)^2}\\]均方误差和均方根误差通常会放大离群值对模型评估结果的影响，一种克服这个问题的方法是用，平均绝对误差（Mean Absolute Error,MAE)3 MAE平均绝对误差（Mean Absolute Error,MAE):\\[MAE(y,\\hat y)=\\frac{1}{n}\\sum_{i=1}^{n}|y_i-\\hat y_i|\\]分类评价指标在二分类问题中，每一个样本可以划分为以下四种类型：  真正(True Positive , TP)：被模型预测为正的正样本。  真负(True Negative , TN)：被模型预测为负的负样本。  假正(False Positive , FP)：被模型预测为正的负样本。  假负(False Negative , FN)：被模型预测为负的正样本。根据样本的真实标签和预测标签，可以得到一个混淆矩阵：正负样本选择，没有明确规定，根据应用场景进行选择，在机器学习中，往往将少数样本定义为正样本，表示希望模型在训练时更加关注少数样本。1 正确率分类问题中最常见的指标是正确率(accuracy)，表示模型预测正确的样本比例，给定混淆矩阵时，正确率计算公式如下：\\[正确率=\\frac{TP+TN}{TP+TN+FP+FN}\\]在类别不均衡时，正确率不是一个很好的度量模型好坏的指标。  比如，在文本情绪分类数据集中，有80%为正向的内容，20%为负向的内容，假如这个模型将所有样本都判断为正向，则正确率有80%!但是显然这个模型并不好对于类别不均衡的数据集，精度和召回率是比正确率更好的性能评价指标2 精度精度(precision)指正确预测的正样本占所有预测为正样本的比例：\\[精度=\\frac{TP}{TP+FP}\\]3 召回率召回率（recall)又称为灵敏度或命中率，是指正样本中被正确预测的比例：\\[召回率=\\frac{TP}{TP+FN}\\]通常精度和召回率是负相关的，实际应用中高精度往往对应低召回率，反之亦然，我们需要根据实际问题场景来选择哪一个指标。4 F值单独考虑精度和召回率是片面的，需要综合考虑二者，在二分类问题中，可以定义一个综合考虑精度和召回率的指标，这个指标为F值：\\[F=\\frac{(1+\\beta^2)精度\\times 召回率}{\\beta^2\\times精度+召回率}\\]其中$\\beta$为正数，其作用是调节精度和召回率的权重，$\\beta$越大，召回率的权重越大，$\\beta$越小，精度的权重越大。当$\\beta=1$时，它是精度和召回率的调和平均数：参考资料  李航 et al. 统计学习方法. 清华大学出版社, 2019."
+  },
+  
+  {
+    "title": "Github网站搭建记录",
+    "url": "/posts/Githubpages_tutorial/",
+    "categories": "各种教程, 网站搭建",
+    "tags": "网站搭建, Github",
+    "date": "2024-07-24 00:00:00 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "前言23年7月份我第一次搭建了自己的个人博客，用的是WordPress+Argon模板，效果如下：放弃继续使用这个网站有两个原因：  由于当时买的是阿里的轻量级服务器，感觉每次访问速度都比较慢，并且服务器和域名续费居然比一开始买还高很多。  WordPress还有一个较大的问题是对md文件公式的支持不太好，我写的含有数学公式的md文件直接上传网站公式会显示有问题。于是放弃WordPress，...",
+    "content": "前言23年7月份我第一次搭建了自己的个人博客，用的是WordPress+Argon模板，效果如下：放弃继续使用这个网站有两个原因：  由于当时买的是阿里的轻量级服务器，感觉每次访问速度都比较慢，并且服务器和域名续费居然比一开始买还高很多。  WordPress还有一个较大的问题是对md文件公式的支持不太好，我写的含有数学公式的md文件直接上传网站公式会显示有问题。于是放弃WordPress，转而用Github Pages+Jekyll模板搭建。下面记录Github个人网站的搭建过程。一、介绍1 Github Pages是什么Github Pages官网： https://pages.github.com/GitHub Pages 是 GitHub 提供的一个免费的静态网站托管服务，它允许 GitHub 用户创建和托管自己的静态网站，这些网站可以通过特定的 GitHub 仓库进行管理和托管。GitHub Pages 的主要特点包括：  免费托管： GitHub Pages 提供免费的静态网站托管服务，允许用户将自己的网站内容托管在 GitHub 上，用户不需要支付额外的托管费用；  使用简单： 创建和管理 GitHub Pages 静态网站相对简单，特别是对于熟悉 GitHub 的用户来说，用户只需在自己的 GitHub 帐户中创建一个特定名称的仓库，将网站文件上传到该仓库即可；  自定义域名： 用户可以选择使用自定义域名来访问他们的 GitHub Pages 网站，这使得它们更适合个人网站、博客和项目页面；  支持多种静态网站生成工具： GitHub Pages 支持多种静态网站生成工具，如 Jekyll、Hugo、Gatsby 等，以及纯HTML、CSS 和 JavaScript 等前端技术，这使得用户能够根据自己的需求选择适合他们的工具；  自动构建： GitHub Pages 可以自动构建用户上传的网站内容，无需用户手动生成或编译网页，这使得发布网站变得更加简单。对于开发人员和技术爱好者来说， GitHub Pages 是一个很好的选择，用于托管个人网站、博客、文档、项目页面等静态内容，它提供了一个方便的方式来分享和展示自己的作品。2 静态网站生成工具GitHub Pages支持多种静态网站生成工具。以下是一些GitHub Pages支持的主要静态网站生成工具：  Jekyll（ https://jekyllrb.com）： Jekyll是GitHub Pages的默认静态网站生成工具，它使用Markdown文件和Liquid模板引擎来创建静态网站，Jekyll对于博客和文档站点非常流行。  Hugo（ https://gohugo.io/）： Hugo是另一个受欢迎的静态网站生成工具，它非常快速且易于使用，它使用Go语言编写，支持多种主题和内容组织方式。  Gatsby（ https://www.gatsbyjs.com/）： Gatsby是基于React的静态网站生成工具，它可以构建高性能、现代化的网站，Gatsby适用于博客、电子商务、应用程序文档等。  VuePress（ https://vuepress.vuejs.org/）： VuePress是Vue.js驱动的静态网站生成工具，专注于文档站点，它支持Markdown文件和Vue组件。  Hexo（ https://hexo.io/）： Hexo是一个快速、简单的博客框架，使用Markdown文件来生成静态博客，它是Node.js应用程序。这些静态网站生成工具各有利弊，我选择了Jekyll，下面简要介绍一下Jekyll及其使用。3 Jekyll简介Jekyll 是一个静态网站生成器，可以帮助我们使用简单的文本文件来创建静态网站。我们可以使用Markdown, HTML, CSS 以及 Liquid 模板语言来编写内容和设计网站布局。其特点如下：  Jekyll 将这些文件转换成静态网页,我们可以将这些生成的网页文件直接部署到网站托管服务上 (不一定放在GitHub 里，放在你自己的服务器上加上买个域名也可以)。  Jekyll 模板是其他人搭好的一个框架，在我们不需要操心其他样式的时候，我们只需要写Markdown 文件就可以生成想要的静态网页。这就像我们制作 PPT 时用的其他人写好的模板，然后我们只需要往里面填内容就行。当然如果我们想进行个性化修改，就得去扒一下模板的源码，看看如何修改 CSS 和 HTML 文件了。Jekyll 和 GitHub 的关系GitHub 支持使用 Jekyll 构建和托管网站。我们可以在 GitHub 上创建一个特定的仓库，将 Jekyll 项目代码“推送到该仓厍中。GitHub 将自动检测到这是一个 Jekyll 项目，并在后台使用 Jekyll 构建网站。我们可以通过 GitHub Pages 服务将该网站部署到一个专门的域名，也就是：username.github.io  总的来说就是：本地Jekyll项目+远程Github Pages.具体步骤就是：      在Github上创建一个username.github.io的仓库，用于托管网站；    在本地用Jekyll创建一个网站项目，上传到Github的仓库（当然可以用模板）；  4 Mac系统Jekyll的安装及使用安装要在 mac上安装 Jekyll，需要确保系统已安装 Ruby，通常mac预装了Ruby，我们不要使用系统的ruby，否则会有冲突，以下是安装 Jekyll 的步骤以及注释：# homebrew安装rubybrew install ruby# 通过以下命令，可以查看ruby的安装路径brew info ruby# 安装完成以后，修改.bash_profile文件,path路径加多/opt/homebrew/opt/ruby/bin，例如：export PATH=/opt/homebrew/opt/ruby/bin:$PATHvi ~/.zshrcsource ~/.zshrc# 验证ruby 版本，如果打印最新的版本，如：ruby 3.x.x表示安装最新的了ruby -v# 安装Jekyllgem install --user-install bundler jekyll# 安装成功之后，调整gem的运行环境(gem的bin目录一般在~/.gem/ruby/ruby版本/bin目录),export PATH路径增加“$HOME/.gem/ruby/ruby版本/bin”vi ~/.zshrcsource ~/.zshrc# 验证jekyll安装是否成功jekyll -vJekyll的简单使用首先，新建一个jekyll项目：jekyll new test-site运行过程如下：打开test-site文件夹，可以看到有以下一些文件：在终端进入对应项目目录，然后执行：bundle exec jekyll serve可以看到项目以及启动：在浏览器可以访问对应的地址(http://http://127.0.0.1:4000)即能在本地预览在Jekyll生成项目的目录下，有一个比较重要的文件：_config.yaml，这个config文件用于指定 Jekyll 站点的各种设置和选项，包含了许多可配置的选项，用于自定义网站的行为和外观，生成的文件内容如下:# Welcome to Jekyll!## This config file is meant for settings that affect your whole blog, values# which you are expected to set up once and rarely edit after that. If you find# yourself editing this file very often, consider using Jekyll's data files# feature for the data you need to update frequently.## For technical reasons, this file is *NOT* reloaded automatically when you use# 'bundle exec jekyll serve'. If you change this file, please restart the server process.## If you need help with YAML syntax, here are some quick references for you:# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml# https://learnxinyminutes.com/docs/yaml/## Site settings# These are used to personalize your new site. If you look in the HTML files,# you will see them accessed via Hongliang Lu, , and so on.# You can create any custom variable you would like, and they will be accessible# in the templates via .# 指定网站的标题title: Your awesome title# 指定联系人邮箱地址email: your-email@example.com# 网站的简要描述description: &gt;- # this means to ignore newlines until \"baseurl:\"  Write an awesome description for your new site here. You can edit this  line in _config.yml. It will appear in your document head meta (for  Google search results) and in your feed.xml site description.# 站点的子目录，如果你的网站托管在子目录下，需要指定  baseurl: \"\" # the subpath of your site, e.g. /blog# 网站的基本 URL 地址url: \"\" # the base hostname &amp; protocol for your site, e.g. http://example.com# 推特的用户名twitter_username: jekyllrb# github的用户名github_username:  jekyll# 指定要使用的 Jekyll 主题，如果不使用主题，则为空theme: minima# 列出要在站点构建过程中使用的插件plugins:  - jekyll-feed# Exclude from processing.# The following items will not be processed, by default.# Any item listed under the `exclude:` key here will be automatically added to# the internal \"default list\".## Excluded items can be processed by explicitly listing the directories or# their entries' file path in the `include:` list.## exclude:#   - .sass-cache/#   - .jekyll-cache/#   - gemfiles/#   - Gemfile#   - Gemfile.lock#   - node_modules/#   - vendor/bundle/#   - vendor/cache/#   - vendor/gems/#   - vendor/ruby/详细的参数，可以参考： https://jekyllrb.com/docs/configuration/.二、快速搭建第一个Github Pages网站在搭建前，默认已经注册成功了Github用户，现在开始根据官网教程一步一步的搭建。GithubPages的站点类型有几种：  个人或组织站点（User or Organization sites）：对于个人或组织站点，每个GitHub用户或组织只能有一个站点，它通常使用username.github.io或organizationname.github.io的格式，这是GitHub Pages的默认站点，通常用于个人网站、博客等。  项目站点（Project sites）：对于项目站点，每个GitHub仓库可以有一个关联的GitHub Pages站点，这意味着对于每个项目，您可以创建一个独立的GitHub Pages站点，无需限制。下面参考保姆级教程：从零构建GitHub Pages静态网站介绍如何搭建个人站点：Step1： 新建一个项目登录Github： https://github.com/，在顶部菜单栏点击“+”，然后“New repository”新建仓库，输入项目的相关信息，然后“Create repository”创建仓库：Step2： 创建一个界面文件首先创建一个文件：输入文件内容，点击提交：输入提交信息，点击提交:Step3： 访问大概等待几十秒，访问：https://用户名.github.io/，即可部署第一个属于自己的静态网站了，可以看到部署成功了。在Github有了 username.github.io仓库后，我们进需要把Jekyll创建的项目与这个仓库关联起来，每次更新将本地文件推送到Github上，Github Pages就能自动生成网页！三、静态网站模板——Chirpy为了使我们的网站比较好看，网上有很多模板可以用，可以从如下网址获取模板：  https://github.com/topics/jekyll-theme  https://jekyllthemes.org/  https://jekyllthemes.io/我选择了Github上的Chirpy模板，其网页Demo如下：在其主页上有详细的部署教程，此处不在赘述。1 个人定制一些个人定制可以参考：https://huanyushi.github.io/posts/chirpy-blog-customization/个人觉得原始网页的帖子显示不是很好看，于是修改一下使得帖子边框更明显，并且鼠标悬停在上面会有轻微移动效果。修改完的具体效果如下：只需要在 assets/css/jekyll-theme-chirpy.scss文件中加入以下代码即可：/* 覆盖主题的博客帖子边框样式 */.card-wrapper.card {  border: 3px solid #e3e5e7 !important; /* 使用更显眼的蓝色边框 */  padding: 2px; /* 适中的内边距 */  margin-bottom: 2px; /* 适中的下边距 */  border-radius: 8px; /* 适中的圆角 */  background-color: #f9f9f9; /* 淡灰色背景，增强边框的对比 */  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 轻微的阴影 */  transition: transform 0.3s ease, box-shadow 0.3s ease; /* 添加平滑过渡效果 */}.card-wrapper.card:hover {  transform: translateY(-5px); /* 鼠标悬停时轻微上移 */  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* 增加阴影效果 */}其他效果的更改，结合ChatGPT也很方便。四、WordPress迁移到GithubGithub个人网站搭建好后，我需要把WordPress上的文章迁移过来，Jekyll有一个jekyll-import包支持从各种其他网站迁移到Jekyll，超级方便！其中从WordPress迁移过来的说明文档链接为：https://import.jekyllrb.com/docs/wordpress/。我用的主要命令是：jekyll-import wordpress \\  --dbname wordpress \\ # 数据库名  --user lhl \\ #SQL用户名  --password 密码 \\  --host 服务器公网地址 \\  --port 3306 \\  --table_prefix wp_不过这个命令用的时候也有很多问题，利用ChatGPT可以一一解决，此处不再赘述。用这个命令成功的将原网站的文章全都迁移过来，至此，我的网站迁移计划大功告成！参考资料  保姆级教程：从零构建GitHub Pages静态网站  Chirpy  有哪些简洁明快的 Jekyll 模板？"
+  },
+  
+  {
+    "title": "基于Pytorch的猫狗图片分类【深度学习CNN】",
+    "url": "/posts/cat-vs-dog/",
+    "categories": "人工智能, 深度学习",
+    "tags": "",
+    "date": "2024-03-07 21:05:54 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "猫狗分类来源于Kaggle上的一个入门竞赛&mdash;&mdash;Dogs vs Cats。为了加深对CNN的理解，基于Pytorch复现了LeNet,AlexNet,ResNet等经典CNN模型，源代码放在GitHub上，地址传送点击此处。项目大纲如下：一、问题描述基于训练集数据，训练一个模型，利用训练好的模型预测未知图片中的动物是狗或者猫的概率。训练集有25,000张图片，测试集12...",
+    "content": "猫狗分类来源于Kaggle上的一个入门竞赛&mdash;&mdash;Dogs vs Cats。为了加深对CNN的理解，基于Pytorch复现了LeNet,AlexNet,ResNet等经典CNN模型，源代码放在GitHub上，地址传送点击此处。项目大纲如下：一、问题描述基于训练集数据，训练一个模型，利用训练好的模型预测未知图片中的动物是狗或者猫的概率。训练集有25,000张图片，测试集12,500 张图片。数据集下载地址：https://www.kaggle.com/datasets/shaunthesheep/microsoft-catsvsdogs-dataset二、数据集处理1 损坏图片清洗在 01_clean.py中，用多种方式来清洗损坏图片：判断开头是否有JFIF用imghdr库中的imghdr.what函数判断文件类型用Image.open(filename).verify()验证图片是否损坏结果如下：2 抽取图片形成数据集由于一万多张图片比较多，并且需要将Cat类和Dog类的图片合在一起并重新命名，方便获得每张图片的labels,所以可以从原图片文件夹复制任意给定数量图片到train的文件夹，并且重命名如下：程序为：02_data_processing.py.三、图片预处理图片预处理部分需要完成：对图片的裁剪：将大小不一的图片裁剪成神经网络所需的，我选择的是裁剪为(224x224)转化为张量归一化:三个方向归一化图片数据增强形成加载器：返回图片数据和对应的标签，利用Pytorch的Dataset包在 dataset.py中定义Mydata的类，继承pytorch的Dataset，定义如下三个方法：（1）init 方法读取图片路径，并拆分为数据集和验证集（以下代码仅体现结构，具体见源码）：class Mydata(data.Dataset):    \"\"\"定义自己的数据集\"\"\"    def __init__(self, root, Transforms=None, train=True):        \"\"\"进行数据集的划分\"\"\"        if train:            self.imgs = imgs[:int(0.8*imgs_num)]  #80%训练集        else:            self.imgs = imgs[int(0.8*imgs_num):]  #20%验证集        \"\"\"定义图片处理方式\"\"\"        if Transforms is None:            normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],                                             std=[0.229, 0.224, 0.225])            self.transforms = transforms.Compose(                    [ transforms.CenterCrop(224),                     transforms.Resize([224,224]),                    transforms.ToTensor(), normalize])（2）getitem方法对图片处理，返回数据和标签： def __getitem__(self, index):     return data, label（3）len方法返回数据集大小：    def __len__(self):        \"\"\"返回数据集中所有图片的个数\"\"\"          return len(self.imgs)（4）测试实例化数据加载器后，通过调用getitem方法，可以得到经过处理后的$3\\times244\\times244$的图片数据if __name__ == \"__main__\":    root = \"./data/train\"    train = Mydata(root, train=True)  #实例化加载器    img,label=train.__getitem__(5)    #获取index为5的图片    print(img.dtype)    print(img.size(),label)       print(len(train))    #数据集大小#输出torch.float32torch.Size([3, 224, 224]) 03200裁剪处理后图片如下所示，大小为224X224：四、模型模型都放在 models.py中，主要用了一些经典的CNN模型：LeNetResNetResNetSqueezeNet下面给出重点关注的LeNet模型和AlexNet模型：1 LeNetLeNet模型是一个早期用来识别手写数字图像的卷积神经网络，这个名字来源于LeNet论文的第一作者Yann LeCun。LeNet展示了通过梯度下降训练卷积神经网络可以达到手写数字识别在当时最先进的结果，LeNet模型结构图示如下所示：由上图知，LeNet分为卷积层块和全连接层块两个部分，在本项目中我对LeNet模型做了相应的调整：采用三个卷积层三个全连接层ReLu作为激活函数在卷积后正则化class LeNet(nn.Module):    def __init__(self):        super(LeNet, self).__init__()        self.relu = nn.ReLU()        self.sigmoid = nn.Sigmoid()        #三个卷积层        self.conv1 = nn.Sequential(            nn.Conv2d(                in_channels=3,                out_channels=16,                kernel_size=3,                stride=2,            ),            nn.BatchNorm2d(16),            nn.ReLU(),            nn.MaxPool2d(kernel_size=2),        )        self.conv2 = nn.Sequential(            nn.Conv2d(                in_channels=16,                out_channels=32,                kernel_size=3,                stride=2,            ),            nn.BatchNorm2d(32),            nn.ReLU(),            nn.MaxPool2d(kernel_size=2),        )        self.conv3 = nn.Sequential(            nn.Conv2d(                in_channels=32,                out_channels=64,                kernel_size=3,                stride=2,            ),            nn.BatchNorm2d(64),            nn.ReLU(),            nn.MaxPool2d(kernel_size=2),        )        #三个全连接层        self.fc1 = nn.Linear(3 * 3 * 64, 64)        self.fc2 = nn.Linear(64, 10)        self.out = nn.Linear(10, 2)   #分类类别为2，    def forward(self, x):        x = self.conv1(x)        x = self.conv2(x)        x = self.conv3(x)        x = x.view(x.shape[0], -1)        x = self.relu(self.fc1(x))        x = self.relu(self.fc2(x))        x = self.out(x)        return x调用torchsummary库，可以观察模型的结构、参数：2 AlexNet模型2012年，AlexNet横空出世，这个模型的名字来源于论文第一作者的姓名Alex Krizhevsky。AlexNet使用了8层卷积神经网络，由5个卷积层和3个池化Pooling 层 ，其中还有3个全连接层构成。AlexNet 跟 LeNet 结构类似，但使⽤了更多的卷积层和更⼤的参数空间来拟合⼤规模数据集 ImageNet，它是浅层神经⽹络和深度神经⽹络的分界线。特点：在每个卷积后面添加了Relu激活函数，解决了Sigmoid的梯度消失问题，使收敛更快。使用随机丢弃技术（dropout）选择性地忽略训练中的单个神经元，避免模型的过拟合（也使用数据增强防止过拟合）添加了归一化LRN（Local Response Normalization，局部响应归一化）层，使准确率更高。重叠最大池化（overlapping max pooling），即池化范围 z 与步长 s 存在关系 z>s 避免平均池化（average pooling）的平均效应五、训练训练在 main.py中，主要是对获取数据、训练、评估、模型的保存等功能的整合，能够实现以下功能：指定训练模型、epoches等基本参数是否选用预训练模型接着从上次的中断的地方继续训练保存最好的模型和最后一次训练的模型对模型的评估：Loss和Accuracy利用TensorBoard可视化1 开始训练在 main.py程序中，设置参数和模型（models.py中可以查看有哪些模型）:在vscode中点击运行或在命令行中输入：python3 main.py即可开始训练，开始训练后效果如下：若程序中断，设置resume参数为True，可以接着上次的模型继续训练，可以非常方便的任意训练多少次。2 tensorboard可视化在vscode中打开tensorboard，或者在命令行中进入当前项目文件夹下输入tensorboard --logdir runs即可打开训练中的可视化界面，可以很方便的观察模型的效果：如上图所示，可以非常方便的观察任意一个模型训练过程的效果！六、不同模型训练结果分析1 LeNet模型在用LeNet模型训练的过程中，通过调整数据集数量、是否用数据增强等不同的方法，来训练模型，并观察模型的训练效果。(1) 数据集数量=1000，无数据增强通过Tensorboard可视化可以观察到：验证集准确率(Accuracy)在上升，训练30epoch左右，达到最终63%左右的最好效果但验证集误差(Loss)也在上升，训练集误差一直下降训练集误差接近于0说明模型在训练集上效果好，验证集上效果不好，泛化能力差，可以推测出模型过拟合了。而这个原因也是比较好推测的，数据集比较少。(2) 数据集数量=4000，无数据增强同样过拟合了，但是最后的准确率能达到68%左右，说明数据集增加有效果(3)数据集数量=4000，数据增强这次数据集数量同上一个一样为4000，但采用了如下的数据增强：水平翻转，概率为p=0.5上下翻转，概率为p=0.1我们可以看到这次一开始验证集误差是下降的，说明一开始没有过拟合，但到15个epoch之后验证集误差开始上升了，说明已经开始过拟合了，但最后的准确率在71%左右，说明数据增强对扩大数据集有明显的效果。(4)数据集=4000，数据增强这次数据集数量为4000，但采用了如下的数据增强：水平翻转，概率为p=0.5上下翻转，概率为p=0.5亮度变化可以看到：35个epoch之前，验证集误差呈下降趋势，准确率也一直上升，最高能到75%。但在35个epoch之后，验证集误差开始上升，准确率也开始下降说明使用了更强的数据增强之后，模型效果更好了。(5)使用dropout函数抑制过拟合本次数据集和数据增强方式同（4），但是在模型的第一个全连接层加入dropout函数。dropout原理：训练过程中随机丢弃掉一些参数。在前向传播的时候，让某个神经元的激活值以一定的概率p（伯努利分布）停止工作，这样可以使模型泛化性更强。不使用dropout示意图                                                                     使用dropout示意图这样相当于每次训练的是一个比较\"瘦\"的模型，更不容易过拟合加入dropout函数后，训练85个epochs，可以观察到效果十分显著：验证集的误差总体呈现下降趋势，且最后没有反弹！训练集误差下降比较慢了！准确率一直上升，最后可以达到76%！说明模型最后没有过拟合，并且效果还不错。2 AlexNet模型将AlexNet模型参数打印出来：可以看到AlexNet相比LeNet，参数数目有数量级的上升，而在数据量比较小的情况下，很容易梯度消失，经过反复的调试：要在卷积层加入正则化优化器选择SGD学习率不能过大才能避免验证集的准确率一直在50%经过调试，较好的一次结果如下所示，最终准确率能达到78%3 squeezeNet模型在后面两个模型中，使用迁移学习的方法。迁移学习（Transfer Learning）是机器学习中的一个名词，是指一种学习对另一种学习> 的影响，或习得的经验对完成其它活动的影响。迁移广泛存在于各种知识、技能与社会规范> 的学习中，将某个领域或任务上学习到的知识或模式应用到不同但相关的领域或问题中。```使用squeezeNet预训练模型，在迭代16个epoch后，准确率可以达到93%4 resNet模型使用resnet50的预训练模型，训练25个epoch后，准确率可以达到98%！模型总结模型测试集预测准确率LeNet（无数据增强）68%LeNet（数据增强）75%LeNet（采用Dropout）76%Alexnet78%squeezeNet（迁移学习）93%resNet98%七、预测模型训练好后，可以打开 predict.py对新图片进行预测，给定用来预测的模型和预测的图片文件夹： model = LeNet1() # 模型结构    modelpath = \"./runs/LeNet1_1/LeNet1_best.pth\" # 训练好的模型路径    checkpoint = torch.load(modelpath)      model.load_state_dict(checkpoint)  # 加载模型参数    root = \"test_pics\"运行 predict.py\t会将预测的图片储存在 output文件夹中，如下图所示：会给出预测的类别和概率。"
+  },
+  
+  {
+    "title": "吉他学习&mdash;&mdash;安和桥间奏",
+    "url": "/posts/%E5%AE%89%E5%92%8C%E6%A1%A5%E9%97%B4%E5%A5%8F%E5%90%89%E4%BB%96%E7%89%88/",
+    "categories": "随笔",
+    "tags": "",
+    "date": "2024-03-07 20:50:14 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "吉他指弹练习的第一首曲子，选择了比较简单的安和桥间奏，教程看的b站的老默（传送门）。记录一下曲谱：断断续续练了挺久的，终于录了两个还算满意的（23年11月录制）。音频版：                                                              Your browser does not support the audio tag. Here ...",
+    "content": "吉他指弹练习的第一首曲子，选择了比较简单的安和桥间奏，教程看的b站的老默（传送门）。记录一下曲谱：断断续续练了挺久的，终于录了两个还算满意的（23年11月录制）。音频版：                                                              Your browser does not support the audio tag. Here is a    link to the audio file instead.          视频版：                                                              Your browser does not support the video tag. Here is a    link to the video file instead.    "
+  },
+  
+  {
+    "title": "常用工具网站合集",
+    "url": "/posts/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E5%90%88%E9%9B%86/",
+    "categories": "",
+    "tags": "",
+    "date": "2024-02-11 08:13:40 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "  网易云ncm格式转mp3  Argon-Theme 文档  鸠摩搜书（电子书索引网站）  文本对比在线工具  SimpleTex公式识别  虚拟电话-接收验证码  CS自学指南  IEEE论文模板  ChatGPT账号购买  Chirpy文档（网站模板说明文档)",
+    "content": "  网易云ncm格式转mp3  Argon-Theme 文档  鸠摩搜书（电子书索引网站）  文本对比在线工具  SimpleTex公式识别  虚拟电话-接收验证码  CS自学指南  IEEE论文模板  ChatGPT账号购买  Chirpy文档（网站模板说明文档)"
+  },
+  
+  {
+    "title": "欧洲建筑笔记（三）&mdash;&mdash;文艺复兴时期",
+    "url": "/posts/%E6%96%87%E8%89%BA%E5%A4%8D%E5%85%B4%E6%97%B6%E6%9C%9F/",
+    "categories": "读书笔记",
+    "tags": "",
+    "date": "2024-01-03 12:35:19 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "文艺复兴中世纪的这1000多年里，以基督教为代表的教权几乎控制了人们的全部精神生活。活在那个时代的人，一生最大的荣耀就是侍奉上帝。直到文艺复兴时期的诗人但丁发表了《神曲》，书里就强调了一个事儿：其实人活着不一定非得围着上帝转，好好享受世俗的生活，实现人自身的伟大价值，也是可以的。14世纪开始，意大利通过发达的商业首先出现了资本主义萌芽，紧接着蔓延到了整个西欧。直到16世纪，意大利都是文艺复兴...",
+    "content": "文艺复兴中世纪的这1000多年里，以基督教为代表的教权几乎控制了人们的全部精神生活。活在那个时代的人，一生最大的荣耀就是侍奉上帝。直到文艺复兴时期的诗人但丁发表了《神曲》，书里就强调了一个事儿：其实人活着不一定非得围着上帝转，好好享受世俗的生活，实现人自身的伟大价值，也是可以的。14世纪开始，意大利通过发达的商业首先出现了资本主义萌芽，紧接着蔓延到了整个西欧。直到16世纪，意大利都是文艺复兴的核心，最开始在佛罗伦萨，后期转向了罗马。本质上其实就是一场对古希腊和古罗马文化的&ldquo;寻根&rdquo;运动。思想核心是象征自由的人文主义，要对抗的是中世纪教会对人们思想的禁锢，并重新肯定人的伟大，强调人不能再匍匐于神之下。佛罗伦萨教堂如果说但丁的《神曲》标志着文艺复兴文学上的开始；达&middot;芬奇的《蒙娜丽莎》为文艺复兴的艺术家指明了方向；那么在建筑领域，打响文艺复兴第一枪的一定要属佛罗伦萨主教堂大穹顶的建成。如果说文艺复兴在思想上是继中世纪后，把人文主义重新带回欧洲；那么在建筑这个战场上，伯鲁乃列斯基则是坚定地复活了象征民主和自由的古罗马穹顶。经典之源：坦比哀多16世纪，文艺复兴进入了全盛时期，人文主义精神此时已经在意大利遍地开花，古希腊和古罗马的理性精神终于在消失了1000年后再次回到了欧洲这片土地。所以文艺复兴盛期的艺术家们最重要的工作之一就是学习和模仿古希腊和古罗马，当然建筑也是如此。古典的&ldquo;柱式&rdquo;被重新使用，建筑的风格逐渐发展为古典时期的注重比例、风格沉稳大气的纪念碑风格。一座座致敬古典的建筑也在罗马城如雨后春笋般被建造出来，这里面最伟大的作品之一就是伯拉孟特设计建造的坦比哀多。坦比哀多特点：外墙直径6.1米，平面是一个标准的圆形，集中式的平面分内外两层.外层是一圈古典多立克式的柱廊.内层由一圈墙体围合而成，为了减小墙体的重量，在上面切出了许多龛和方形窗.柱子上承一段鼓座，再往上则是一个完美的半圆形穹顶，加上上面的十字架，总高度也只有14.7米.整个建筑的各部分比例和谐，体现着古希腊文化中的几何之美。伯拉孟特之后用这种手法设计了梵蒂冈圣彼得大教堂，后来几百年里，欧洲很多重要的建筑都反复沿用了这种形式，例如英国的圣保罗大教堂、美国的国会大厦等。今天我们中国人对所谓的&ldquo;欧式建筑&rdquo;最直观的印象也基本是来自于它们，而这一切的源头都来自坦比哀多。圣彼得大教堂今天的罗马梵蒂冈中心，有一座全宇宙（在没有发现外星文明之前）最大、最奢华、最有故事的教堂&mdash;&mdash;圣彼得大教堂。伯拉孟特、米开朗基罗、拉斐尔、贝尼尼等一批文艺复兴顶级建筑师轮番上阵，再加上几个心怀鬼胎并乐于提意见的教皇，在文艺复兴的中后期上演了一场人文与专制、进步与落后、先进和反动的&mdash;&mdash;拆了建、建了拆、拆完再建，前后持续了足足120年的世纪拉锯战。参考书密小斯，《建筑也可以很好玩：欧洲篇，从古希腊到文艺复兴》，机械工业出版社，2020."
+  },
+  
+  {
+    "title": "CSDN学习笔记索引",
+    "url": "/posts/CSDN%E7%AC%94%E8%AE%B0%E7%B4%A2%E5%BC%95/",
+    "categories": "机器学习",
+    "tags": "",
+    "date": "2023-12-26 20:27:59 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "WordPress不兼容本地上传的md文件，目前也没找到很好的解决办法。故而公式较多的笔记用CSDN来存，顺便分享，这里列一下索引.一、机器学习第一章 机器学习简介第二章 感知机第三章 支持向量机第四章 朴素贝叶斯分类器第五章 Logistic回归第六章 线性回归和岭回归第七章 多层感知机与反向传播第八章 主成分分析【PCA降维】第九章 隐马尔可夫模型第十章 奇异值分解第十一章 熵、交叉熵、...",
+    "content": "WordPress不兼容本地上传的md文件，目前也没找到很好的解决办法。故而公式较多的笔记用CSDN来存，顺便分享，这里列一下索引.一、机器学习第一章 机器学习简介第二章 感知机第三章 支持向量机第四章 朴素贝叶斯分类器第五章 Logistic回归第六章 线性回归和岭回归第七章 多层感知机与反向传播第八章 主成分分析【PCA降维】第九章 隐马尔可夫模型第十章 奇异值分解第十一章 熵、交叉熵、KL散度第十二章 什么是范数【向量范数、矩阵范数】第十三章 蒙特卡洛采样二、强化学习第一章 强化学习基本概念第二章 贝尔曼方程第三章 贝尔曼最优方程第四章 值迭代和策略迭代第五章 强化学习实例：GridWorld第六章 蒙特卡洛方法三、凸优化次梯度算法介绍牛顿法和拟牛顿法介绍近似点梯度法【Proximal Gradient Method】线性规划单纯形法"
+  },
+  
+  {
+    "title": "MAC系统zsh及环境变量简介",
+    "url": "/posts/MAC%E7%B3%BB%E7%BB%9Fzsh%E5%8F%8A%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B/",
+    "categories": "各种教程, Mac",
+    "tags": "Mac",
+    "date": "2023-12-17 16:27:19 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "Zsh简介从 macOS Catalina 开始，Mac 使用 zsh 作为默认登录 Shell 和交互式 Shell。默认情况下，Mac 使用 zsh 或 bash 作为登录 Shell 和交互式 Shell 的命令行解释器：从 macOS Catalina 开始，zsh (Z shell) 是所有新建用户帐户的默认 Shell。bash 是 macOS Mojave 及更早版本中的默认 ...",
+    "content": "Zsh简介从 macOS Catalina 开始，Mac 使用 zsh 作为默认登录 Shell 和交互式 Shell。默认情况下，Mac 使用 zsh 或 bash 作为登录 Shell 和交互式 Shell 的命令行解释器：从 macOS Catalina 开始，zsh (Z shell) 是所有新建用户帐户的默认 Shell。bash 是 macOS Mojave 及更早版本中的默认 Shell。zsh 与 Bourne Shell (sh) 高度兼容，并且与 bash 基本兼容（存在一些差别）。要进一步了解 zsh 及其全面的命令行完成系统，请在&ldquo;终端&rdquo;中输入：man zsh总的来说，Zsh是一个UNIX命令解释器(shell)，可以作为交互式登录shell和shell脚本命令处理器使用。在标准shell中，zsh最类似于ksh，但包含许多增强功能。Zsh具有命令行编辑、内置拼写纠正、可编程命令补全、shell功能(具有自动加载)、历史机制和许多其他功能。环境变量shell 使用环境变量储存信息，例如当前用户的名称、主机名称以及任何命令的默认路径。在 shell 上下文中执行的所有命令都会继承环境变量，部分命令取决于环境变量。你可以创建环境变量并用来控制命令行为，无需修改命令本身。例如，你可以使用环境变量来让命令将调试信息打印到控制台。若要查看所有环境变量，请输入：env当你从 shell 启动 App 时，该 App 将继承大部分的 shell 环境，包括导出的环境变量。这种形式的继承有利于进行 App 的动态配置。例如，你的 App 可以检查某个环境变量的存在（或值），并据此更改其行为。设置环境变量export 命令用于设置或显示环境变量，格式为：export[变量名]=[变量值]，例如：export PATH=\"/opt/homebrew/bin:$PATH\"上面PATH设置时，路径后面加了\":$PATH\"，表示之前PATH的值 ，不加入使得PATH为设置的值（唯一）。注：冒号表示并列。shell的环境变量一般都保存在配置文件中，下面简要介绍一下各种shell的配置文件。配置文件shell的配置文件有两种，一种是全局配置文件，一种是用户配置文件。推荐设置用户个人自己的环境变量，尽量不破坏Mac系统全局变量。比如若是zsh，那么推荐改动~/.zshrc文件。(注意下面有些文件可能没有，每个电脑不一样)全局配置文件配置文件描述/etc/profile系统级别/etc/paths系统级别/etc/bashrc基于bash/etc/zprofile基于zsh/etc/zshrc基于zsh用户配置文件配置文件描述~/bash_profile基于bash（shell）~/etc/zprofile基于zsh（shell）~/.zshrc基于（shell）以zsh为例，介绍一下不同文件的作用。.zprofile 和 .zshrc 这两个文件都是与 Zsh shell 相关的配置文件，它们的作用略有不同：.zprofile:zprofile 文件是在登录时（login shell）被执行的。当您从登录管理器或远程登录时，Zsh 将被作为登录 shell 启动，并且会执行 .zprofile 中的命令。这通常用于设置一些与登录会话相关的环境变量和执行初始化命令。.zshrc:.zshrc 文件则是在交互式 non-login shell 启动时被执行的。也就是说，当您在一个已经登录的终端中启动新的 Zsh shell 时，会执行 .zshrc 中的命令。这个文件通常包含了定制提示符、别名、自定义函数等与交互式使用相关的设置。因此，zprofile 主要用于设置登录会话相关的环境变量和执行初始化命令，而 .zshrc 则主要用于定制交互式 shell 的行为和环境设置。参考资料在Mac上的&ldquo;终端&rdquo;使用环境变量Mac系统 - Mac的环境变量"
+  },
+  
+  {
+    "title": "《苏轼传》读书笔记(5)&mdash;&mdash;流星坠落",
+    "url": "/posts/%E8%8B%8F%E8%BD%BC%E4%BC%A05/",
+    "categories": "读书笔记",
+    "tags": "苏轼传",
+    "date": "2023-12-16 16:34:04 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "元祐九年(1094)四月十二日,哲宗下诏改年号为&ldquo;绍圣&rdquo;,意思是继承神宗朝的施政方针。随后不久,吕大防、范纯仁罢职,章惇、安焘等出任宰执大臣。这批重回朝堂的变法派大臣,完全抛弃了王安石新法的革新精神和具体政策,把打击&ldquo;元祐党人&rdquo;作为主要目标,尽情发泄他们多年来被排挤在外、投闲置散的怨愤。于是,罢黜、贬谪的诏令一道接着一道,短短一两月间,便将当时...",
+    "content": "元祐九年(1094)四月十二日,哲宗下诏改年号为&ldquo;绍圣&rdquo;,意思是继承神宗朝的施政方针。随后不久,吕大防、范纯仁罢职,章惇、安焘等出任宰执大臣。这批重回朝堂的变法派大臣,完全抛弃了王安石新法的革新精神和具体政策,把打击&ldquo;元祐党人&rdquo;作为主要目标,尽情发泄他们多年来被排挤在外、投闲置散的怨愤。于是,罢黜、贬谪的诏令一道接着一道,短短一两月间,便将当时在朝任职的高级官员三十多人全部贬到岭南等边远地区。在这场政治风暴中，苏轼兄弟首当其冲。 一、苏轼于绍圣元年十月二日抵达惠州贬所经过号称&ldquo;万里&rdquo;的长途跋涉，绍圣元年十月二日苏轼终于抵达贬所惠州。岭南，当时属于蛮貊之邦，瘴疠之地，气候与北方迥然相异，生活条件又极为艰苦，一向被视为险恶军州，只有&ldquo;罪大恶极&rdquo;的官员才会被放逐到这里。&ldquo;岭南万户&rdquo;本为酒名，古时常以&ldquo;春&rdquo;名酒。这里&ldquo;岭南万户皆春色&rdquo;一句则包含着多重意思，既借指惠州家家户户都有美酒，也比喻这里的民众热情好客，使人有如沐春风之感，同时也是写实，正如诗人此后写到的：   《食荔枝二首其一》罗浮山下四时春，卢橘黄梅次第新。日啖荔枝三百颗，不辞长作岭南人。二、姬妾&mdash;&mdash;朝云​    朝云自熙宁七年苏轼通判杭州时进入苏家，年仅十二岁。二十三年间一直跟随苏轼辗转南北，无论升陟贬黜，始终忠诚不贰。姬妾原是荣华富贵的点缀，没有义务与主人患难与共，所以苏轼元祐在朝时也曾蓄养过数名歌儿舞女，招待客人宴饮时出以侑酒，戏称为&ldquo;搽粉虞候（为长官办事的吏卒）&rdquo;（宋&middot;吕居仁《轩渠录》），近几年来都相继辞去，只有朝云随他南迁，成为他悲惨的流放生涯中忠实的伴侣。​    苏轼另有一首《蝶恋花》词虽然不是写给朝云的，但传说也和朝云有关：  花褪残红青杏小，燕子飞时，绿水人家绕。枝上柳绵吹又少，天涯何处无芳草。墙里秋千墙外道，墙外行人，墙里佳人笑。笑渐不闻声渐悄，多情却被无情恼。三、终老之际五月中旬，趁着苏迈、苏迨回常州搬家这段时间，苏轼前往金山，程德孺、钱济明都已如约而至。三人一起游金山寺、登妙高台，开怀畅谈。金山寺里，藏有李公麟所画苏轼像一幅，这次金山之行，苏轼自题一首六言绝句：  《自题金山画像》心似已灰之木，身如不系之舟。问汝平生功业，黄州惠州儋州。参考书籍王水照，崔铭.《苏轼传》，人名文学出版社，2019."
+  },
+  
+  {
+    "title": "《苏轼传》读书笔记(4)&mdash;&mdash;柳暗花明又一村",
+    "url": "/posts/%E8%8B%8F%E8%BD%BC%E4%BC%A04/",
+    "categories": "读书笔记",
+    "tags": "苏轼传",
+    "date": "2023-12-16 16:27:09 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "元丰七年（1084），苏轼收到朝廷诏令，从黄州调往汝州。离开黄州期间，苏轼路过庐山，写下了一首哲理诗：   题西林寺壁横看成林侧成峰，远近高低各不同。不识庐山真面目，只缘身在此山中。 作为文学史上的名篇,《题西林壁》和《石钟山记》,既是苏轼游山感受的记录,也是他这一时期人生思考的一个方面的艺术总结。黄州五年佛、道修持的意义,儒、佛、道三教合一在苏轼思想上的体现,不仅仅在于获得乐观旷达的心境,...",
+    "content": "元丰七年（1084），苏轼收到朝廷诏令，从黄州调往汝州。离开黄州期间，苏轼路过庐山，写下了一首哲理诗：   题西林寺壁横看成林侧成峰，远近高低各不同。不识庐山真面目，只缘身在此山中。 作为文学史上的名篇,《题西林壁》和《石钟山记》,既是苏轼游山感受的记录,也是他这一时期人生思考的一个方面的艺术总结。黄州五年佛、道修持的意义,儒、佛、道三教合一在苏轼思想上的体现,不仅仅在于获得乐观旷达的心境,同时也在于认识论上的刷新。如何认识人生,如何认识客观世界,在思维方式和思想角度上,儒、佛、道三家各有侧重。儒家重视现实、实践和实用;道家强调客观事物与主观价值判断的相对性与流变性;佛家主张整体地而不是分别地、局部地把握宇宙人生的实相。平步青云苏轼于元丰八年(1085)十二月上旬末抵达汴京就任礼部郎中,不到十天,又接到新的任命,迁为起居舍人。起居舍人与礼部郎中虽然同为从六品官职,但其重要性却不可同日而语。元丰改制以后,门下省的起居郎、中书省的起居舍人,同领修起居注的职责,记录皇帝言行,合称为左右史。皇帝御正殿时,起居郎与起居舍人侍立两侧,皇帝外出时,则为左右随从。凡礼乐法度的因革损益,文武百官的任免赏罚，群臣进对，临幸引见，朝廷所有大小事务，起居舍人皆参与其中。元祐元年(1086)正月的一天，瑞雪纷飞，皇城内外一派银装素裹。苏轼以七品服入侍延和殿，皇帝有旨，诏赐绯（红）袍银鱼袋。在封建时代，官服的颜色最鲜明地表现官员品位的高低。北宋前期，官分九品（每品分正、从，四品以下正、从之中又各分上、下，共三十阶），服色分紫、红、绿、青四种。元丰改制以后，官分九品（每品分正、从，共十八阶），服色分三种：七品以下官员穿绿袍五、六品官员穿绯袍四品以上官员穿紫袍。鱼袋则是系在官服腰带后面的一个重要佩件，是高级文官的标志。太宗雍熙年间规定：服紫者佩金鱼袋，服绯者佩银鱼袋。苏轼现已是从六品官员，所以依例着绯戴银。从苏轼于元丰八年（1085）到元佑八年（1093）这9年间，苏轼在官场十分得意，先后在中央和地方为官。他一生最高的官位是进端明殿学士、翰林侍读学士、礼部尚书。但这期间，名作就要少很多了。参考书籍王水照，崔铭.《苏轼传》，人名文学出版社，2019."
+  },
+  
+  {
+    "title": "《苏轼传》读书笔记(3)&mdash;&mdash;人生挫折，乌台诗案",
+    "url": "/posts/%E8%8B%8F%E8%BD%BC%E4%BC%A03/",
+    "categories": "读书笔记",
+    "tags": "苏轼传",
+    "date": "2023-12-16 15:55:42 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "一、乌台诗案元丰二年（1079年，42岁）四月，苏轼调任湖州知州。上任后，他即给神宗写了一封《湖州谢表》，这本是例行公事，但苏轼是诗人，笔端常带感情，即使官样文章，也忘不了加上点个人色彩，说自己&ldquo;愚不适时，难以追陪新进&rdquo;，&ldquo;老不生事或能牧养小民&rdquo;，这些话被新党利用，说他&ldquo;愚弄朝廷，妄自尊大&rdquo;、&ldquo;衔怨怀怒&rd...",
+    "content": "一、乌台诗案元丰二年（1079年，42岁）四月，苏轼调任湖州知州。上任后，他即给神宗写了一封《湖州谢表》，这本是例行公事，但苏轼是诗人，笔端常带感情，即使官样文章，也忘不了加上点个人色彩，说自己&ldquo;愚不适时，难以追陪新进&rdquo;，&ldquo;老不生事或能牧养小民&rdquo;，这些话被新党利用，说他&ldquo;愚弄朝廷，妄自尊大&rdquo;、&ldquo;衔怨怀怒&rdquo;、&ldquo;指斥乘舆&rdquo;、&ldquo;包藏祸心&rdquo;，又讽刺政府，莽撞无礼，对皇帝不忠，如此大罪可谓死有余辜。他们从苏轼的大量诗作中挑出他们认为隐含讥讽之意的句子，一时间，朝廷内一片倒苏之声。七月二十八日，上任才三个月的苏轼被御史台的吏卒逮捕，解往京师，受牵连者达数十人。这就是北宋著名的&ldquo;乌台诗案&rdquo;（乌台，即御史台，因其上植柏树，终年栖息乌鸦，故称乌台）。经多方面救援，终于免去牢狱之灾，但被贬为黄州团练副使。二、黄州期间元丰六年，王巩遇赦北归，绕道来到黄州与苏轼相见。随行有一位侍妾名叫柔奴，眉目媚丽，歌喉美妙，从小生长在京师。王巩南迁，家属都留在南都岳父张方平家，柔奴毅然陪同前往。三年来与王巩同甘共苦，无怨无悔。来到黄州后，苏轼问她：&ldquo;广南风土应是不好？&rdquo;柔奴回答道：&ldquo;此心安处便是吾乡。&rdquo;苏轼十分敬佩这位品格超凡的女子，感激她在生活上、精神上给予密友王巩的照顾与慰藉，热情地写词歌颂。  《定风波》常羡人间琢玉郎，天应乞与点酥娘。自作清歌传皓齿，风起，雪飞炎海变清凉。万里归来颜愈少，微笑。笑时犹带岭梅香。试问岭南应不好，却道：此心安处是吾乡。与友人出行途中遇雨，友人纷纷躲避，而他则以豁然的态度面对：  《定风波》莫听穿林打叶声，何妨吟啸且徐行。竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。料峭春风吹酒醒，微冷，山头斜照却相迎。回首向来萧瑟处，归去，也无风雨也无晴。但是，毕竟年龄大了，淋雨后生病了(哈哈哈)。苏轼病好后，两人同游位于蕲水县（今湖北浠水县）城外约两里处的清泉寺。寺中泉水据说是东晋著名书法家王羲之洗笔之处，泉水清冽，下临兰溪，溪水西流，两旁长满兰草，景色十分幽美。苏轼触景生情，信口而歌：  《浣溪沙》山下兰芽短浸溪，松间沙路净无泥，萧萧暮雨子规啼。谁道人生无再少，门前流水尚能西，休将白发唱黄鸡。在黄州期间，苏轼常常与友人到赤壁游玩。一天，苏轼又来到赤壁，站在矶头，望着滚滚东去的长江，想起自己一生坎坷，少年壮志皆已付之东流，不禁俯仰古今，浮想联翩，写下著名的词作：  《念奴娇&middot;赤壁怀古》大江东去，浪淘尽，千古风流人物。故垒西边，人道是，三国周郎赤壁。乱石穿空，惊涛拍岸，卷起千堆雪。江山如画，一时多少豪杰！遥想公瑾当年，小乔初嫁了，雄姿英发。羽扇纶巾，谈笑间、樯橹灰飞烟灭。故国神游，多情应笑我，早生华发。人生如梦，一樽还酹江月。同时，还写下了前后《赤壁赋》。总的来说，苏轼在被贬期间写出了大量流传后世的佳作，当然我觉得有可能就是因为官小，没什么公务上的事，于是只能写作了。参考书籍王水照，崔铭.《苏轼传》，人名文学出版社，2019."
+  },
+  
+  {
+    "title": "《苏轼传》读书笔记(2)&mdash;&mdash;反对变法，四方为官",
+    "url": "/posts/%E8%8B%8F%E8%BD%BC%E4%BC%A02/",
+    "categories": "读书笔记",
+    "tags": "苏轼传",
+    "date": "2023-12-16 15:48:47 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "熙宁二年（1069年），苏轼兄弟丁父忧还朝，但此时王安石开始了历时18年的熙宁变法 。一、王安石的变法宋仁宗时期，宋朝已经出现了国库空虚、内忧外患等一系列危机。朝廷持续加大对民间财富汲取的力度，是使得社会矛盾日益尖锐。到宋神宗时期，国家形式已经十分严峻，改革迫在眉睫。在宋神宗的支持下，王安石受命执政，开启了历时18年的变法运动。熙宁二年，在神宗皇帝最大限度的信任和支持下，王安石勇往直前，颁布...",
+    "content": "熙宁二年（1069年），苏轼兄弟丁父忧还朝，但此时王安石开始了历时18年的熙宁变法 。一、王安石的变法宋仁宗时期，宋朝已经出现了国库空虚、内忧外患等一系列危机。朝廷持续加大对民间财富汲取的力度，是使得社会矛盾日益尖锐。到宋神宗时期，国家形式已经十分严峻，改革迫在眉睫。在宋神宗的支持下，王安石受命执政，开启了历时18年的变法运动。熙宁二年，在神宗皇帝最大限度的信任和支持下，王安石勇往直前，颁布和实行了一系列新法，大刀阔斧地推进改革。新法的具体内容可分为理财和整军两类：属于理财的有青苗法、免役法、农田水利法等；属于整军的有减兵并营、将兵法、保马法等。理财是为了&ldquo;富国&rdquo;，整军是为了&ldquo;强兵&rdquo;，最终目的是为了缓和社会危机，巩固赵宋王朝的统治。 二、苏轼支持反变法派由于苏轼站在反对变法的一方，多次上书劝谏未果，反遭小人弹劾，于是他便主动请求外调离京。 面对苏轼的申请，神宗心里很不是滋味，这么一个难得的人才，神宗多么希望能够重用啊！可惜他不能与变法派协调一致，从大局考虑，也只得放他外任。神宗无可奈何地摇一摇头，批示道：&ldquo;与知州差遣。&rdquo;但是中书省（宰相办公室）认为不可，改为通判颍州。事实上，苏轼自签判凤翔至今，已经十年，按资历逐年升迁，足够担任知州的资格了，中书省强行压抑，神宗也不好明确驳回，所以又再改批道：&ldquo;通判杭州。&rdquo;派给他一个东南第一大都会的美差，这一差遣，按规定也与&ldquo;知州&rdquo;同一级别。三、杭州通判熙宁四年四月间（1071年），朝命即已下达，苏轼便开始离京赴任杭州。任期：1072-1074 。1 期间拜访恩师欧阳修到杭州后，苏轼拜访量欧阳修。致仕后的欧阳修日子过得非常悠闲，他说，我有琴一张，棋一局，酒一壶，书一万卷，金石遗文一千卷，以我一个老翁，老于此五物之间，因而自号&ldquo;六一居士&rdquo;。2 杭州期间佳作在杭州期间，杭州的湖光山色不仅让苏轼身心得到了极大的放松，也让他留下了不少诗词佳作。  《腊日游孤山访惠勤惠思》天欲雪，云满湖，楼台明灭山有无。水清石出鱼可数，林深无人鸟相呼。  《饮湖上初晴后雨》水光潋滟晴方好，山色空蒙雨亦奇。欲把西湖比西子，淡妆浓抹总相宜。3 杭州期间开始作词词，在我国文化史上是一种非常独特、非常微妙的文学样式。它的萌芽可以追溯到隋唐，那时民族的大融合带来中土音乐的新发展，词便是配合这种新兴音乐的演唱而产生的。所以，从根本上来说，词就是歌词，最初只在民间流行，以后才逐步为文人所注意，成为歌筵酒席上娱宾遣兴的重要文学形式。第一部文人词集《花间集》宋仁宗时代，一些富有创新意识的文学家占风气之先，开始新的有益的尝试：范仲淹《苏幕遮》（&ldquo;碧云天&rdquo;）、《渔家傲》（&ldquo;塞下秋来风景异&rdquo;）表现边塞生活，慷慨悲凉；欧阳修《临江仙》（&ldquo;记得金銮同唱第&rdquo;）、《朝中措》（&ldquo;平山栏槛倚晴空&rdquo;）融入仕途感慨，跌宕疏放；张先将词的题材日常化；柳永以词抒写文士悲秋的失意情怀。题材的扩大影响了风格、意境和表现手法，但是，传统的因袭毕竟很重，整体而言，词依然跳不出&ldquo;艳科&rdquo;的樊篱，需要一支雄才大力的如椽巨笔，来打开一个全新的世界，苏轼便在这个关键的时刻登上了词坛。杭州三年是苏轼填词生涯的习作阶段，他的兴趣正在与日俱增。从现存苏轼词集来看，熙宁五年才写了两首，熙宁六年写了五首（一说七首），而熙宁七年竟写了四十二首，成为他一生作词最多的一年。这时，他基本上循着传统的路子虚心地接受前辈词家的经验和影响，以他高度的悟性深刻地理解和把握词体特质，因而打下了非常踏实的基础。这种&ldquo;本色当行&rdquo;的眼光和手法，成为他以后革新词体、开拓新境必不可少的重要素质。四、密州时期杭州三年任期满，苏轼被任命为密州知州，任期：1075-10771 密州期间佳作熙宁八年七月(1075），宋朝与辽国在疆界问题上发生冲突，宋朝失地七百里，心中涌起效力疆场、以身许国的豪迈激情。他倚马而立，写下《江城子&middot;密州出猎》一词：  《江城子&middot;密州出猎》老夫聊发少年狂。左牵黄，右擎苍。锦帽貂裘，千骑卷平岗。为报倾城随太守，亲射虎，看孙郎。酒酣胸胆尚开张。鬓微霜，又何妨。持节云中，何日遣冯唐？会挽雕弓如满月，西北望，射天狼。次年中秋，皓月当空，银光泻地，苏轼想起分别七年的苏辙，如今在济南不能前来团聚，不禁心潮起伏，写下另一首名作：  《水调歌头》丙辰中秋，欢饮达旦，大醉作此篇，兼怀子由明月几时有？把酒问青天。不知天上宫阙，今夕是何年？我欲乘风归去，又恐琼楼玉宇，高处不胜寒。起舞弄清影，何似在人间？转朱阁，低绮户，照无眠。不应有恨，何事长向别时圆？人有悲欢离合，月有阴晴圆缺，此事古难全。但愿人长久，千里共婵娟。五、 徐州期间密州任期满，转调徐州，任期：1077-1079在徐州治水，取得显著效果，元丰二年三月（1079），朝廷令下，苏轼移任湖州知州。临行的这一天，他骑马出城，发现城门内外、官道两旁，已经密密麻麻挤满了从四面八方赶来的父老乡亲。歌管凄咽，哀声一片。人们争相拦马拉缰，苦苦挽留这位贤良的知州不要离去。此情此景，令苏轼深深感动，其实，他又何尝不同样充满依恋。三年来，他与徐州人民一起斗洪水、筑长堤、建黄楼、抗春旱，又以自己的才气学问，结识了不少诗人名士，这片土地洒下了他的汗水，烙下了他的足迹，也留下了他的欢歌！他喜欢这里的山水，喜欢这里淳朴的民风，多么希望能买田泗水，终老此地啊！然而，朝命难违，他不得不起程了。参考书籍王水照，崔铭.《苏轼传》，人名文学出版社，2019."
+  },
+  
+  {
+    "title": "《苏轼传》读书笔记(1)——进士及第，名震京师",
+    "url": "/posts/%E8%8B%8F%E8%BD%BC%E4%BC%A01/",
+    "categories": "读书笔记",
+    "tags": "苏轼传",
+    "date": "2023-12-16 15:35:37 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "一、年少得志嘉祐元年（1056）三月的一天，风和日丽，湛蓝的天空上舒卷着朵朵柔软的白云。这一天，对于二十一岁的苏轼，实在是极不平常的日子，他将和弟弟苏辙一道告别母亲，告别亲友乡邻，跟随父亲第一次远离家乡，前往京城汴梁（今河南开封），参加进士考试。送别的亲友热切地说着祝福的话，年轻的苏轼满脸荡漾着笑意，他的心却早已飞向了远方。八月，苏轼与苏辙在开封府考进士，首战告捷，双双获选。按照宋朝的规定，...",
+    "content": "一、年少得志嘉祐元年（1056）三月的一天，风和日丽，湛蓝的天空上舒卷着朵朵柔软的白云。这一天，对于二十一岁的苏轼，实在是极不平常的日子，他将和弟弟苏辙一道告别母亲，告别亲友乡邻，跟随父亲第一次远离家乡，前往京城汴梁（今河南开封），参加进士考试。送别的亲友热切地说着祝福的话，年轻的苏轼满脸荡漾着笑意，他的心却早已飞向了远方。八月，苏轼与苏辙在开封府考进士，首战告捷，双双获选。按照宋朝的规定，府试以后还要经过中央礼部（负责礼仪、祭享、贡举等事）的考试和皇帝的殿试。所以，兄弟俩不敢松懈，继续闭门攻读。接着礼部复试，苏轼以&ldquo;春秋对义&rdquo;（即回答《春秋》一书的问题）获得第一。三月，礼部考试合格者参加殿试，仁宗皇帝亲临崇政殿主持策问，苏轼兄弟同科进士及第。这时苏轼二十二岁，苏辙十九岁。气宇轩昂、才华出众的苏氏兄弟，给仁宗皇帝留下了十分深刻的印象。殿试结束，仁宗兴冲冲地回到后宫对皇后说：&ldquo;我今天为子孙得了两个太平宰相！&rdquo;二、飞鸿雪泥​    嘉祐六年十一月，天寒地冻，北风凛冽，苏轼怀着致君尧舜的火热理想，带着妻子王弗和尚在襁褓之中的长子苏迈踏上征途。苏辙骑马跟随数十里，为哥哥送行。送君千里，终须一别，来到郑州西门之外，苏辙必须返回了，兄弟俩就此分手。​    与弟弟分手之后，苏轼继续前行，来到渑池。五年前，兄弟俩在父亲的带领下赴京应考，就曾路过这里。那一次，他们在县中寺庙内借宿，得到庙中主持奉闲老和尚的热情接待，临别之时，兄弟二人还在奉闲和尚居室的墙壁上题诗留念。如今旧地重游，想不到竟已物是人非，奉闲已经去世，骨灰安葬在庭院中，上面筑起了一座新塔（和尚死后不用墓葬，常是火化后筑塔来埋葬骨灰），墙皮早已剥落，往日的题诗也没有了。此情此景，令苏轼悚然感悟到人生的变幻无常：  《和子由渑池怀旧》人生到处知何似？应似飞鸿踏雪泥。泥上偶然留指爪，鸿飞那复计东西。老僧已死成新塔，坏壁无由见旧题。往日崎岖还记否，路长人困蹇驴嘶。参考书籍王水照，崔铭.《苏轼传》，人名文学出版社，2019."
+  },
+  
+  {
+    "title": "MAC系统CVX 安装",
+    "url": "/posts/MAC%E7%B3%BB%E7%BB%9FCVX-%E5%AE%89%E8%A3%85/",
+    "categories": "各种教程, Mac",
+    "tags": "凸优化",
+    "date": "2023-11-23 15:44:00 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "CVX是一个用于凸优化建模的MATLAB工具箱。CVX是基于Matlab的建模语言，允许使用标准Matlab表达式语法来描述凸优化问题的约束和目标函数。下载CVX首先在CVX官网下载对应版本的CVX，下载任意一个压缩包都行，下载后解压。申请licence如果需要调用Mosek和Gurobi这两个商用软件，需要申请一个cvx professional licese，填写学校的邮箱申请即可，然后...",
+    "content": "CVX是一个用于凸优化建模的MATLAB工具箱。CVX是基于Matlab的建模语言，允许使用标准Matlab表达式语法来描述凸优化问题的约束和目标函数。下载CVX首先在CVX官网下载对应版本的CVX，下载任意一个压缩包都行，下载后解压。申请licence如果需要调用Mosek和Gurobi这两个商用软件，需要申请一个cvx professional licese，填写学校的邮箱申请即可，然后将邮箱里cvx_license.dat文件移动到cvx文件夹里。激活打开MATLAB，在命令行中输入如下两条命令（需要换成自己的路径，进入cvx文件夹） cd /path/to/cvxcvx_setup cvx_license.dat如果最后看到如下界面，则说明安装成功！"
+  },
+  
+  {
+    "title": "欧洲建筑笔记(二）：中世纪",
+    "url": "/posts/%E4%B8%AD%E4%B8%96%E7%BA%AA/",
+    "categories": "读书笔记",
+    "tags": "",
+    "date": "2023-11-07 15:43:28 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "公元330年，古罗马皇帝君士坦丁大帝迁都君士坦丁堡，史称东罗马&mdash;&mdash;拜占庭帝国，直到1000年后被更东边的土耳其人灭亡；西罗马被遗弃，于公元476年被北面的日耳曼人征服，西罗马灭亡，从此西欧进入了漫长的中世纪。基督教在古罗马之后，西欧东欧各自的1000年里，基督教无疑是主角。古罗马晚期，基督教已经慢慢开始在西方传播，并拥有广大的教徒，形成了一定的规模。可是在&ldquo...",
+    "content": "公元330年，古罗马皇帝君士坦丁大帝迁都君士坦丁堡，史称东罗马&mdash;&mdash;拜占庭帝国，直到1000年后被更东边的土耳其人灭亡；西罗马被遗弃，于公元476年被北面的日耳曼人征服，西罗马灭亡，从此西欧进入了漫长的中世纪。基督教在古罗马之后，西欧东欧各自的1000年里，基督教无疑是主角。古罗马晚期，基督教已经慢慢开始在西方传播，并拥有广大的教徒，形成了一定的规模。可是在&ldquo;谁是古罗马正统继承人&rdquo;这个问题上，东西两边都认为自己才&ldquo;根正苗红&rdquo;，于是基督教也被两边的人按照各自的政治需要改造成了不同版本。1054年，两边教廷彻底撕破脸，互相开除了对方教籍，基督教正式分裂为西边的&ldquo;罗马公教&rdquo;和东边的&ldquo;正教&rdquo;。中世纪时期，基督教几乎是人们的唯一信仰，所以这个时期最有代表性的建筑就是各地的大教堂。由于东西两派之间教义的对立，导致了教堂的使用功能不同，这使得这些教堂在形式和空间组织中产生了非常大的区别。西欧：西欧天主教选择了古罗马后期出现的一种名叫&ldquo;巴西利卡&rdquo;的建筑形式并逐渐完善，最终发展成了直冲云端的哥特式大教堂；东欧：东欧选择了古罗马的穹顶形式发展了下去，也受到了小亚细亚和东方风格的影响，最终发展成了以集中式穹顶大空间为代表的东正教教堂，如圣索菲亚大教堂那样的东欧巨无霸。巴西利卡与拉丁十字巴西利卡是古罗马的一种公共建筑形式，其特点是平面呈长方形，外侧有一圈柱廊主入口在长边，短边有耳室，多采用条形拱券作屋顶。拉丁十字：由于信教人数越来越多，规模越来越大，在建造巴西利卡时，就在祭坛前面增加了一条与原来呈90&deg;的横向空间，但后加的这段建筑会比原先纵向的空间短，这种&ldquo;三短一长&rdquo;的平面形制就叫作拉丁十字。在举行仪式的时候，教徒们要面向东方的耶路撒冷，所以西欧教堂的圣坛全在建筑的东侧，入口都在西侧，这样信徒们在进行活动的时候才会面向东方。哥特式大教堂中世纪最能代表西欧教堂建筑类型的就是散布于西欧各地的哥特式大教堂，就是古罗马晚期拉丁十字式巴西利卡的升级版（更高，更大，结构很复杂，艺术更丰富），主要流行于中世纪后几百年里的西欧。哥特式教堂的特点：骨架券双圆心尖券飞扶壁彩色玻璃窗骨架券骨架券能够很好地减轻结构的重量，使得建筑能建得更高；第一个使用骨架券的教堂是1144年建成的法国的圣丹尼教堂，这座教堂也被看作是哥特式教堂的鼻祖，建成后立即成为当时的&ldquo;西欧第一网红&rdquo;。双圆心尖券罗马时期的拱券大多是以完整的半圆形为主，而哥特式建筑中则将拱券做成两个圆心，从侧面看就好像把一个半圆形拱券沿中线劈成两段，&ldquo;挤扁&rdquo;后再接在一起。这样做的好处是从力学的角度，侧推力变得更小了，于是墙可以做得更薄，进而使得建筑的屋顶可以伸得更高。飞扶壁飞扶壁的作用主要是抵住中央拱券的侧推力，并把自身结构充分暴露出来的一种结构，教堂外部大量飞扶壁的重复使用，就产生了一种向上韵律感。玫瑰窗哥特式教堂的另一大特色：美丽的彩色玻璃窗。置身于哥特式教堂的内部，往往会有一种神秘感，这种神秘感的主要来源就是昏暗的室内和与之形成强烈反差的彩色玻璃窗。哥特式教堂的窗子，最早都是由五颜六色的小块玻璃拼凑成一幅幅圣经故事画。作用：采光，传教通过大教堂的实践，哥特式建筑最终发展成了可以媲美古希腊和古罗马柱式的成熟建筑体系，上述这些特点也成了哥特式建筑区别于历史上其他建筑风格最明显的标志。穹顶、帆拱和希腊十字古罗马帝国分裂后，君士坦丁大帝将国家首都迁到了东边，并将这里更名为君士坦丁堡，后人称之为&ldquo;拜占庭帝国&rdquo;。在帝国存在的这1000年里，拜占庭的皇帝都以罗马皇帝自居，因为论正统性，君士坦丁确实是名正言顺的罗马皇帝。基督教此时已经分裂为东西两个教派，东边的这个叫作东正教。东欧拜占庭的教堂和西欧的哥特式教堂到底有哪些区别呢？在古罗马的晚期，东罗马也流行巴西利卡，由于教义的不同，东正教的宗教仪式主要强调信徒们亲密和谐，所以教堂内的核心往往是一个穹顶之下的大空间，所有人都置身于这个穹顶之下。由于这种差别，导致东正教的教堂把穹顶造得越来越大，越来越高，穹顶成了整个教堂的精神中心和视觉中心。巨大的穹顶由下面的多个独立支柱支承，这种形制就叫&ldquo;集中式&rdquo;。穹顶的结构也成了集中式的决定性因素。&ldquo;集中式&rdquo;的特点为 帆拱、鼓座、穹顶、希腊十字。帆拱：帆拱使得可以把圆形的穹顶建在方形的平面上，并且能够将各种结构优雅地结合在一起而不显得突兀；鼓座：鼓座可以使得穹顶更高更大；希腊十字：区别于西欧哥特式教堂的&ldquo;拉丁十字&rdquo;，这个四条边长度都相等的十字被称为&ldquo;希腊十字&rdquo;。从平面上看，&ldquo;希腊十字&rdquo;正好是一个十字形，其交点就是大穹顶。意大利威尼斯有一座希腊十字教堂的代表&mdash;&mdash;圣马可大教堂，它有1000年的历史了，是天主教最富丽和最重要的教堂之一。参考书密小斯，《建筑也可以很好玩：欧洲篇，从古希腊到文艺复兴》，机械工业出版社，2020."
+  },
+  
+  {
+    "title": "欧洲建筑笔记(一)：古希腊和古罗马时期",
+    "url": "/posts/%E5%8F%A4%E5%B8%8C%E8%85%8A%E5%92%8C%E5%8F%A4%E7%BD%97%E9%A9%AC%E6%97%B6%E6%9C%9F/",
+    "categories": "读书笔记",
+    "tags": "",
+    "date": "2023-11-05 14:07:14 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "古希腊时期古希腊建筑留给后世最宝贵的遗产&mdash;&mdash;柱式：多立克柱式最简约在西西里、意大利和伯罗奔尼撒半岛流行代表男性爱奥尼柱式有精致的雕塑在小亚细亚、爱琴海等地区流行代表女性柯林斯柱式更加精美柱式能突出建筑的外观气质，当时的建筑主要材料是大理石，便于雕刻，但缺点是不能做出很大的跨度。所以只能通过在建筑周围布置一圈的柱廊来增加层次感和变化。庙宇的四周往往用柱廊围起来，形成了丰...",
+    "content": "古希腊时期古希腊建筑留给后世最宝贵的遗产&mdash;&mdash;柱式：多立克柱式最简约在西西里、意大利和伯罗奔尼撒半岛流行代表男性爱奥尼柱式有精致的雕塑在小亚细亚、爱琴海等地区流行代表女性柯林斯柱式更加精美柱式能突出建筑的外观气质，当时的建筑主要材料是大理石，便于雕刻，但缺点是不能做出很大的跨度。所以只能通过在建筑周围布置一圈的柱廊来增加层次感和变化。庙宇的四周往往用柱廊围起来，形成了丰富的光影变化，也消除了大片的石墙面所带来的封闭单一的感觉。古罗马时期如果说古希腊留给后人最宝贵的建筑遗产是柱式；那么古罗马留给后人的就是伟大的拱券技术。以砖和天然混凝土（火山灰）为主要材料的拱券技术，是古罗马建筑最大的特色和成就。拱券技术的发展直接使得建筑可以被建造得更加高大，形成比古希腊建筑更高大的内部空间。用拱券结构的发展，使得内部空间发达，可以满足各部分复杂的要求，适应性很强，并且发展了建筑内部空间艺术，也完善了柱式和拱券相结合的艺术手法。筒形拱十字拱将十字拱组合起来，我们称之为：古罗马的拱顶体系。正是这套体系为古罗马各种各样大型的公共建筑的建造提供了可能。穹顶穹顶营造了一种圆形空间，周围封闭，连续集中式，形成了大的有集中感的内部空间。建筑特点为集中性,统一性。古罗马穹顶最具代表性的建筑就是万神庙。万神庙是一座结合了古希腊风格与古罗马风格的典型案例，无论是外部或内部，结构和艺术的处理手法都非常成功。每当时光变化，阳光会从屋顶的圆洞照进室内，在墙上形成神秘朦胧的光影。《建筑十书》对后世影响最深，同时也是古罗马流传下来唯一的一本建筑学经典著作就是《建筑十书》。它的作者是古罗马的军事工程师维特鲁威。十分详尽地总结了古希腊和古罗马的建筑经验，奠定了欧洲古代建筑的基本体系；这本书最伟大之处是总结出建筑的三大终极定律：坚固、美观、实用。这三大定律一直到今天，都是衡量建筑优劣的最基本标准。参考资料密小斯，《建筑也可以很好玩：欧洲篇，从古希腊到文艺复兴》，机械工业出版社，2020."
+  },
+  
+  {
+    "title": "交叉验证法和自助法",
+    "url": "/posts/%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%E6%B3%95%E5%92%8C%E8%87%AA%E5%8A%A9%E6%B3%95/",
+    "categories": "机器学习",
+    "tags": "模型选择, ML",
+    "date": "2023-09-17 13:59:28 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "一、交叉验证如果给定的样本数据充足，进行模型选择的一种简单方法是随机地将数据集切分成三部分，分别为训练集（training set）、验证集（validation set）和测试集（test set）。训练集用来训练模型，验证集用于模型的选择，而测试集用于最终对学习方法的评估。但是，在许多实际应用中数据是不充足的。为了选择好的模型，可以采用交叉验证方法。交叉验证的基本想法是重复地使用数据，把...",
+    "content": "一、交叉验证如果给定的样本数据充足，进行模型选择的一种简单方法是随机地将数据集切分成三部分，分别为训练集（training set）、验证集（validation set）和测试集（test set）。训练集用来训练模型，验证集用于模型的选择，而测试集用于最终对学习方法的评估。但是，在许多实际应用中数据是不充足的。为了选择好的模型，可以采用交叉验证方法。交叉验证的基本想法是重复地使用数据，把给定的数据进行切分，将切分的数据集组合为训练集与测试集，在此基础上反复地进行训练、测试以及模型选择。1 简单交叉验证简单交叉验证方法是：将数据集 $D$ 随机划分为两个互不相交的子集，其中一个作为训练 集 $T$ ，另一个作为测试集 $T^{\\prime}$ :采用无放回的随机采样方式从数据集 $D$ 中抽出一部分数据 （设定的比例或个数）作为 $T$ ，剩下的数据作为 $T^{\\prime}$.要在采样中尽可能保持数据分布的一致性, 可采用分层无放回随机采样方式.通常重复多次随机划分过程, 以每次划分对应的测试评估的均值作为评估结果.图1：不放回随机采样2 K 折交叉验证应用最多的是 K 折交叉验证（K-fold cross validation），方法如下：首先随机地将已给数据切分为 K个互不相交、大小相同的子集；然后利用 K &minus; 1 个子集的数据训练模型，利用余下的子集测试模型；将这一过程对可能的 K 种选择重复进行；最后选出 K 次评测中平均测试误差最小的模型。比较耗时，每轮要训练K次3 留一交叉验证K 折交叉验证的特殊情形是 K = N，称为留一交叉验证（leave-one-out cross validation），往往在数据缺乏的情况下使用。这里，N 是给定数据集的容量。也就是说每次测试集只留一个数据训练N次，数据量大时，计算开销大二、自助法自助法是为了解决交叉验证法在模型选择阶段训练集规模比整个样本小的问题，采用有放回抽样对交叉验证法进行改造。其具体策略如下：先从 $D$ 中以有放回的抽样方式随机抽取 $|D|$ 个数据来构建训 练数据集 $T$,然后以 $D$ 中没有被抽中的数据构建测试数据集 $T^{\\prime}$.自助法解决了交叉验证法中模型选择阶段和最终模型训练阶段的训练集规模差异问题.但训练集 $T$ 和原始数据集 $D$ 中数据的分布未必相一致, 因此对一些对数据分布敏感的模型选择并不话用.三、异同从上面对交叉验证法和自助法的介绍，我们可以发现它们之间的异同。相同都是机器学习中用于模型选择的方法；模型选择阶段每次训练都只会用到样本的一部分.不同交叉验证法模型选择阶段和最终模型训练阶段的训练集规模不同；自助法模型选择阶段和最终模型训练阶段的训练集规模相同；自助法训练集数据分布可能域原始数据集数据分布不同.Reference《机器学习方法》，李航，2022."
+  },
+  
+  {
+    "title": "2023暑假记忆",
+    "url": "/posts/2023%E6%9A%91%E5%81%87%E8%AE%B0%E5%BF%86/",
+    "categories": "随笔",
+    "tags": "",
+    "date": "2023-08-31 21:39:20 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "恍惚间，就到8月底了，回到北京发现七月份40℃的盛夏正在远去……这个属于毕业季的夏天自然是独特的，有很多值得回忆的事和人。大学四年匆匆而过，回望整个四年，可以说是懵懂-迷茫-挣扎-渐渐释然的过程，最后一个学期可能是整个四年最快乐的时光吧。3、4、5月份为毕业论文忙碌，选题是自己很感兴趣的，也蛮想做点东西的，但是回想起来自己投入还是不够。从22年11月份就确定选题，结果基本是来年2月才开始认真...",
+    "content": "恍惚间，就到8月底了，回到北京发现七月份40℃的盛夏正在远去……这个属于毕业季的夏天自然是独特的，有很多值得回忆的事和人。大学四年匆匆而过，回望整个四年，可以说是懵懂-迷茫-挣扎-渐渐释然的过程，最后一个学期可能是整个四年最快乐的时光吧。3、4、5月份为毕业论文忙碌，选题是自己很感兴趣的，也蛮想做点东西的，但是回想起来自己投入还是不够。从22年11月份就确定选题，结果基本是来年2月才开始认真搞。期间感触比较深的时，数理基础真的很重要，大一二没打好的基础，慢慢补吧。在写毕业论文期间，虽然偶尔挺痛苦，但也有很多快乐时光！3月去了深圳，去到改革开放的代表城市，感慨还是很多的，特别是当我去逛莲花山公园时，看到里面的退休老人多姿多彩的生活时，就想起我外公外婆七十多了，还得面朝黄土背朝天的过日子，心里就很不是滋味。40年前，深圳也只是个小渔村，而40年后同辈的人生活水平差距如此之大，我想肯定不能说是我老家爷爷奶奶辈的人不如深圳的同龄人努力。与时代发展滚滚向前的巨轮相比，个人是如此的渺小。5月初，与学校轮滑社成员一起，去参加北戴河的轮滑节，非常愉快的旅程，让我感受到了小时候在家门前公路上滑轮滑的快乐！五月中旬，去了天津的音乐节，听到了陈楚生、许嵩的现场，小学就听他们的歌，长大看到他们现场演出的感觉还是挺奇妙的。5月底，去看了五月天，感受了演唱会的氛围和音响效果，室友说缓了好几天，才从兴奋中冷静下来。6月，毕业论文定稿、答辩、拍毕业照、期末考试，繁忙之中离毕业越来越近。月底去了一趟广州，给我最深的感觉是：骑电动车戴头盔的比例好高，猛然想起北京都不怎么管骑电动车是不是戴头盔。7月初，正式毕业，想起收空宿舍时，只剩我和另一位室友了，虽然后面几年都还在这所学校，但我们一起去把钥匙归还给宿管准备分别时，两个人都有点眼泪汪汪的感觉，最后拥抱了一下离开这栋住了四年的楼。7月中旬，姐姐婚礼，见证姐姐人生中又一重要的时刻，作为家属代表发言，略微有点紧张，还得多锻炼在人多的场合发言的能力。7月中下旬，回北京的路上去了西安，不愧是千年古都，历史氛围感很浓，缺点是暑假每个景点人都巨多。7月下旬，因为换了导师，去了长沙，开始进入一个新的领域学习。这次选择了这个方向，真的不要再游移不定了，先沉下心来好好搞。本科期间就因为不知道自己想干嘛，一直没能沉下心来好好学习，换方向的成本太高了，希望自己引以为戒。8月，主要做了两件事：学优化，空闲时间搭了个人网站。来长沙一个月，发现湖南是吃得是真辣，茶颜也是真的挺好喝，一定会再来的！过去已去，未来已来。这次又要作为新生进入这个园子了，希望自己比四年前多一些坚定、少一点迷茫，多一些用功、少一点颓废，多一些开朗、少一点自闭。Anyway，作为成年人了，自己要对自己的未来负责！  不乱于心，不困于情，不畏将来，不念过往，如此安好！"
+  },
+  
+  {
+    "title": "Mac传文件到云服务器",
+    "url": "/posts/mac%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/",
+    "categories": "各种教程, Mac",
+    "tags": "Mac, scp, 文件传输",
+    "date": "2023-08-25 15:58:04 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "macSCP是一款基于Mac OS X的远程文件传输软件，可以方便快捷地将本地文件上传到远程服务器或者从服务器下载到本地。scp 是指 secure copy（安全拷贝）的缩写，它使用 SSH 协议进行数据传输，提供了加密的、安全的文件传输方式。scp 命令的语法如下：scp [选项] 源文件 目标位置其中，源文件 表示要传输的文件或目录的路径，目标位置 表示传输后的目标路径。目标位置可以是...",
+    "content": "macSCP是一款基于Mac OS X的远程文件传输软件，可以方便快捷地将本地文件上传到远程服务器或者从服务器下载到本地。scp 是指 secure copy（安全拷贝）的缩写，它使用 SSH 协议进行数据传输，提供了加密的、安全的文件传输方式。scp 命令的语法如下：scp [选项] 源文件 目标位置其中，源文件 表示要传输的文件或目录的路径，目标位置 表示传输后的目标路径。目标位置可以是本地或远程服务器上的路径，具体取决于你在命令中使用的地址格式。例如，要将本地的  /Users/example.txt 文件上传到远程服务器上的 /home/username/files 目录中，可以在命令行中执行以下命令：scp /Users/example.txt username@server_ip:/home/username/files这个命令使用 scp 将本地 /Users/example.txt 文件复制到位于远程服务器上的/home/username/files 目录中。如果要从远端服务器下载文件到本地，将上述命令中地址交换就行。请注意，scp 命令需要在远程服务器上具有相应的权限，并且需要提供正确的用户名、服务器 IP 地址（或主机名）以及目标路径。根据你的环境设置，可能需要使用 SSH 密钥进行身份验证，而不是密码。"
+  },
+  
+  {
+    "title": "Markdown介绍",
+    "url": "/posts/markdown%E4%BB%8B%E7%BB%8D/",
+    "categories": "各种教程",
+    "tags": "markdown",
+    "date": "2023-08-24 18:11:55 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "一、简介Markdown是一种轻量级标记语言，创始人为约翰&middot;格鲁伯；它允许人们使用易读易写的纯文本格式编写文档，Markdown 文件可以轻松地转换为其他格式，如 HTML、PDF、Word 等。这样，在需要发布到不同平台或媒体时，你只需将 Markdown 文件转换为目标格式即可。由于Markdown的轻量化、易读易写特性，并且对于图片，图表、数学式都有支持，目前许多网站都广...",
+    "content": "一、简介Markdown是一种轻量级标记语言，创始人为约翰&middot;格鲁伯；它允许人们使用易读易写的纯文本格式编写文档，Markdown 文件可以轻松地转换为其他格式，如 HTML、PDF、Word 等。这样，在需要发布到不同平台或媒体时，你只需将 Markdown 文件转换为目标格式即可。由于Markdown的轻量化、易读易写特性，并且对于图片，图表、数学式都有支持，目前许多网站都广泛使用Markdown来撰写帮助文档或是用于论坛上发表消息，如Github、CSDN、简书等。二、语法1 常用语法markdown中比较常用的几个符号：#：标题*：粗体、斜体>：引用块$：latex数学公式`：代码2 一些示例代码示例：#include using namespace std;int main(){  cout 公式示例：如果过集合 $C$ 中任意两点的直线都在 $C$ 内, 则称 $C$ 为仿射集, 即$x_1, x_2 \\in C \\Longrightarrow \\theta x_1+(1-\\theta) x_2 \\in C, \\forall \\theta \\in \\mathbb{R} .$其他示例：Markdown还支持HTML格式下划线三、编辑器Typora：轻量级、有模板自定义Vscode四、参考资料Typora 的 Markdown 语法Typora各种主题Typora如何上传图片到图床"
+  },
+  
+  {
+    "title": "二阶锥规划简介",
+    "url": "/posts/%E4%BA%8C%E9%98%B6%E9%94%A5%E8%A7%84%E5%88%92%E7%AE%80%E4%BB%8B/",
+    "categories": "凸优化",
+    "tags": "凸优化",
+    "date": "2023-08-24 14:28:28 +0800",
+    
+
+
+
+
+
+    
+    "snippet": "​（1）锥定义1：对于一个向量空间 $R^n$​ 与它的一个子集 C ，如果子集 C中的任意一点 x 与任意正数&theta;​ 的乘积仍然属于子集 C ， 则称 C为一个锥（cone）定义2:对于集合，，C&sube;$R^n$，&forall;x&isin;C，&theta;&ge;0​，有 &theta;x&isin;C​，则x构成的集合称为锥由上述定义我们知道锥不一定是连续的，可以是...",
+    "content": "​（1）锥定义1：对于一个向量空间 $R^n$​ 与它的一个子集 C ，如果子集 C中的任意一点 x 与任意正数&theta;​ 的乘积仍然属于子集 C ， 则称 C为一个锥（cone）定义2:对于集合，，C&sube;$R^n$，&forall;x&isin;C，&theta;&ge;0​，有 &theta;x&isin;C​，则x构成的集合称为锥由上述定义我们知道锥不一定是连续的，可以是数条过原点的射线的集合，并且锥总是无界的。（2) 凸锥定义：对于$ C&sube;R^n,&forall;x_1,x_2,&hellip;,x_n&isin;C,&theta;_i&ge;0​$, 若 $&theta;_1x_1+&theta;_2x_2+&hellip;+&theta;_nx_n&isin;C​$, 则 C​ 是凸锥。简单来说：一个集合既是凸集又是锥，则是凸锥。闭凸锥如果一个集合既是凸集，又是闭集，同时又是锥，则称为闭凸锥（3）标准锥n​ 维标准锥(norm cone)的定义:$C={(x,t)∣∥x∥&le;t,x&isin;R^{n&minus;1},t&isin;R}$Note:标准锥是一个凸锥, 变量包括 x​ 和 t​;用定义可以证明是一个锥；利用范数的三角不等式可以证明是一个凸集.下图是一个3维的标准锥：（4）二阶锥二阶锥规划是一种非常特殊的非线性优化，有非常高效的求解算法。所谓二阶是指锥里面用到的是二范数，下面的表达式表示一个二阶锥(second order cone)：$∥Ax+b∥^2&le;c^Tx+d$二阶锥相当于对标准锥 $C={(x,t)∣∥x∥^2&le;t,t&ge;0}​$ 做了仿射变换 :$∥Ax+b∥^2&le;c^Tx+d&hArr;(Ax+b,c^Tx+d)&isin;C$根据仿射变换的性质, 变换后凹凸性不变, 因此二阶锥仍然是一个凸锥。 注: 对向量 x​ 仿射变换（相当于将一个图形平移、变大变小、旋转或倒影）: y=Ax+b​, 其 中 Ax​ 表示对 x​ 变大变小或旋转倒影, 而 +b​ 表示平移。（5）二阶锥规划二阶锥规划 (SOCP，Second Order Cone Programming )的一般形式如下：$\\begin{array}{ll}\\operatorname{minimize} &amp; f^T x \\\\ \\text { subject to } &amp; ∥A_i x+b_i∥_2 \\leqslant c_i^T x+d_i, \\quad i=1, \\cdots, m \\\\ &amp; F x=g,\\end{array}$其中,$ x&isin;R^n​$ 为优化变量, $A_i&isin;R^{ni&times;n}​ 且 F&isin;R^{p&times;n​} $。我们称这种形式中的约束：$∥A_ix+b_i∥2⩽c_i^Tx+d_i ，=1,⋯,m$为二阶锥约束。Note:目标函数为仿射函数；当Ai​ = 0, 问题退化为LP;当ci​ = 0, 问题退化为QCQP(二次约束二次规划)；问题形式比LP与QCQP更常规；一些其他优化问题也可以转化为 SOCP，例如二次规划可以转化为SOCP。参考资料锥、二阶锥《最优化：建模、算法与理论》.刘浩洋、户将、李勇锋、文再文编著《凸优化》.Boyd"
+  }
+  
+]
+

@@ -1,0 +1,3999 @@
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- `site.alt_lang` can specify a language different from the UI -->
+<html lang="en" >
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta
+    name="viewport"
+    content="width=device-width, user-scalable=no initial-scale=1, shrink-to-fit=no, viewport-fit=cover"
+  ><!-- Setup Open Graph image -->
+
+  
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<meta name="generator" content="Jekyll v4.3.3" />
+<meta property="og:title" content="基于Pytorch的猫狗图片分类【深度学习CNN】" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="猫狗分类来源于Kaggle上的一个入门竞赛&mdash;&mdash;Dogs vs Cats。为了加深对CNN的理解，基于Pytorch复现了LeNet,AlexNet,ResNet等经典CNN模型，源代码放在GitHub上，地址传送点击此处。项目大纲如下： 一、问题描述 基于训练集数据，训练一个模型，利用训练好的模型预测未知图片中的动物是狗或者猫的概率。 训练集有25,000张图片，测试集12,500 张图片。 数据集下载地址：https://www.kaggle.com/datasets/shaunthesheep/microsoft-catsvsdogs-dataset 二、数据集处理 1 损坏图片清洗 在 01_clean.py中，用多种方式来清洗损坏图片： 判断开头是否有JFIF 用imghdr库中的imghdr.what函数判断文件类型 用Image.open(filename).verify()验证图片是否损坏 结果如下： 2 抽取图片形成数据集 由于一万多张图片比较多，并且需要将Cat类和Dog类的图片合在一起并重新命名，方便获得每张图片的labels,所以可以从原图片文件夹复制任意给定数量图片到train的文件夹，并且重命名如下： 程序为：02_data_processing.py. 三、图片预处理 图片预处理部分需要完成： 对图片的裁剪：将大小不一的图片裁剪成神经网络所需的，我选择的是裁剪为(224x224) 转化为张量 归一化:三个方向归一化 图片数据增强 形成加载器：返回图片数据和对应的标签，利用Pytorch的Dataset包 在 dataset.py中定义Mydata的类，继承pytorch的Dataset，定义如下三个方法： （1）init 方法 读取图片路径，并拆分为数据集和验证集（以下代码仅体现结构，具体见源码）： class Mydata(data.Dataset): &quot;&quot;&quot;定义自己的数据集&quot;&quot;&quot; def __init__(self, root, Transforms=None, train=True): &quot;&quot;&quot;进行数据集的划分&quot;&quot;&quot; if train: self.imgs = imgs[:int(0.8*imgs_num)] #80%训练集 else: self.imgs = imgs[int(0.8*imgs_num):] #20%验证集 &quot;&quot;&quot;定义图片处理方式&quot;&quot;&quot; if Transforms is None: normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]) self.transforms = transforms.Compose( [ transforms.CenterCrop(224), transforms.Resize([224,224]), transforms.ToTensor(), normalize]) （2）getitem方法 对图片处理，返回数据和标签： def __getitem__(self, index): return data, label （3）len方法 返回数据集大小： def __len__(self): &quot;&quot;&quot;返回数据集中所有图片的个数&quot;&quot;&quot; return len(self.imgs) （4）测试 实例化数据加载器后，通过调用getitem方法，可以得到经过处理后的$3\times244\times244$的图片数据 if __name__ == &quot;__main__&quot;: root = &quot;./data/train&quot; train = Mydata(root, train=True) #实例化加载器 img,label=train.__getitem__(5) #获取index为5的图片 print(img.dtype) print(img.size(),label) print(len(train)) #数据集大小 #输出 torch.float32 torch.Size([3, 224, 224]) 0 3200 裁剪处理后图片如下所示，大小为224X224： 四、模型 模型都放在 models.py中，主要用了一些经典的CNN模型： LeNet ResNet ResNet SqueezeNet 下面给出重点关注的LeNet模型和AlexNet模型： 1 LeNet LeNet模型是一个早期用来识别手写数字图像的卷积神经网络，这个名字来源于LeNet论文的第一作者Yann LeCun。LeNet展示了通过梯度下降训练卷积神经网络可以达到手写数字识别在当时最先进的结果，LeNet模型结构图示如下所示： 由上图知，LeNet分为卷积层块和全连接层块两个部分，在本项目中我对LeNet模型做了相应的调整： 采用三个卷积层 三个全连接层 ReLu作为激活函数 在卷积后正则化 class LeNet(nn.Module): def __init__(self): super(LeNet, self).__init__() self.relu = nn.ReLU() self.sigmoid = nn.Sigmoid() #三个卷积层 self.conv1 = nn.Sequential( nn.Conv2d( in_channels=3, out_channels=16, kernel_size=3, stride=2, ), nn.BatchNorm2d(16), nn.ReLU(), nn.MaxPool2d(kernel_size=2), ) self.conv2 = nn.Sequential( nn.Conv2d( in_channels=16, out_channels=32, kernel_size=3, stride=2, ), nn.BatchNorm2d(32), nn.ReLU(), nn.MaxPool2d(kernel_size=2), ) self.conv3 = nn.Sequential( nn.Conv2d( in_channels=32, out_channels=64, kernel_size=3, stride=2, ), nn.BatchNorm2d(64), nn.ReLU(), nn.MaxPool2d(kernel_size=2), ) #三个全连接层 self.fc1 = nn.Linear(3 * 3 * 64, 64) self.fc2 = nn.Linear(64, 10) self.out = nn.Linear(10, 2) #分类类别为2，" />
+<meta property="og:description" content="猫狗分类来源于Kaggle上的一个入门竞赛&mdash;&mdash;Dogs vs Cats。为了加深对CNN的理解，基于Pytorch复现了LeNet,AlexNet,ResNet等经典CNN模型，源代码放在GitHub上，地址传送点击此处。项目大纲如下： 一、问题描述 基于训练集数据，训练一个模型，利用训练好的模型预测未知图片中的动物是狗或者猫的概率。 训练集有25,000张图片，测试集12,500 张图片。 数据集下载地址：https://www.kaggle.com/datasets/shaunthesheep/microsoft-catsvsdogs-dataset 二、数据集处理 1 损坏图片清洗 在 01_clean.py中，用多种方式来清洗损坏图片： 判断开头是否有JFIF 用imghdr库中的imghdr.what函数判断文件类型 用Image.open(filename).verify()验证图片是否损坏 结果如下： 2 抽取图片形成数据集 由于一万多张图片比较多，并且需要将Cat类和Dog类的图片合在一起并重新命名，方便获得每张图片的labels,所以可以从原图片文件夹复制任意给定数量图片到train的文件夹，并且重命名如下： 程序为：02_data_processing.py. 三、图片预处理 图片预处理部分需要完成： 对图片的裁剪：将大小不一的图片裁剪成神经网络所需的，我选择的是裁剪为(224x224) 转化为张量 归一化:三个方向归一化 图片数据增强 形成加载器：返回图片数据和对应的标签，利用Pytorch的Dataset包 在 dataset.py中定义Mydata的类，继承pytorch的Dataset，定义如下三个方法： （1）init 方法 读取图片路径，并拆分为数据集和验证集（以下代码仅体现结构，具体见源码）： class Mydata(data.Dataset): &quot;&quot;&quot;定义自己的数据集&quot;&quot;&quot; def __init__(self, root, Transforms=None, train=True): &quot;&quot;&quot;进行数据集的划分&quot;&quot;&quot; if train: self.imgs = imgs[:int(0.8*imgs_num)] #80%训练集 else: self.imgs = imgs[int(0.8*imgs_num):] #20%验证集 &quot;&quot;&quot;定义图片处理方式&quot;&quot;&quot; if Transforms is None: normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]) self.transforms = transforms.Compose( [ transforms.CenterCrop(224), transforms.Resize([224,224]), transforms.ToTensor(), normalize]) （2）getitem方法 对图片处理，返回数据和标签： def __getitem__(self, index): return data, label （3）len方法 返回数据集大小： def __len__(self): &quot;&quot;&quot;返回数据集中所有图片的个数&quot;&quot;&quot; return len(self.imgs) （4）测试 实例化数据加载器后，通过调用getitem方法，可以得到经过处理后的$3\times244\times244$的图片数据 if __name__ == &quot;__main__&quot;: root = &quot;./data/train&quot; train = Mydata(root, train=True) #实例化加载器 img,label=train.__getitem__(5) #获取index为5的图片 print(img.dtype) print(img.size(),label) print(len(train)) #数据集大小 #输出 torch.float32 torch.Size([3, 224, 224]) 0 3200 裁剪处理后图片如下所示，大小为224X224： 四、模型 模型都放在 models.py中，主要用了一些经典的CNN模型： LeNet ResNet ResNet SqueezeNet 下面给出重点关注的LeNet模型和AlexNet模型： 1 LeNet LeNet模型是一个早期用来识别手写数字图像的卷积神经网络，这个名字来源于LeNet论文的第一作者Yann LeCun。LeNet展示了通过梯度下降训练卷积神经网络可以达到手写数字识别在当时最先进的结果，LeNet模型结构图示如下所示： 由上图知，LeNet分为卷积层块和全连接层块两个部分，在本项目中我对LeNet模型做了相应的调整： 采用三个卷积层 三个全连接层 ReLu作为激活函数 在卷积后正则化 class LeNet(nn.Module): def __init__(self): super(LeNet, self).__init__() self.relu = nn.ReLU() self.sigmoid = nn.Sigmoid() #三个卷积层 self.conv1 = nn.Sequential( nn.Conv2d( in_channels=3, out_channels=16, kernel_size=3, stride=2, ), nn.BatchNorm2d(16), nn.ReLU(), nn.MaxPool2d(kernel_size=2), ) self.conv2 = nn.Sequential( nn.Conv2d( in_channels=16, out_channels=32, kernel_size=3, stride=2, ), nn.BatchNorm2d(32), nn.ReLU(), nn.MaxPool2d(kernel_size=2), ) self.conv3 = nn.Sequential( nn.Conv2d( in_channels=32, out_channels=64, kernel_size=3, stride=2, ), nn.BatchNorm2d(64), nn.ReLU(), nn.MaxPool2d(kernel_size=2), ) #三个全连接层 self.fc1 = nn.Linear(3 * 3 * 64, 64) self.fc2 = nn.Linear(64, 10) self.out = nn.Linear(10, 2) #分类类别为2，" />
+<link rel="canonical" href="http://localhost:4000/posts/cat-vs-dog/" />
+<meta property="og:url" content="http://localhost:4000/posts/cat-vs-dog/" />
+<meta property="og:site_name" content="Hongliang Lu" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-03-07T21:05:54+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="基于Pytorch的猫狗图片分类【深度学习CNN】" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-03-07T21:05:54+08:00","datePublished":"2024-03-07T21:05:54+08:00","description":"猫狗分类来源于Kaggle上的一个入门竞赛&mdash;&mdash;Dogs vs Cats。为了加深对CNN的理解，基于Pytorch复现了LeNet,AlexNet,ResNet等经典CNN模型，源代码放在GitHub上，地址传送点击此处。项目大纲如下： 一、问题描述 基于训练集数据，训练一个模型，利用训练好的模型预测未知图片中的动物是狗或者猫的概率。 训练集有25,000张图片，测试集12,500 张图片。 数据集下载地址：https://www.kaggle.com/datasets/shaunthesheep/microsoft-catsvsdogs-dataset 二、数据集处理 1 损坏图片清洗 在 01_clean.py中，用多种方式来清洗损坏图片： 判断开头是否有JFIF 用imghdr库中的imghdr.what函数判断文件类型 用Image.open(filename).verify()验证图片是否损坏 结果如下： 2 抽取图片形成数据集 由于一万多张图片比较多，并且需要将Cat类和Dog类的图片合在一起并重新命名，方便获得每张图片的labels,所以可以从原图片文件夹复制任意给定数量图片到train的文件夹，并且重命名如下： 程序为：02_data_processing.py. 三、图片预处理 图片预处理部分需要完成： 对图片的裁剪：将大小不一的图片裁剪成神经网络所需的，我选择的是裁剪为(224x224) 转化为张量 归一化:三个方向归一化 图片数据增强 形成加载器：返回图片数据和对应的标签，利用Pytorch的Dataset包 在 dataset.py中定义Mydata的类，继承pytorch的Dataset，定义如下三个方法： （1）init 方法 读取图片路径，并拆分为数据集和验证集（以下代码仅体现结构，具体见源码）： class Mydata(data.Dataset): &quot;&quot;&quot;定义自己的数据集&quot;&quot;&quot; def __init__(self, root, Transforms=None, train=True): &quot;&quot;&quot;进行数据集的划分&quot;&quot;&quot; if train: self.imgs = imgs[:int(0.8*imgs_num)] #80%训练集 else: self.imgs = imgs[int(0.8*imgs_num):] #20%验证集 &quot;&quot;&quot;定义图片处理方式&quot;&quot;&quot; if Transforms is None: normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]) self.transforms = transforms.Compose( [ transforms.CenterCrop(224), transforms.Resize([224,224]), transforms.ToTensor(), normalize]) （2）getitem方法 对图片处理，返回数据和标签： def __getitem__(self, index): return data, label （3）len方法 返回数据集大小： def __len__(self): &quot;&quot;&quot;返回数据集中所有图片的个数&quot;&quot;&quot; return len(self.imgs) （4）测试 实例化数据加载器后，通过调用getitem方法，可以得到经过处理后的$3\\times244\\times244$的图片数据 if __name__ == &quot;__main__&quot;: root = &quot;./data/train&quot; train = Mydata(root, train=True) #实例化加载器 img,label=train.__getitem__(5) #获取index为5的图片 print(img.dtype) print(img.size(),label) print(len(train)) #数据集大小 #输出 torch.float32 torch.Size([3, 224, 224]) 0 3200 裁剪处理后图片如下所示，大小为224X224： 四、模型 模型都放在 models.py中，主要用了一些经典的CNN模型： LeNet ResNet ResNet SqueezeNet 下面给出重点关注的LeNet模型和AlexNet模型： 1 LeNet LeNet模型是一个早期用来识别手写数字图像的卷积神经网络，这个名字来源于LeNet论文的第一作者Yann LeCun。LeNet展示了通过梯度下降训练卷积神经网络可以达到手写数字识别在当时最先进的结果，LeNet模型结构图示如下所示： 由上图知，LeNet分为卷积层块和全连接层块两个部分，在本项目中我对LeNet模型做了相应的调整： 采用三个卷积层 三个全连接层 ReLu作为激活函数 在卷积后正则化 class LeNet(nn.Module): def __init__(self): super(LeNet, self).__init__() self.relu = nn.ReLU() self.sigmoid = nn.Sigmoid() #三个卷积层 self.conv1 = nn.Sequential( nn.Conv2d( in_channels=3, out_channels=16, kernel_size=3, stride=2, ), nn.BatchNorm2d(16), nn.ReLU(), nn.MaxPool2d(kernel_size=2), ) self.conv2 = nn.Sequential( nn.Conv2d( in_channels=16, out_channels=32, kernel_size=3, stride=2, ), nn.BatchNorm2d(32), nn.ReLU(), nn.MaxPool2d(kernel_size=2), ) self.conv3 = nn.Sequential( nn.Conv2d( in_channels=32, out_channels=64, kernel_size=3, stride=2, ), nn.BatchNorm2d(64), nn.ReLU(), nn.MaxPool2d(kernel_size=2), ) #三个全连接层 self.fc1 = nn.Linear(3 * 3 * 64, 64) self.fc2 = nn.Linear(64, 10) self.out = nn.Linear(10, 2) #分类类别为2，","headline":"基于Pytorch的猫狗图片分类【深度学习CNN】","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/posts/cat-vs-dog/"},"url":"http://localhost:4000/posts/cat-vs-dog/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <title>基于Pytorch的猫狗图片分类【深度学习CNN】 | Hongliang Lu
+  </title>
+
+  <!--
+  The Favicons for Web, Android, Microsoft, and iOS (iPhone and iPad) Apps
+  Generated by: https://realfavicongenerator.net/
+-->
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
+
+  <link rel="manifest" href="/assets/img/favicons/site.webmanifest">
+
+<link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
+<meta name="apple-mobile-web-app-title" content="Hongliang Lu">
+<meta name="application-name" content="Hongliang Lu">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+
+  <!-- Resource Hints -->
+  
+    
+      
+        <link rel="preconnect" href="https://fonts.googleapis.com" >
+      
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" >
+      
+    
+      
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" >
+      
+    
+      
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" >
+      
+        <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" >
+      
+    
+  
+
+  <!-- Bootstrap -->
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  
+
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/assets/css/jekyll-theme-chirpy.css">
+
+  <!-- Web Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Source+Sans+Pro:wght@400;600;700;900&display=swap">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+
+  <!-- 3rd-party Dependencies -->
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4.27.20/dist/tocbot.min.css">
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.min.css">
+  
+
+  
+    <!-- Image Popup -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css">
+  
+
+  <!-- JavaScript -->
+
+  
+    <!-- Switch the mode between dark and light. -->
+
+<script type="text/javascript">
+  class ModeToggle {
+    static get MODE_KEY() {
+      return 'mode';
+    }
+    static get MODE_ATTR() {
+      return 'data-mode';
+    }
+    static get DARK_MODE() {
+      return 'dark';
+    }
+    static get LIGHT_MODE() {
+      return 'light';
+    }
+    static get ID() {
+      return 'mode-toggle';
+    }
+
+    constructor() {
+      let self = this;this.sysDarkPrefers.addEventListener('change', () => {
+        if (self.hasMode) {
+          self.clearMode();
+        }
+        self.notify();
+      });
+
+      if (!this.hasMode) {
+        return;
+      }
+
+      if (this.isDarkMode) {
+        this.setDark();
+      } else {
+        this.setLight();
+      }
+    }
+
+    get sysDarkPrefers() {
+      return window.matchMedia('(prefers-color-scheme: dark)');
+    }
+
+    get isPreferDark() {
+      return this.sysDarkPrefers.matches;
+    }
+
+    get isDarkMode() {
+      return this.mode === ModeToggle.DARK_MODE;
+    }
+
+    get hasMode() {
+      return this.mode != null;
+    }
+
+    get mode() {
+      return sessionStorage.getItem(ModeToggle.MODE_KEY);
+    }get modeStatus() {
+      if (this.hasMode) {
+        return this.mode;
+      } else {
+        return this.isPreferDark ? ModeToggle.DARK_MODE : ModeToggle.LIGHT_MODE;
+      }
+    }
+
+    setDark() {
+      document.documentElement.setAttribute(ModeToggle.MODE_ATTR, ModeToggle.DARK_MODE);
+      sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE);
+    }
+
+    setLight() {
+      document.documentElement.setAttribute(ModeToggle.MODE_ATTR, ModeToggle.LIGHT_MODE);
+      sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE);
+    }
+
+    clearMode() {
+      document.documentElement.removeAttribute(ModeToggle.MODE_ATTR);
+      sessionStorage.removeItem(ModeToggle.MODE_KEY);
+    }notify() {
+      window.postMessage(
+        {
+          direction: ModeToggle.ID,
+          message: this.modeStatus
+        },
+        '*'
+      );
+    }
+
+    flipMode() {
+      if (this.hasMode) {
+        this.clearMode();
+      } else {
+        if (this.isPreferDark) {
+          this.setLight();
+        } else {
+          this.setDark();
+        }
+      }
+
+      this.notify();
+    }
+  }
+
+  const modeToggle = new ModeToggle();
+</script>
+
+  
+
+  <!-- A placeholder to allow defining custom metadata -->
+
+</head>
+
+
+  <body>
+    <!--
+ * @Author: Hongliang Lu, lhl@pku.edu.cn
+ * @Date: 2024-07-24 15:33:36
+ * @LastEditTime: 2024-07-24 16:58:50
+ * @FilePath: /AuroraLHL.github.io/_includes/sidebar.html
+ * @Description: 
+ * Organization: College of Engineering,Peking University.
+-->
+<!-- The Side Bar -->
+
+<aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end">
+  <header class="profile-wrapper">
+    <a href="/" id="avatar" class="rounded-circle"><img src="/assets/img/1.png" width="112" height="112" alt="avatar" onerror="this.style.display='none'"></a>
+
+    <h1 class="site-title">
+      <a href="/">Hongliang Lu</a>
+    </h1>
+    <p class="site-subtitle fst-italic mb-0">Everything is nothing</p>
+  </header>
+  <!-- .profile-wrapper -->
+
+  <nav class="flex-column flex-grow-1 w-100 ps-0">
+    <ul class="nav">
+      <!-- home -->
+      <li class="nav-item">
+        <a href="/" class="nav-link">
+          <i class="fa-fw fas fa-home"></i>
+          <span>HOME</span>
+        </a>
+      </li>
+      <!-- the real tabs -->
+      
+        <li class="nav-item">
+          <a href="/categories/" class="nav-link">
+            <i class="fa-fw fas fa-stream"></i>
+            
+
+            <span>CATEGORIES</span>
+          </a>
+        </li>
+        <!-- .nav-item -->
+      
+        <li class="nav-item">
+          <a href="/tags/" class="nav-link">
+            <i class="fa-fw fas fa-tags"></i>
+            
+
+            <span>TAGS</span>
+          </a>
+        </li>
+        <!-- .nav-item -->
+      
+        <li class="nav-item">
+          <a href="/timeline/" class="nav-link">
+            <i class="fa-fw fas fa-archive"></i>
+            
+
+            <span>TIMELINE</span>
+          </a>
+        </li>
+        <!-- .nav-item -->
+      
+        <li class="nav-item">
+          <a href="/about/" class="nav-link">
+            <i class="fa-fw fas fa-info-circle"></i>
+            
+
+            <span>ABOUT</span>
+          </a>
+        </li>
+        <!-- .nav-item -->
+      
+    </ul>
+  </nav>
+
+  <div class="sidebar-bottom d-flex flex-wrap  align-items-center w-100">
+    
+      <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle">
+        <i class="fas fa-adjust"></i>
+      </button>
+
+      
+        <span class="icon-border"></span>
+      
+    
+
+    
+      
+
+      
+        <a
+          href="https://github.com/AuroraLHL"
+          aria-label="github"
+          
+
+          
+            target="_blank"
+            
+          
+
+          
+
+          
+            rel="noopener noreferrer"
+          
+        >
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+
+      
+        <a
+          href="https://blog.csdn.net/v20000727?spm=1000.2115.3001.5343"
+          aria-label="csdn"
+          
+
+          
+            target="_blank"
+            
+          
+
+          
+
+          
+            rel="noopener noreferrer"
+          
+        >
+          <i class="fa-solid fa-c"></i>
+        </a>
+      
+    
+      
+
+      
+        <a
+          href="javascript:location.href = 'mailto:' + ['lhl','pku.educ.cn'].join('@')"
+          aria-label="email"
+          
+
+          
+
+          
+
+          
+        >
+          <i class="fas fa-envelope"></i>
+        </a>
+      
+    
+      
+
+      
+        <a
+          href="/feed.xml"
+          aria-label="rss"
+          
+
+          
+
+          
+
+          
+        >
+          <i class="fas fa-rss"></i>
+        </a>
+      
+    
+  </div>
+  <!-- .sidebar-bottom -->
+</aside>
+<!-- #sidebar -->
+
+
+    <div id="main-wrapper" class="d-flex justify-content-center">
+      <div class="container d-flex flex-column px-xxl-5">
+        <!-- The Top Bar -->
+
+<header id="topbar-wrapper" aria-label="Top Bar">
+  <div
+    id="topbar"
+    class="d-flex align-items-center justify-content-between px-lg-3 h-100"
+  >
+    <nav id="breadcrumb" aria-label="Breadcrumb">
+      
+
+      
+        
+          
+            <span>
+              <a href="/">Home</a>
+            </span>
+
+          
+        
+          
+        
+          
+            
+              <span>基于Pytorch的猫狗图片分类【深度学习CNN】</span>
+            
+
+          
+        
+      
+    </nav>
+    <!-- endof #breadcrumb -->
+
+    <button type="button" id="sidebar-trigger" class="btn btn-link">
+      <i class="fas fa-bars fa-fw"></i>
+    </button>
+
+    <div id="topbar-title">
+      Post
+    </div>
+
+    <button type="button" id="search-trigger" class="btn btn-link">
+      <i class="fas fa-search fa-fw"></i>
+    </button>
+
+    <search id="search" class="align-items-center ms-3 ms-lg-0">
+      <i class="fas fa-search fa-fw"></i>
+      <input
+        class="form-control"
+        id="search-input"
+        type="search"
+        aria-label="search"
+        autocomplete="off"
+        placeholder="Search..."
+      >
+    </search>
+    <button type="button" class="btn btn-link text-decoration-none" id="search-cancel">Cancel</button>
+  </div>
+</header>
+
+
+        <div class="row flex-grow-1">
+          <main aria-label="Main Content" class="col-12 col-lg-11 col-xl-9 px-md-4">
+            
+              <!-- Refactor the HTML structure -->
+
+
+
+<!--
+  In order to allow a wide table to scroll horizontally,
+  we suround the markdown table with `<div class="table-wrapper">` and `</div>`
+-->
+
+
+
+<!--
+  Fixed kramdown code highlight rendering:
+  https://github.com/penibelst/jekyll-compress-html/issues/101
+  https://github.com/penibelst/jekyll-compress-html/issues/71#issuecomment-188144901
+-->
+
+
+
+<!-- Change the icon of checkbox -->
+
+
+
+<!-- Handle images -->
+
+
+
+
+  
+  
+
+  
+    
+      
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+      
+
+      
+      
+      
+
+      
+    
+      
+
+      
+      
+      
+
+      
+    
+
+    <!-- take out classes -->
+    
+
+    
+    
+
+    
+
+    
+      
+    
+
+    <!-- lazy-load images -->
+    
+
+    
+      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      
+
+      
+        <!-- create the image wrapper -->
+        
+
+        
+        
+      
+    
+
+    <!-- combine -->
+    
+  
+
+  
+
+
+<!-- Add header for code snippets -->
+
+
+
+<!-- Create heading anchors -->
+
+
+
+
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+
+
+
+<!-- return -->
+
+
+
+
+<article class="px-1">
+  <header>
+    <h1 data-toc-skip>基于Pytorch的猫狗图片分类【深度学习CNN】</h1>
+    
+
+    <div class="post-meta text-muted">
+      <!-- published date -->
+      <span>
+        Posted
+        <!--
+  Date format snippet
+  See: ${JS_ROOT}/utils/locale-dateime.js
+-->
+
+
+
+
+<time
+  
+  data-ts="1709816754"
+  data-df="ll"
+  
+    data-bs-toggle="tooltip" data-bs-placement="bottom"
+  
+>
+  Mar  7, 2024
+</time>
+
+      </span>
+
+      <!-- lastmod date -->
+      
+
+      
+
+      <div class="d-flex justify-content-between">
+        <!-- author(s) -->
+        <span>
+          
+
+          By
+
+          <em>
+            
+              <a href="https://github.com/AuroraLHL">Hongliang Lu</a>
+            
+          </em>
+        </span>
+
+        <div>
+          <!-- pageviews -->
+          
+            <span>
+              <em id="pageviews">
+                <i class="fas fa-spinner fa-spin small"></i>
+              </em>
+              views
+            </span>
+          
+
+          <!-- read time -->
+          <!-- Calculate the post's reading time, and display the word count in tooltip -->
+
+
+
+<!-- words per minute -->
+
+
+
+
+
+
+
+
+
+
+<!-- return element -->
+<span
+  class="readtime"
+  data-bs-toggle="tooltip"
+  data-bs-placement="bottom"
+  title="2881 words"
+>
+  <em>16 min</em> read</span>
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="content">
+    <p>猫狗分类来源于Kaggle上的一个入门竞赛&mdash;&mdash;<a href="https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition">Dogs vs Cats</a>。为了加深对CNN的理解，基于Pytorch复现了LeNet,AlexNet,ResNet等经典CNN模型，源代码放在GitHub上，<a href="https://github.com/AuroraLHL/CatDog/tree/master">地址传送点击此处</a>。项目大纲如下：</p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402251608573.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402251608573.png" alt="猫狗分类" loading="lazy"></a></p>
+<h1>一、问题描述</h1>
+<p>基于训练集数据，训练一个模型，利用训练好的模型预测未知图片中的动物是狗或者猫的概率。</p>
+<p>训练集有25,000张图片，测试集12,500 张图片。</p>
+<p>数据集下载地址：<a href="https://www.kaggle.com/datasets/shaunthesheep/microsoft-catsvsdogs-dataset">https://www.kaggle.com/datasets/shaunthesheep/microsoft-catsvsdogs-dataset</a></p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191556730.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191556730.png" alt="截屏2024-02-19 15.56.01" loading="lazy"></a></p>
+<h1>二、数据集处理</h1>
+<h2>1 损坏图片清洗</h2>
+<p>在 <code>01_clean.py</code>中，用多种方式来清洗损坏图片：</p>
+<ol>
+<li>判断开头是否有JFIF</li>
+<li>用imghdr库中的imghdr.what函数判断文件类型</li>
+<li>用Image.open(filename).verify()验证图片是否损坏</li>
+</ol>
+<p>结果如下：</p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191557676.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191557676.png" alt="截屏2022-04-20 下午1.54.15" style="zoom:50%;" loading="lazy"></a></p>
+<h2>2 抽取图片形成数据集</h2>
+<p>由于一万多张图片比较多，并且需要将Cat类和Dog类的图片合在一起并重新命名，方便获得每张图片的labels,所以可以从原图片文件夹复制<strong>任意给定数量图</strong>片到<strong>train</strong>的文件夹，并且重命名如下：</p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191557657.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191557657.png" alt="截屏2022-04-22 下午3.58.33" style="zoom:1000%;" loading="lazy"></a></p>
+<p>程序为：<code>02_data_processing.py</code>.</p>
+<h1>三、图片预处理</h1>
+<p>图片预处理部分需要完成：</p>
+<ol>
+<li>对图片的裁剪：将大小不一的图片裁剪成神经网络所需的，我选择的是裁剪为<strong>(224x224)</strong></li>
+<li>转化为张量</li>
+<li>归一化:三个方向归一化</li>
+<li>图片数据增强</li>
+<li>形成加载器：返回图片数据和对应的标签，利用Pytorch的Dataset包</li>
+</ol>
+<p>在 <code>dataset.py</code>中定义Mydata的类，继承pytorch的Dataset，定义如下三个方法：</p>
+<h2>（1）init 方法</h2>
+<p>读取图片路径，并拆分为数据集和验证集（以下代码<strong>仅体现结构，具体见源码</strong>）：</p>
+<pre><code class="language-python">class Mydata(data.Dataset):
+    """定义自己的数据集"""
+    def __init__(self, root, Transforms=None, train=True):
+        """进行数据集的划分"""
+        if train:
+            self.imgs = imgs[:int(0.8*imgs_num)]  #80%训练集
+        else:
+            self.imgs = imgs[int(0.8*imgs_num):]  #20%验证集
+        """定义图片处理方式"""
+        if Transforms is None:
+            normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], 
+                                            std=[0.229, 0.224, 0.225])
+            self.transforms = transforms.Compose(
+                    [ transforms.CenterCrop(224), 
+                    transforms.Resize([224,224]),
+                    transforms.ToTensor(), normalize])</code></pre>
+<h2>（2）getitem方法</h2>
+<p>对图片处理，返回数据和标签：</p>
+<pre><code class="language-python"> def __getitem__(self, index):
+     return data, label</code></pre>
+<h2>（3）len方法</h2>
+<p>返回数据集大小：</p>
+<pre><code class="language-python">    def __len__(self):
+        """返回数据集中所有图片的个数"""  
+        return len(self.imgs)</code></pre>
+<h2>（4）测试</h2>
+<p>实例化数据加载器后，通过调用getitem方法，可以得到经过处理后的$3\times244\times244$的图片数据</p>
+<pre><code class="language-python">if __name__ == "__main__":
+    root = "./data/train"
+    train = Mydata(root, train=True)  #实例化加载器
+    img,label=train.__getitem__(5)    #获取index为5的图片
+    print(img.dtype)
+    print(img.size(),label)   
+    print(len(train))    #数据集大小
+#输出
+torch.float32
+torch.Size([3, 224, 224]) 0
+3200</code></pre>
+<p>裁剪处理后图片如下所示，大小为<strong>224X224</strong>：</p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191558149.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191558149.png" alt="截屏2022-04-22 下午5.28.56" style="zoom:50%;" loading="lazy"></a></p>
+<h1>四、模型</h1>
+<p>模型都放在 <code>models.py</code>中，主要用了一些经典的CNN模型：</p>
+<ol>
+<li>LeNet</li>
+<li>ResNet</li>
+<li>ResNet</li>
+<li>SqueezeNet</li>
+</ol>
+<p>下面给出重点关注的LeNet模型和AlexNet模型：</p>
+<h2>1 LeNet</h2>
+<p>LeNet模型是一个早期用来识别手写数字图像的卷积神经网络，这个名字来源于LeNet论文的第一作者Yann LeCun。LeNet展示了通过梯度下降训练卷积神经网络可以达到手写数字识别在当时最先进的结果，LeNet模型结构图示如下所示：</p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191614351.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191614351.png" alt="截屏2022-04-29 下午7.54.44" style="zoom: 33%;" loading="lazy"></a></p>
+<p>由上图知，LeNet分为<strong>卷积层块</strong>和<strong>全连接层块</strong>两个部分，在本项目中我对LeNet模型做了<strong>相应的调整</strong>：</p>
+<ol>
+<li>采用三个卷积层</li>
+<li>三个全连接层</li>
+<li>ReLu作为激活函数</li>
+<li>在卷积后正则化</li>
+</ol>
+<pre><code class="language-python">class LeNet(nn.Module):
+    def __init__(self):
+        super(LeNet, self).__init__()
+        self.relu = nn.ReLU()
+        self.sigmoid = nn.Sigmoid()
+        #三个卷积层
+        self.conv1 = nn.Sequential(
+            nn.Conv2d(
+                in_channels=3,
+                out_channels=16,
+                kernel_size=3,
+                stride=2,
+            ),
+            nn.BatchNorm2d(16),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2),
+        )
+        self.conv2 = nn.Sequential(
+            nn.Conv2d(
+                in_channels=16,
+                out_channels=32,
+                kernel_size=3,
+                stride=2,
+            ),
+            nn.BatchNorm2d(32),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2),
+        )
+        self.conv3 = nn.Sequential(
+            nn.Conv2d(
+                in_channels=32,
+                out_channels=64,
+                kernel_size=3,
+                stride=2,
+            ),
+            nn.BatchNorm2d(64),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2),
+        )
+        #三个全连接层
+        self.fc1 = nn.Linear(3 * 3 * 64, 64)
+        self.fc2 = nn.Linear(64, 10)
+        self.out = nn.Linear(10, 2)   #分类类别为2，
+
+    def forward(self, x):
+        x = self.conv1(x)
+        x = self.conv2(x)
+        x = self.conv3(x)
+        x = x.view(x.shape[0], -1)
+        x = self.relu(self.fc1(x))
+        x = self.relu(self.fc2(x))
+        x = self.out(x)
+        return x</code></pre>
+<p>调用torchsummary库，可以观察模型的结构、参数：</p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191614376.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191614376.png" alt="截屏2022-04-30 上午12.35.15" style="zoom:50%;" loading="lazy"></a></p>
+<h2>2 AlexNet模型</h2>
+<p>2012年，AlexNet横空出世，这个模型的名字来源于论文第一作者的姓名Alex Krizhevsky。AlexNet使用了<strong>8层卷积神经网络</strong>，由5个卷积层和3个池化Pooling 层 ，其中还有3个全连接层构成。AlexNet 跟 LeNet 结构类似，但使⽤了更多的卷积层和更⼤的参数空间来拟合⼤规模数据集 ImageNet，它是浅层神经⽹络和深度神经⽹络的分界线。</p>
+<p>特点：</p>
+<ol>
+<li>在每个卷积后面添加了Relu激活函数，解决了Sigmoid的梯度消失问题，使收敛更快。</li>
+<li>使用随机丢弃技术（dropout）选择性地忽略训练中的单个神经元，避免模型的过拟合（也使用数据增强防止过拟合）</li>
+<li>添加了归一化LRN（Local Response Normalization，局部响应归一化）层，使准确率更高。</li>
+<li>重叠最大池化（overlapping max pooling），即池化范围 z 与步长 s 存在关系 z>s 避免平均池化（average pooling）的平均效应</li>
+</ol>
+<h1>五、训练</h1>
+<p>训练在 <code>main.py</code>中，主要是对获取数据、训练、评估、模型的保存等功能的整合，能够实现以下功能：</p>
+<ol>
+<li>指定训练模型、epoches等基本参数</li>
+<li>是否选用<strong>预训练模型</strong></li>
+<li>接着从上次的中断的地方<strong>继续训练</strong></li>
+<li><strong>保存最好的模型</strong>和最后一次训练的模型</li>
+<li>对模型的评估：Loss和Accuracy</li>
+<li>利用<strong>TensorBoard可视化</strong></li>
+</ol>
+<h2>1 开始训练</h2>
+<p>在 <code>main.py</code>程序中，设置参数和模型（<code>models.py</code>中可以查看有哪些模型）:</p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191615103.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191615103.png" alt="截屏2022-04-29 下午11.22.34" loading="lazy"></a></p>
+<p>在vscode中点击运行或在命令行中输入：</p>
+<pre><code class="language-bash">python3 main.py</code></pre>
+<p>即可开始训练，开始训练后效果如下：</p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191615119.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191615119.png" alt="截屏2022-04-30 上午8.24.14" loading="lazy"></a></p>
+<p>若程序中断，设置resume参数为True，可以接着上次的模型继续训练，可以非常方便的<strong>任意训练多少次</strong>。</p>
+<h2>2 tensorboard可视化</h2>
+<p>在vscode中打开tensorboard，或者在命令行中进入当前项目文件夹下输入</p>
+<pre><code class="language-python">tensorboard --logdir runs</code></pre>
+<p>即可打开训练中的可视化界面，可以很方便的观察模型的效果：</p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191615161.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191615161.png" alt="截屏2022-04-30 上午8.28.37" style="zoom: 50%;" loading="lazy"></a></p>
+<p>如上图所示，可以非常方便的观察任意一个模型训练过程的效果！</p>
+<h1>六、不同模型训练结果分析</h1>
+<h2>1 LeNet模型</h2>
+<p>在用LeNet模型训练的过程中，通过调整数据集数量、是否用数据增强等不同的方法，来训练模型，并观察模型的训练效果。</p>
+<h3>(1) 数据集数量=1000，无数据增强</h3>
+<p>通过Tensorboard可视化可以观察到：</p>
+<ol>
+<li>验证集准确率(Accuracy)在上升，训练<strong>30epoch</strong>左右，达到最终<strong>63%</strong>左右的最好效果</li>
+<li>但验证集误差(Loss)也在上升，训练集误差一直下降</li>
+<li>训练集误差<strong>接近于0</strong></li>
+</ol>
+<p>说明模型在训练集上效果好，验证集上效果不好，泛化能力差，可以推测出模型<strong>过拟合</strong>了。而这个原因也是比较好推测的，数据集比较少。</p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620191.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620191.png" alt="截屏2022-04-29 下午8.23.09" loading="lazy"></a></p>
+<h3>(2) 数据集数量=4000，无数据增强</h3>
+<p>同样<strong>过拟合了</strong>，但是最后的准确率能达到<strong>68%</strong>左右，说明数据集增加有效果</p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620160.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620160.png" alt="截屏2022-04-29 下午8.32.01" loading="lazy"></a></p>
+<h3>(3)数据集数量=4000，数据增强</h3>
+<p>这次数据集数量同上一个一样为4000，但采用了如下的数据增强：</p>
+<ol>
+<li>水平翻转，概率为p=0.5</li>
+<li>上下翻转，概率为p=0.1</li>
+</ol>
+<p>我们可以看到这次一开始验证集误差是<strong>下降的</strong>，说明一开始没有过拟合，但到15个epoch之后验证集误差开始上升了，说明已经开始过拟合了，但最后的准确率在<strong>71%</strong>左右，说明数据增强对扩大数据集有明显的效果。</p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620179.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620179.png" alt="截屏2022-04-29 下午8.38.00" loading="lazy"></a></p>
+<h3>(4)数据集=4000，数据增强</h3>
+<p>这次数据集数量为4000，但采用了如下的数据增强：</p>
+<ol>
+<li>水平翻转，概率为p=0.5</li>
+<li>上下翻转，概率为p=0.5</li>
+<li>亮度变化<a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620188.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620188.png" alt="截屏2022-04-29 下午8.48.10" loading="lazy"></a></li>
+</ol>
+<p>可以看到：</p>
+<ol>
+<li>35个epoch之前，验证集误差呈<strong>下降</strong>趋势，准确率也一直上升，最高能到<strong>75%</strong>。</li>
+<li>但在35个epoch之后，验证集误差开始上升，准确率也开始下降</li>
+</ol>
+<p>说明使用了更强的数据增强之后，模型效果更好了。</p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620205.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620205.png" alt="截屏2022-04-29 下午8.50.01" loading="lazy"></a></p>
+<h3>(5)使用dropout函数抑制过拟合</h3>
+<p>本次数据集和数据增强方式同（4），但是在模型的第一个<strong>全连接层</strong>加入dropout函数。</p>
+<blockquote>
+<p><strong>dropout原理：</strong></p>
+<p>训练过程中随机丢弃掉一些参数。在前向传播的时候，让某个神经元的激活值以一定的概率p（伯努利分布）停止工作，这样可以使模型泛化性更强。<a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620214.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620214.png" alt="截屏2022-04-29 下午8.59.39" loading="lazy"></a></p>
+<p>不使用dropout示意图                                                                     使用dropout示意图</p>
+<p>这样相当于每次训练的是一个比较"瘦"的模型，更不容易过拟合</p>
+</blockquote>
+<p>加入dropout函数后，训练85个epochs，可以观察到效果<strong>十分显著</strong>：</p>
+<ol>
+<li>验证集的误差总体呈现下降趋势，且最后<strong>没有反弹</strong>！</li>
+<li>训练集误差下降比较慢了！</li>
+<li>准确率一直上升，最后可以达到<strong>76%</strong>！</li>
+</ol>
+<p>说明模型最后没有过拟合，并且效果还不错。</p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620425.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620425.png" alt="截屏2022-04-29 下午9.03.21" loading="lazy"></a></p>
+<h2>2 AlexNet模型</h2>
+<p>将AlexNet模型参数打印出来：</p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620453.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620453.png" alt="截屏2022-04-30 上午12.58.58" loading="lazy"></a></p>
+<p>可以看到AlexNet相比LeNet，参数数目有数量级的上升，而在数据量比较小的情况下，很容易梯度消失，经过反复的调试：</p>
+<ol>
+<li>要在卷积层加入正则化</li>
+<li>优化器选择SGD</li>
+<li>学习率不能过大</li>
+</ol>
+<p>才能避免验证集的准确率一直在<strong>50%</strong></p>
+<p>经过调试，较好的一次结果如下所示，最终准确率能达到<strong>78%</strong></p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620481.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620481.png" alt="截屏2022-04-30 上午1.10.08" loading="lazy"></a></p>
+<h2>3 squeezeNet模型</h2>
+<p>在后面两个模型中，使用迁移学习的方法。</p>
+<blockquote>
+<p><strong>迁移学习（Transfer Learning）</strong>是机器学习中的一个名词，是指一种学习对另一种学习> 的影响，或习得的经验对完成其它活动的影响。迁移广泛存在于各种知识、技能与社会规范> 的学习中，将某个领域或任务上学习到的知识或模式应用到不同但相关的领域或问题中。`<code><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620571.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620571.png" alt="截屏2022-04-29 下午11.58.32" style="zoom:70%;" loading="lazy"></a></code>``</p>
+</blockquote>
+<p>使用squeezeNet预训练模型，在迭代16个epoch后，准确率可以达到<strong>93%</strong></p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620589.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620589.png" alt="截屏2022-04-29 下午11.51.43" loading="lazy"></a></p>
+<h2>4 resNet模型</h2>
+<p>使用resnet50的预训练模型，训练25个epoch后，准确率可以达到<strong>98%！</strong></p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620637.png" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402191620637.png" alt="截屏2022-04-30 上午12.12.36" loading="lazy"></a></p>
+<h2>模型总结</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align: center;">模型</th>
+<th style="text-align: center;">测试集预测准确率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">LeNet（无数据增强）</td>
+<td style="text-align: center;">68%</td>
+</tr>
+<tr>
+<td style="text-align: center;">LeNet（数据增强）</td>
+<td style="text-align: center;">75%</td>
+</tr>
+<tr>
+<td style="text-align: center;">LeNet（采用Dropout）</td>
+<td style="text-align: center;">76%</td>
+</tr>
+<tr>
+<td style="text-align: center;">Alexnet</td>
+<td style="text-align: center;">78%</td>
+</tr>
+<tr>
+<td style="text-align: center;">squeezeNet（迁移学习）</td>
+<td style="text-align: center;">93%</td>
+</tr>
+<tr>
+<td style="text-align: center;">resNet</td>
+<td style="text-align: center;">98%</td>
+</tr>
+</tbody>
+</table></div>
+<h1>七、预测</h1>
+<p>模型训练好后，可以打开 <code>predict.py</code>对新图片进行预测，给定用来预测的模型和预测的图片文件夹：</p>
+<pre><code class="language-python"> model = LeNet1() # 模型结构
+    modelpath = "./runs/LeNet1_1/LeNet1_best.pth" # 训练好的模型路径
+    checkpoint = torch.load(modelpath)  
+    model.load_state_dict(checkpoint)  # 加载模型参数
+
+    root = "test_pics"</code></pre>
+<p>运行 <code>predict.py	</code>会将预测的图片储存在 <code>output</code>文件夹中，如下图所示：</p>
+<p><a href="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402200948926.jpg" class="popup img-link  shimmer"><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202402200948926.jpg" alt="pre_04_cat" loading="lazy"></a></p>
+<p>会给出预测的类别和概率。</p>
+
+  </div>
+
+  <div class="post-tail-wrapper text-muted">
+    <!-- categories -->
+    
+      <div class="post-meta mb-3">
+        <i class="far fa-folder-open fa-fw me-1"></i>
+        
+          <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a>,
+          <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a>
+      </div>
+    
+
+    <!-- tags -->
+    
+
+    <div
+      class="
+        post-tail-bottom
+        d-flex justify-content-between align-items-center mt-5 pb-2
+      "
+    >
+      <div class="license-wrapper">
+        
+          
+
+          This post is licensed under 
+        <a href="https://creativecommons.org/licenses/by/4.0/">
+          CC BY 4.0
+        </a>
+         by the author.
+        
+      </div>
+
+      <!-- Post sharing snippet -->
+
+<div class="share-wrapper d-flex align-items-center">
+  <span class="share-label text-muted">Share</span>
+  <span class="share-icons">
+    
+    
+    
+
+    
+
+      
+
+      <a href="https://twitter.com/intent/tweet?text=%E5%9F%BA%E4%BA%8EPytorch%E7%9A%84%E7%8C%AB%E7%8B%97%E5%9B%BE%E7%89%87%E5%88%86%E7%B1%BB%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0CNN%E3%80%91%20-%20Hongliang%20Lu&url=http%3A%2F%2Flocalhost%3A4000%2Fposts%2Fcat-vs-dog%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter" aria-label="Twitter">
+        <i class="fa-fw fa-brands fa-square-x-twitter"></i>
+      </a>
+    
+
+      
+
+      <a href="https://service.weibo.com/share/share.php?title=%E5%9F%BA%E4%BA%8EPytorch%E7%9A%84%E7%8C%AB%E7%8B%97%E5%9B%BE%E7%89%87%E5%88%86%E7%B1%BB%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0CNN%E3%80%91%20-%20Hongliang%20Lu&url=http%3A%2F%2Flocalhost%3A4000%2Fposts%2Fcat-vs-dog%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Weibo" aria-label="Weibo">
+        <i class="fa-fw fab fa-weibo"></i>
+      </a>
+    
+
+    <button
+      id="copy-link"
+      aria-label="Copy link"
+      class="btn small"
+      data-bs-toggle="tooltip"
+      data-bs-placement="top"
+      title="Copy link"
+      data-title-succeed="Link copied successfully!"
+    >
+      <i class="fa-fw fas fa-link pe-none fs-6"></i>
+    </button>
+  </span>
+</div>
+
+    </div>
+    <!-- .post-tail-bottom -->
+  </div>
+  <!-- div.post-tail-wrapper -->
+</article>
+
+
+            
+          </main>
+
+          <!-- panel -->
+          <aside aria-label="Panel" id="panel-wrapper" class="col-xl-3 ps-2 mb-5 text-muted">
+            <div class="access">
+              <!-- Get 5 last posted/updated posts -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <section id="access-lastmod">
+    <h2 class="panel-heading">Recently Updated</h2>
+    <ul class="content list-unstyled ps-0 pb-1 ms-1 mt-2">
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
+          <a href="/posts/2023%E6%9A%91%E5%81%87%E8%AE%B0%E5%BF%86/">2023暑假记忆</a>
+        </li>
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
+          <a href="/posts/%E4%BA%8C%E9%98%B6%E9%94%A5%E8%A7%84%E5%88%92%E7%AE%80%E4%BB%8B/">二阶锥规划简介</a>
+        </li>
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
+          <a href="/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">深入理解注意力机制【Self-Attention,自注意力模型】</a>
+        </li>
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
+          <a href="/posts/Githubpages_tutorial/">Github网站搭建记录</a>
+        </li>
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
+          <a href="/posts/transformer/">Transformer图文详解【Attention is all you need】</a>
+        </li>
+      
+    </ul>
+  </section>
+  <!-- #access-lastmod -->
+
+
+              <!-- The trending tags list -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+
+
+  <section>
+    <h2 class="panel-heading">Trending Tags</h2>
+    <div class="d-flex flex-wrap mt-3 mb-1 me-3">
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/%E8%8B%8F%E8%BD%BC%E4%BC%A0/">苏轼传</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/llm/">LLM</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/mac/">Mac</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/%E5%87%B8%E4%BC%98%E5%8C%96/">凸优化</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/github/">Github</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/markdown/">markdown</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/ml/">ML</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/scp/">scp</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93/">文件传输</a>
+      
+    </div>
+  </section>
+
+
+            </div>
+
+            
+              
+              
+
+
+
+  <section id="toc-wrapper" class="d-none ps-0 pe-4">
+    <h2 class="panel-heading ps-3 mb-2">Contents</h2>
+    <nav id="toc"></nav>
+  </section>
+
+
+            
+          </aside>
+        </div>
+
+        <div class="row">
+          <!-- tail -->
+          <div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 px-md-4">
+            
+              
+              <!-- Recommend the other 3 posts according to the tags and categories of the current post. -->
+
+<!-- The total size of related posts -->
+
+
+<!-- An random integer that bigger than 0 -->
+
+
+<!-- Equals to TAG_SCORE / {max_categories_hierarchy} -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <aside id="related-posts" aria-labelledby="related-label">
+    <h3 class="mb-4" id="related-label">Further Reading</h3>
+    <nav class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 mb-4">
+      
+        <article class="col">
+          <a href="/posts/transformer/" class="post-preview card h-100">
+            <div class="card-body">
+              <!--
+  Date format snippet
+  See: ${JS_ROOT}/utils/locale-dateime.js
+-->
+
+
+
+
+<time
+  
+  data-ts="1721965800"
+  data-df="ll"
+  
+>
+  Jul 26, 2024
+</time>
+
+              <h4 class="pt-0 my-2">Transformer图文详解【Attention is all you need】</h4>
+              <div class="text-muted">
+                <p>🚀在自然语言处理（NLP）领域，Transformer架构已经成为最先进的技术之一，其核心概念是自注意力机制（Self-Attention Mechanism）。
+
+📚在前面的两小节中，我们已经介绍了注意力机制的基础知识，包括RNN、Seq2Seq等传统方法的基本概念和实现。此外，我们详细讨论了自注意力机制（Self-Attention）及其在现代NLP模型中的重要性。自注意力机制允许模型在...</p>
+              </div>
+            </div>
+          </a>
+        </article>
+      
+        <article class="col">
+          <a href="/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" class="post-preview card h-100">
+            <div class="card-body">
+              <!--
+  Date format snippet
+  See: ${JS_ROOT}/utils/locale-dateime.js
+-->
+
+
+
+
+<time
+  
+  data-ts="1721965140"
+  data-df="ll"
+  
+>
+  Jul 26, 2024
+</time>
+
+              <h4 class="pt-0 my-2">深入理解注意力机制【Self-Attention,自注意力模型】</h4>
+              <div class="text-muted">
+                <p>在自然语言处理领域，注意力机制（Attention Mechanism）已经成为提升模型性能的重要工具。传统的Encoder-Decoder结构在处理长序列时，常常因为统一语义特征向量的长度限制而导致性能瓶颈。然而，注意力机制通过引入动态上下文向量，成功解决了这一问题，使得模型能够在每个时间步选择与当前输出最相关的信息。
+
+
+  本篇博客将详细介绍注意力机制的基本原理、一般形式以及自注意力模...</p>
+              </div>
+            </div>
+          </a>
+        </article>
+      
+        <article class="col">
+          <a href="/posts/nlp%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="post-preview card h-100">
+            <div class="card-body">
+              <!--
+  Date format snippet
+  See: ${JS_ROOT}/utils/locale-dateime.js
+-->
+
+
+
+
+<time
+  
+  data-ts="1721964480"
+  data-df="ll"
+  
+>
+  Jul 26, 2024
+</time>
+
+              <h4 class="pt-0 my-2">详解注意力机制上篇【RNN,seq2seq等基础知识】</h4>
+              <div class="text-muted">
+                <p>🔥 在自然语言处理（NLP）领域，理解和生成自然语言的能力对于构建智能系统至关重要。从文本分类、机器翻译到对话系统，底层技术的不断进步推动了NLP的发展。在这些技术中，循环神经网络（RNN）及其变种如长短期记忆网络（LSTM）、Seq2Seq模型和注意力机制（Attention Mechanism）扮演了重要角色。
+
+📚 本系列博客将从基础知识开始，逐步深入探讨大语言模型在NLP中的应用。我...</p>
+              </div>
+            </div>
+          </a>
+        </article>
+      
+    </nav>
+  </aside>
+  <!-- #related-posts -->
+
+
+            
+              
+              <!-- Navigation buttons at the bottom of the post. -->
+
+<nav class="post-navigation d-flex justify-content-between" aria-label="Post Navigation">
+  
+  
+
+  
+    <a
+      href="/posts/%E5%AE%89%E5%92%8C%E6%A1%A5%E9%97%B4%E5%A5%8F%E5%90%89%E4%BB%96%E7%89%88/"
+      class="btn btn-outline-primary"
+      aria-label="Older"
+    >
+      <p>吉他学习&mdash;&mdash;安和桥间奏</p>
+    </a>
+  
+
+  
+    <a
+      href="/posts/Githubpages_tutorial/"
+      class="btn btn-outline-primary"
+      aria-label="Newer"
+    >
+      <p>Github网站搭建记录</p>
+    </a>
+  
+</nav>
+
+            
+              
+              <!-- The comments switcher -->
+
+
+            
+
+            <!--
+ * @Author: Hongliang Lu, lhl@pku.edu.cn
+ * @Date: 2024-07-24 15:33:36
+ * @LastEditTime: 2024-07-24 15:55:47
+ * @FilePath: /AuroraLHL.github.io/_includes/footer.html
+ * @Description: 
+ * Organization: College of Engineering,Peking University.
+-->
+<!-- The Footer -->
+
+<footer
+  aria-label="Site Info"
+  class="
+    d-flex flex-column justify-content-center text-muted
+    flex-lg-row justify-content-lg-between align-items-lg-center pb-lg-3
+  "
+>
+  <p>©
+    <time>2024</time>
+
+    
+      <a href="https://github.com/AuroraLHL">Hongliang Lu</a>.
+    
+
+    
+      <span
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author."
+      >Some rights reserved.</span>
+    
+  </p>
+
+  <!-- 站点统计 -->
+<p> 
+  <!-- 不蒜子站点统计，放在页脚处 (footer.html 中插入) -->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<i class="fa fa-user" aria-hidden="true"></i> <span id="busuanzi_value_site_uv"></span> |
+<i class="fa fa-eye" aria-hidden="true"></i> <span id="busuanzi_value_site_pv"></span>
+</p>
+
+  <p>Using the <a
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="v7.0.1"
+        href="https://github.com/cotes2020/jekyll-theme-chirpy"
+        target="_blank"
+        rel="noopener"
+      >Chirpy</a> theme for <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a>.
+  </p>
+
+</footer>
+
+          </div>
+        </div>
+
+        <!-- The Search results -->
+
+<div id="search-result-wrapper" class="d-flex justify-content-center d-none">
+  <div class="col-11 content">
+    <div id="search-hints">
+      <!-- The trending tags list -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+      
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
+        
+        
+
+
+
+  <section>
+    <h2 class="panel-heading">Trending Tags</h2>
+    <div class="d-flex flex-wrap mt-3 mb-1 me-3">
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/%E8%8B%8F%E8%BD%BC%E4%BC%A0/">苏轼传</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/llm/">LLM</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/mac/">Mac</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/%E5%87%B8%E4%BC%98%E5%8C%96/">凸优化</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/github/">Github</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/markdown/">markdown</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/ml/">ML</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/scp/">scp</a>
+      
+        
+        <a class="post-tag btn btn-outline-primary" href="/tags/%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93/">文件传输</a>
+      
+    </div>
+  </section>
+
+
+    </div>
+    <div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div>
+  </div>
+</div>
+
+      </div>
+
+      <aside aria-label="Scroll to Top">
+        <button id="back-to-top" type="button" class="btn btn-lg btn-box-shadow">
+          <i class="fas fa-angle-up"></i>
+        </button>
+      </aside>
+    </div>
+
+    <div id="mask"></div>
+
+    
+      <aside
+  id="notification"
+  class="toast"
+  role="alert"
+  aria-live="assertive"
+  aria-atomic="true"
+  data-bs-animation="true"
+  data-bs-autohide="false"
+>
+  <div class="toast-header">
+    <button
+      type="button"
+      class="btn-close ms-auto"
+      data-bs-dismiss="toast"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="toast-body text-center pt-0">
+    <p class="px-2 mb-3">A new version of content is available.</p>
+    <button type="button" class="btn btn-primary" aria-label="Update">
+      Update
+    </button>
+  </div>
+</aside>
+
+    
+
+    <!-- JavaScripts -->
+    <!-- JS selector for site. -->
+
+<!-- commons -->
+
+
+
+<!-- layout specified -->
+
+
+
+
+  
+
+  
+    <!-- image lazy-loading & popup & clipboard -->
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+  
+    
+
+    
+
+  
+
+
+
+  <script src="https://cdn.jsdelivr.net/combine/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js,npm/loading-attribute-polyfill@2.1.1/dist/loading-attribute-polyfill.umd.min.js,npm/glightbox@3.3.0/dist/js/glightbox.min.js,npm/clipboard@2.0.11/dist/clipboard.min.js,npm/dayjs@1.11.11/dayjs.min.js,npm/dayjs@1.11.11/locale/en.min.js,npm/dayjs@1.11.11/plugin/relativeTime.min.js,npm/dayjs@1.11.11/plugin/localizedFormat.min.js,npm/tocbot@4.27.20/dist/tocbot.min.js"></script>
+
+
+
+
+
+
+<script src="/assets/js/dist/post.min.js"></script>
+
+
+
+<!-- Pageviews -->
+
+  
+
+  
+    
+        
+          <!-- Display GoatCounter pageviews -->
+<script>
+  let pv = document.getElementById('pageviews');
+
+  if (pv !== null) {
+    const uri = location.pathname.replace(/\/$/, '');
+    const url = `https://513921.goatcounter.com/counter/${encodeURIComponent(uri)}.json`;
+
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        const count = data.count.replace(/\s/g, '');
+        pv.innerText = new Intl.NumberFormat().format(count);
+      })
+      .catch((error) => {
+        pv.innerText = '1';
+      });
+  }
+</script>
+
+        
+    
+  
+
+
+
+
+
+
+
+    <!--
+  Jekyll Simple Search loader
+  See: <https://github.com/christian-fei/Simple-Jekyll-Search>
+-->
+
+
+
+
+
+<script>SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('search-results'),
+    json: '/assets/js/data/search.json',
+    searchResultTemplate: '  <article class="px-1 px-sm-2 px-lg-4 px-xl-0">    <header>      <h2><a href="{url}">{title}</a></h2>      <div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1">        {categories}        {tags}      </div>    </header>    <p>{snippet}</p>  </article>',
+    noResultsText: '<p class="mt-5">Oops! No results found.</p>',
+    templateMiddleware: function(prop, value, template) {
+      if (prop === 'categories') {
+        if (value === '') {
+          return `${value}`;
+        } else {
+          return `<div class="me-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`;
+        }
+      }
+
+      if (prop === 'tags') {
+        if (value === '') {
+          return `${value}`;
+        } else {
+          return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`;
+        }
+      }
+    }
+  });
+</script>
+
+
+    <!-- Animated Background -->
+    
+     <div id="animation">
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+    <div class="animation-circle"></div>
+  </div>
+
+
+    
+  </body>
+</html>
+

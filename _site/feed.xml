@@ -1,0 +1,219 @@
+
+
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <id>http://localhost:4000/</id>
+  <title>Hongliang Lu</title>
+  <subtitle>This is a website dedicated to recording study notes and sharing knowledge, covering areas such as machine learning, deep learning, and large language models. By sharing practical experiences and theoretical knowledge, it aims to help readers better understand and apply these technologies.</subtitle>
+  <updated>2024-07-26T14:32:30+08:00</updated>
+  <author>
+    <name>Hongliang Lu</name>
+    <uri>http://localhost:4000/</uri>
+  </author>
+  <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml"/>
+  <link rel="alternate" type="text/html" hreflang="en"
+    href="http://localhost:4000/"/>
+  <generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator>
+  <rights> © 2024 Hongliang Lu </rights>
+  <icon>/assets/img/favicons/favicon.ico</icon>
+  <logo>/assets/img/favicons/favicon-96x96.png</logo>
+
+
+  
+  <entry>
+    <title>Transformer图文详解【Attention is all you need】</title>
+    <link href="http://localhost:4000/posts/transformer/" rel="alternate" type="text/html" title="Transformer图文详解【Attention is all you need】" />
+    <published>2024-07-26T11:50:00+08:00</published>
+  
+    <updated>2024-07-26T11:50:00+08:00</updated>
+  
+    <id>http://localhost:4000/posts/transformer/</id>
+    <content src="http://localhost:4000/posts/transformer/" />
+    <author>
+      <name>Hongliang Lu</name>
+    </author>
+
+  
+    
+    <category term="人工智能" />
+    
+    <category term="大语言模型" />
+    
+  
+
+  <summary>🚀在自然语言处理（NLP）领域，Transformer架构已经成为最先进的技术之一，其核心概念是自注意力机制（Self-Attention Mechanism）。
+
+📚在前面的两小节中，我们已经介绍了注意力机制的基础知识，包括RNN、Seq2Seq等传统方法的基本概念和实现。此外，我们详细讨论了自注意力机制（Self-Attention）及其在现代NLP模型中的重要性。自注意力机制允许模型在处理每个输入时“关注”输入序列的不同部分，从而理解单词与其他单词之间的关系，而不是逐个地线性处理输入。
+
+🔥在理解了自注意力机制的基础上，我们来介绍大语言模型的基础——Transformer结构，Attention is all you need！
+
+一、Transformer框架
+
+Transformer 的核心概念是 自注意力机制（Self-Attention Mechanism），它允许模型...</summary>
+
+  </entry>
+
+  
+  <entry>
+    <title>深入理解注意力机制【Self-Attention,自注意力模型】</title>
+    <link href="http://localhost:4000/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" rel="alternate" type="text/html" title="深入理解注意力机制【Self-Attention,自注意力模型】" />
+    <published>2024-07-26T11:39:00+08:00</published>
+  
+    <updated>2024-07-26T14:26:24+08:00</updated>
+  
+    <id>http://localhost:4000/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/</id>
+    <content src="http://localhost:4000/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" />
+    <author>
+      <name>Hongliang Lu</name>
+    </author>
+
+  
+    
+    <category term="人工智能" />
+    
+    <category term="大语言模型" />
+    
+  
+
+  <summary>在自然语言处理领域，注意力机制（Attention Mechanism）已经成为提升模型性能的重要工具。传统的Encoder-Decoder结构在处理长序列时，常常因为统一语义特征向量的长度限制而导致性能瓶颈。然而，注意力机制通过引入动态上下文向量，成功解决了这一问题，使得模型能够在每个时间步选择与当前输出最相关的信息。
+
+
+  本篇博客将详细介绍注意力机制的基本原理、一般形式以及自注意力模型，并通过具体例子和图示来更好地理解这些关键概念。
+
+
+一、语言模型实例
+
+在Encoder-Decoder结构中，Encoder把所有的输入序列都编码成一个统一的语义特征c再解码：
+
+
+
+因此， c中必须包含原始序列中的所有信息，它的长度就成了限制模型性能的瓶颈。如机器翻译问题，当要翻译的句子较长时，一个c可能存不下那么多信息，就会造成翻译精度的下降。
+
+Attention机制通过在每个时间输入...</summary>
+
+  </entry>
+
+  
+  <entry>
+    <title>详解注意力机制上篇【RNN,seq2seq等基础知识】</title>
+    <link href="http://localhost:4000/posts/nlp%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="alternate" type="text/html" title="详解注意力机制上篇【RNN,seq2seq等基础知识】" />
+    <published>2024-07-26T11:28:00+08:00</published>
+  
+    <updated>2024-07-26T11:28:00+08:00</updated>
+  
+    <id>http://localhost:4000/posts/nlp%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</id>
+    <content src="http://localhost:4000/posts/nlp%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" />
+    <author>
+      <name>Hongliang Lu</name>
+    </author>
+
+  
+    
+    <category term="人工智能" />
+    
+    <category term="大语言模型" />
+    
+  
+
+  <summary>🔥 在自然语言处理（NLP）领域，理解和生成自然语言的能力对于构建智能系统至关重要。从文本分类、机器翻译到对话系统，底层技术的不断进步推动了NLP的发展。在这些技术中，循环神经网络（RNN）及其变种如长短期记忆网络（LSTM）、Seq2Seq模型和注意力机制（Attention Mechanism）扮演了重要角色。
+
+📚 本系列博客将从基础知识开始，逐步深入探讨大语言模型在NLP中的应用。我们将从RNN的经典结构出发，介绍其工作原理和局限性，接着探讨Seq2Seq模型及其在机器翻译中的应用，最后深入解读注意力机制及其在现代深度学习模型中的重要性。
+
+一、RNN经典结构
+
+循环神经网络（Recurrent Neural Network, RNN)是一类以序列数据为输入，在序列的演进方向进行递归且所有节点（循环单元）按链式连接的递归神经网络（recursive neural networ...</summary>
+
+  </entry>
+
+  
+  <entry>
+    <title>机器学习入门简介</title>
+    <link href="http://localhost:4000/posts/ML1/" rel="alternate" type="text/html" title="机器学习入门简介" />
+    <published>2024-07-24T00:00:00+08:00</published>
+  
+    <updated>2024-07-25T23:05:02+08:00</updated>
+  
+    <id>http://localhost:4000/posts/ML1/</id>
+    <content src="http://localhost:4000/posts/ML1/" />
+    <author>
+      <name>Hongliang Lu</name>
+    </author>
+
+  
+    
+    <category term="人工智能" />
+    
+    <category term="机器学习" />
+    
+  
+
+  <summary>一、基本概念
+
+什么是机器学习
+
+总的来说，机器学习就是大数据时代背景下处理数据的各种方法的总称。机器学习利用各种数理模型对数据进行建模，对数据进行预测和分析，在实际应用中指导决策。
+
+我们通常将用于学习的数据对象或者实例称为样例或者样本，每个样例x采用一个向量 $x=(x^{(1)},x^{(2)},\cdots,x^{(n)})^T$来表示.
+
+
+  向量的每个分量对应样例的一个特征或者属性.
+  n为样例$x$的特征个数，也称为维数，$x^{(i)}$为样例x的第i 维属性的属性值.
+  属性张成的空间$\chi$为特征空间，也称为样本空间或输入空间，记作$\chi$.
+
+
+[x=(x^{(1)},x^{(2)},\cdots,x^{(n)})^T\in\mathcal{X}]
+
+一般而言，数据对象的特征和学习任务相关，如果有不相关的特征可能会影响模型的预测能力。
+
+机器学习的...</summary>
+
+  </entry>
+
+  
+  <entry>
+    <title>Github网站搭建记录</title>
+    <link href="http://localhost:4000/posts/Githubpages_tutorial/" rel="alternate" type="text/html" title="Github网站搭建记录" />
+    <published>2024-07-24T00:00:00+08:00</published>
+  
+    <updated>2024-07-26T11:56:26+08:00</updated>
+  
+    <id>http://localhost:4000/posts/Githubpages_tutorial/</id>
+    <content src="http://localhost:4000/posts/Githubpages_tutorial/" />
+    <author>
+      <name>Hongliang Lu</name>
+    </author>
+
+  
+    
+    <category term="各种教程" />
+    
+    <category term="网站搭建" />
+    
+  
+
+  <summary>前言
+
+23年7月份我第一次搭建了自己的个人博客，用的是WordPress+Argon模板，效果如下：
+
+
+
+放弃继续使用这个网站有两个原因：
+
+  由于当时买的是阿里的轻量级服务器，感觉每次访问速度都比较慢，并且服务器和域名续费居然比一开始买还高很多。
+  WordPress还有一个较大的问题是对md文件公式的支持不太好，我写的含有数学公式的md文件直接上传网站公式会显示有问题。
+
+
+于是放弃WordPress，转而用Github Pages+Jekyll模板搭建。下面记录Github个人网站的搭建过程。
+
+一、介绍
+
+1 Github Pages是什么
+
+Github Pages官网： https://pages.github.com/
+
+GitHub Pages 是 GitHub 提供的一个免费的静态网站托管服务，它允许 GitHub 用户创建和托管自己的静态网站，这些网站可以...</summary>
+
+  </entry>
+
+</feed>
+
+
