@@ -34,15 +34,15 @@
 <meta property="og:locale" content="en" />
 <meta name="description" content="​ （1）锥 定义1： 对于一个向量空间 $R^n$​ 与它的一个子集 C ，如果子集 C中的任意一点 x 与任意正数&theta;​ 的乘积仍然属于子集 C ， 则称 C为一个锥（cone） 定义2: 对于集合，，C&sube;$R^n$，&forall;x&isin;C，&theta;&ge;0​，有 &theta;x&isin;C​，则x构成的集合称为锥 由上述定义我们知道锥不一定是连续的，可以是数条过原点的射线的集合，并且锥总是无界的。 （2) 凸锥 定义： 对于$ C&sube;R^n,&forall;x_1,x_2,&hellip;,x_n&isin;C,&theta;_i&ge;0​$, 若 $&theta;_1x_1+&theta;_2x_2+&hellip;+&theta;_nx_n&isin;C​$, 则 C​ 是凸锥。 简单来说：一个集合既是凸集又是锥，则是凸锥。 闭凸锥 如果一个集合既是凸集，又是闭集，同时又是锥，则称为闭凸锥 （3）标准锥 n​ 维标准锥(norm cone)的定义:$C={(x,t)∣∥x∥&le;t,x&isin;R^{n&minus;1},t&isin;R}$ Note: &lt;/p&gt; 标准锥是一个凸锥, 变量包括 x​ 和 t​; 用定义可以证明是一个锥； 利用范数的三角不等式可以证明是一个凸集. &lt;/ol&gt; 下图是一个3维的标准锥： &lt;/blockquote&gt; （4）二阶锥 二阶锥规划是一种非常特殊的非线性优化，有非常高效的求解算法。所谓二阶是指锥里面用到的是二范数，下面的表达式表示一个二阶锥(second order cone)： $∥Ax+b∥^2&le;c^Tx+d$ 二阶锥相当于对标准锥 $C={(x,t)∣∥x∥^2&le;t,t&ge;0}​$ 做了仿射变换 :$∥Ax+b∥^2&le;c^Tx+d&hArr;(Ax+b,c^Tx+d)&isin;C$ 根据仿射变换的性质, 变换后凹凸性不变, 因此二阶锥仍然是一个凸锥。 注: 对向量 x​ 仿射变换（相当于将一个图形平移、变大变小、旋转或倒影）: y=Ax+b​, 其 中 Ax​ 表示对 x​ 变大变小或旋转倒影, 而 +b​ 表示平移。 （5）二阶锥规划 二阶锥规划 (SOCP，Second Order Cone Programming )的一般形式如下： $\begin{array}{ll}\operatorname{minimize} &amp; f^T x \\ \text { subject to } &amp; ∥A_i x+b_i∥_2 \leqslant c_i^T x+d_i, \quad i=1, \cdots, m \\ &amp; F x=g,\end{array}$ 其中,$ x&isin;R^n​$ 为优化变量, $A_i&isin;R^{ni&times;n}​ 且 F&isin;R^{p&times;n​} $。我们称这种形式中的约束：$∥A_ix+b_i∥2⩽c_i^Tx+d_i ，=1,⋯,m$为二阶锥约束。 Note: &lt;/p&gt; 目标函数为仿射函数； 当Ai​ = 0, 问题退化为LP; 当ci​ = 0, 问题退化为QCQP(二次约束二次规划)； 问题形式比LP与QCQP更常规； 一些其他优化问题也可以转化为 SOCP，例如二次规划可以转化为SOCP。 &lt;/ol&gt; 参考资料 &lt;/p&gt; 锥、二阶锥 《最优化：建模、算法与理论》.刘浩洋、户将、李勇锋、文再文编著 《凸优化》.Boyd &lt;/ol&gt;" />
 <meta property="og:description" content="​ （1）锥 定义1： 对于一个向量空间 $R^n$​ 与它的一个子集 C ，如果子集 C中的任意一点 x 与任意正数&theta;​ 的乘积仍然属于子集 C ， 则称 C为一个锥（cone） 定义2: 对于集合，，C&sube;$R^n$，&forall;x&isin;C，&theta;&ge;0​，有 &theta;x&isin;C​，则x构成的集合称为锥 由上述定义我们知道锥不一定是连续的，可以是数条过原点的射线的集合，并且锥总是无界的。 （2) 凸锥 定义： 对于$ C&sube;R^n,&forall;x_1,x_2,&hellip;,x_n&isin;C,&theta;_i&ge;0​$, 若 $&theta;_1x_1+&theta;_2x_2+&hellip;+&theta;_nx_n&isin;C​$, 则 C​ 是凸锥。 简单来说：一个集合既是凸集又是锥，则是凸锥。 闭凸锥 如果一个集合既是凸集，又是闭集，同时又是锥，则称为闭凸锥 （3）标准锥 n​ 维标准锥(norm cone)的定义:$C={(x,t)∣∥x∥&le;t,x&isin;R^{n&minus;1},t&isin;R}$ Note: &lt;/p&gt; 标准锥是一个凸锥, 变量包括 x​ 和 t​; 用定义可以证明是一个锥； 利用范数的三角不等式可以证明是一个凸集. &lt;/ol&gt; 下图是一个3维的标准锥： &lt;/blockquote&gt; （4）二阶锥 二阶锥规划是一种非常特殊的非线性优化，有非常高效的求解算法。所谓二阶是指锥里面用到的是二范数，下面的表达式表示一个二阶锥(second order cone)： $∥Ax+b∥^2&le;c^Tx+d$ 二阶锥相当于对标准锥 $C={(x,t)∣∥x∥^2&le;t,t&ge;0}​$ 做了仿射变换 :$∥Ax+b∥^2&le;c^Tx+d&hArr;(Ax+b,c^Tx+d)&isin;C$ 根据仿射变换的性质, 变换后凹凸性不变, 因此二阶锥仍然是一个凸锥。 注: 对向量 x​ 仿射变换（相当于将一个图形平移、变大变小、旋转或倒影）: y=Ax+b​, 其 中 Ax​ 表示对 x​ 变大变小或旋转倒影, 而 +b​ 表示平移。 （5）二阶锥规划 二阶锥规划 (SOCP，Second Order Cone Programming )的一般形式如下： $\begin{array}{ll}\operatorname{minimize} &amp; f^T x \\ \text { subject to } &amp; ∥A_i x+b_i∥_2 \leqslant c_i^T x+d_i, \quad i=1, \cdots, m \\ &amp; F x=g,\end{array}$ 其中,$ x&isin;R^n​$ 为优化变量, $A_i&isin;R^{ni&times;n}​ 且 F&isin;R^{p&times;n​} $。我们称这种形式中的约束：$∥A_ix+b_i∥2⩽c_i^Tx+d_i ，=1,⋯,m$为二阶锥约束。 Note: &lt;/p&gt; 目标函数为仿射函数； 当Ai​ = 0, 问题退化为LP; 当ci​ = 0, 问题退化为QCQP(二次约束二次规划)； 问题形式比LP与QCQP更常规； 一些其他优化问题也可以转化为 SOCP，例如二次规划可以转化为SOCP。 &lt;/ol&gt; 参考资料 &lt;/p&gt; 锥、二阶锥 《最优化：建模、算法与理论》.刘浩洋、户将、李勇锋、文再文编著 《凸优化》.Boyd &lt;/ol&gt;" />
-<link rel="canonical" href="http://localhost:4000/posts/%E4%BA%8C%E9%98%B6%E9%94%A5%E8%A7%84%E5%88%92%E7%AE%80%E4%BB%8B/" />
-<meta property="og:url" content="http://localhost:4000/posts/%E4%BA%8C%E9%98%B6%E9%94%A5%E8%A7%84%E5%88%92%E7%AE%80%E4%BB%8B/" />
+<link rel="canonical" href="https://auroralhl.github.io/posts/%E4%BA%8C%E9%98%B6%E9%94%A5%E8%A7%84%E5%88%92%E7%AE%80%E4%BB%8B/" />
+<meta property="og:url" content="https://auroralhl.github.io/posts/%E4%BA%8C%E9%98%B6%E9%94%A5%E8%A7%84%E5%88%92%E7%AE%80%E4%BB%8B/" />
 <meta property="og:site_name" content="Hongliang Lu" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2023-08-24T14:28:28+08:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="二阶锥规划简介" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-07-26T14:26:24+08:00","datePublished":"2023-08-24T14:28:28+08:00","description":"​ （1）锥 定义1： 对于一个向量空间 $R^n$​ 与它的一个子集 C ，如果子集 C中的任意一点 x 与任意正数&theta;​ 的乘积仍然属于子集 C ， 则称 C为一个锥（cone） 定义2: 对于集合，，C&sube;$R^n$，&forall;x&isin;C，&theta;&ge;0​，有 &theta;x&isin;C​，则x构成的集合称为锥 由上述定义我们知道锥不一定是连续的，可以是数条过原点的射线的集合，并且锥总是无界的。 （2) 凸锥 定义： 对于$ C&sube;R^n,&forall;x_1,x_2,&hellip;,x_n&isin;C,&theta;_i&ge;0​$, 若 $&theta;_1x_1+&theta;_2x_2+&hellip;+&theta;_nx_n&isin;C​$, 则 C​ 是凸锥。 简单来说：一个集合既是凸集又是锥，则是凸锥。 闭凸锥 如果一个集合既是凸集，又是闭集，同时又是锥，则称为闭凸锥 （3）标准锥 n​ 维标准锥(norm cone)的定义:$C={(x,t)∣∥x∥&le;t,x&isin;R^{n&minus;1},t&isin;R}$ Note: &lt;/p&gt; 标准锥是一个凸锥, 变量包括 x​ 和 t​; 用定义可以证明是一个锥； 利用范数的三角不等式可以证明是一个凸集. &lt;/ol&gt; 下图是一个3维的标准锥： &lt;/blockquote&gt; （4）二阶锥 二阶锥规划是一种非常特殊的非线性优化，有非常高效的求解算法。所谓二阶是指锥里面用到的是二范数，下面的表达式表示一个二阶锥(second order cone)： $∥Ax+b∥^2&le;c^Tx+d$ 二阶锥相当于对标准锥 $C={(x,t)∣∥x∥^2&le;t,t&ge;0}​$ 做了仿射变换 :$∥Ax+b∥^2&le;c^Tx+d&hArr;(Ax+b,c^Tx+d)&isin;C$ 根据仿射变换的性质, 变换后凹凸性不变, 因此二阶锥仍然是一个凸锥。 注: 对向量 x​ 仿射变换（相当于将一个图形平移、变大变小、旋转或倒影）: y=Ax+b​, 其 中 Ax​ 表示对 x​ 变大变小或旋转倒影, 而 +b​ 表示平移。 （5）二阶锥规划 二阶锥规划 (SOCP，Second Order Cone Programming )的一般形式如下： $\\begin{array}{ll}\\operatorname{minimize} &amp; f^T x \\\\ \\text { subject to } &amp; ∥A_i x+b_i∥_2 \\leqslant c_i^T x+d_i, \\quad i=1, \\cdots, m \\\\ &amp; F x=g,\\end{array}$ 其中,$ x&isin;R^n​$ 为优化变量, $A_i&isin;R^{ni&times;n}​ 且 F&isin;R^{p&times;n​} $。我们称这种形式中的约束：$∥A_ix+b_i∥2⩽c_i^Tx+d_i ，=1,⋯,m$为二阶锥约束。 Note: &lt;/p&gt; 目标函数为仿射函数； 当Ai​ = 0, 问题退化为LP; 当ci​ = 0, 问题退化为QCQP(二次约束二次规划)； 问题形式比LP与QCQP更常规； 一些其他优化问题也可以转化为 SOCP，例如二次规划可以转化为SOCP。 &lt;/ol&gt; 参考资料 &lt;/p&gt; 锥、二阶锥 《最优化：建模、算法与理论》.刘浩洋、户将、李勇锋、文再文编著 《凸优化》.Boyd &lt;/ol&gt;","headline":"二阶锥规划简介","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/posts/%E4%BA%8C%E9%98%B6%E9%94%A5%E8%A7%84%E5%88%92%E7%AE%80%E4%BB%8B/"},"url":"http://localhost:4000/posts/%E4%BA%8C%E9%98%B6%E9%94%A5%E8%A7%84%E5%88%92%E7%AE%80%E4%BB%8B/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-07-26T14:26:24+08:00","datePublished":"2023-08-24T14:28:28+08:00","description":"​ （1）锥 定义1： 对于一个向量空间 $R^n$​ 与它的一个子集 C ，如果子集 C中的任意一点 x 与任意正数&theta;​ 的乘积仍然属于子集 C ， 则称 C为一个锥（cone） 定义2: 对于集合，，C&sube;$R^n$，&forall;x&isin;C，&theta;&ge;0​，有 &theta;x&isin;C​，则x构成的集合称为锥 由上述定义我们知道锥不一定是连续的，可以是数条过原点的射线的集合，并且锥总是无界的。 （2) 凸锥 定义： 对于$ C&sube;R^n,&forall;x_1,x_2,&hellip;,x_n&isin;C,&theta;_i&ge;0​$, 若 $&theta;_1x_1+&theta;_2x_2+&hellip;+&theta;_nx_n&isin;C​$, 则 C​ 是凸锥。 简单来说：一个集合既是凸集又是锥，则是凸锥。 闭凸锥 如果一个集合既是凸集，又是闭集，同时又是锥，则称为闭凸锥 （3）标准锥 n​ 维标准锥(norm cone)的定义:$C={(x,t)∣∥x∥&le;t,x&isin;R^{n&minus;1},t&isin;R}$ Note: &lt;/p&gt; 标准锥是一个凸锥, 变量包括 x​ 和 t​; 用定义可以证明是一个锥； 利用范数的三角不等式可以证明是一个凸集. &lt;/ol&gt; 下图是一个3维的标准锥： &lt;/blockquote&gt; （4）二阶锥 二阶锥规划是一种非常特殊的非线性优化，有非常高效的求解算法。所谓二阶是指锥里面用到的是二范数，下面的表达式表示一个二阶锥(second order cone)： $∥Ax+b∥^2&le;c^Tx+d$ 二阶锥相当于对标准锥 $C={(x,t)∣∥x∥^2&le;t,t&ge;0}​$ 做了仿射变换 :$∥Ax+b∥^2&le;c^Tx+d&hArr;(Ax+b,c^Tx+d)&isin;C$ 根据仿射变换的性质, 变换后凹凸性不变, 因此二阶锥仍然是一个凸锥。 注: 对向量 x​ 仿射变换（相当于将一个图形平移、变大变小、旋转或倒影）: y=Ax+b​, 其 中 Ax​ 表示对 x​ 变大变小或旋转倒影, 而 +b​ 表示平移。 （5）二阶锥规划 二阶锥规划 (SOCP，Second Order Cone Programming )的一般形式如下： $\\begin{array}{ll}\\operatorname{minimize} &amp; f^T x \\\\ \\text { subject to } &amp; ∥A_i x+b_i∥_2 \\leqslant c_i^T x+d_i, \\quad i=1, \\cdots, m \\\\ &amp; F x=g,\\end{array}$ 其中,$ x&isin;R^n​$ 为优化变量, $A_i&isin;R^{ni&times;n}​ 且 F&isin;R^{p&times;n​} $。我们称这种形式中的约束：$∥A_ix+b_i∥2⩽c_i^Tx+d_i ，=1,⋯,m$为二阶锥约束。 Note: &lt;/p&gt; 目标函数为仿射函数； 当Ai​ = 0, 问题退化为LP; 当ci​ = 0, 问题退化为QCQP(二次约束二次规划)； 问题形式比LP与QCQP更常规； 一些其他优化问题也可以转化为 SOCP，例如二次规划可以转化为SOCP。 &lt;/ol&gt; 参考资料 &lt;/p&gt; 锥、二阶锥 《最优化：建模、算法与理论》.刘浩洋、户将、李勇锋、文再文编著 《凸优化》.Boyd &lt;/ol&gt;","headline":"二阶锥规划简介","mainEntityOfPage":{"@type":"WebPage","@id":"https://auroralhl.github.io/posts/%E4%BA%8C%E9%98%B6%E9%94%A5%E8%A7%84%E5%88%92%E7%AE%80%E4%BB%8B/"},"url":"https://auroralhl.github.io/posts/%E4%BA%8C%E9%98%B6%E9%94%A5%E8%A7%84%E5%88%92%E7%AE%80%E4%BB%8B/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -942,14 +942,14 @@
 
       
 
-      <a href="https://twitter.com/intent/tweet?text=%E4%BA%8C%E9%98%B6%E9%94%A5%E8%A7%84%E5%88%92%E7%AE%80%E4%BB%8B%20-%20Hongliang%20Lu&url=http%3A%2F%2Flocalhost%3A4000%2Fposts%2F%25E4%25BA%258C%25E9%2598%25B6%25E9%2594%25A5%25E8%25A7%2584%25E5%2588%2592%25E7%25AE%2580%25E4%25BB%258B%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter" aria-label="Twitter">
+      <a href="https://twitter.com/intent/tweet?text=%E4%BA%8C%E9%98%B6%E9%94%A5%E8%A7%84%E5%88%92%E7%AE%80%E4%BB%8B%20-%20Hongliang%20Lu&url=https%3A%2F%2Fauroralhl.github.io%2Fposts%2F%25E4%25BA%258C%25E9%2598%25B6%25E9%2594%25A5%25E8%25A7%2584%25E5%2588%2592%25E7%25AE%2580%25E4%25BB%258B%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter" aria-label="Twitter">
         <i class="fa-fw fa-brands fa-square-x-twitter"></i>
       </a>
     
 
       
 
-      <a href="https://service.weibo.com/share/share.php?title=%E4%BA%8C%E9%98%B6%E9%94%A5%E8%A7%84%E5%88%92%E7%AE%80%E4%BB%8B%20-%20Hongliang%20Lu&url=http%3A%2F%2Flocalhost%3A4000%2Fposts%2F%25E4%25BA%258C%25E9%2598%25B6%25E9%2594%25A5%25E8%25A7%2584%25E5%2588%2592%25E7%25AE%2580%25E4%25BB%258B%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Weibo" aria-label="Weibo">
+      <a href="https://service.weibo.com/share/share.php?title=%E4%BA%8C%E9%98%B6%E9%94%A5%E8%A7%84%E5%88%92%E7%AE%80%E4%BB%8B%20-%20Hongliang%20Lu&url=https%3A%2F%2Fauroralhl.github.io%2Fposts%2F%25E4%25BA%258C%25E9%2598%25B6%25E9%2594%25A5%25E8%25A7%2584%25E5%2588%2592%25E7%25AE%2580%25E4%25BB%258B%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Weibo" aria-label="Weibo">
         <i class="fa-fw fab fa-weibo"></i>
       </a>
     
@@ -1004,6 +1004,20 @@
         
         
         <li class="text-truncate lh-lg">
+          <a href="/posts/scaling-law/">Scaling Law</a>
+        </li>
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
+          <a href="/posts/Githubpages_tutorial/">Github网站搭建记录</a>
+        </li>
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
           <a href="/posts/2023%E6%9A%91%E5%81%87%E8%AE%B0%E5%BF%86/">2023暑假记忆</a>
         </li>
       
@@ -1019,20 +1033,6 @@
         
         <li class="text-truncate lh-lg">
           <a href="/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">深入理解注意力机制【Self-Attention,自注意力模型】</a>
-        </li>
-      
-        
-        
-        
-        <li class="text-truncate lh-lg">
-          <a href="/posts/Githubpages_tutorial/">Github网站搭建记录</a>
-        </li>
-      
-        
-        
-        
-        <li class="text-truncate lh-lg">
-          <a href="/posts/transformer/">Transformer图文详解【Attention is all you need】</a>
         </li>
       
     </ul>
@@ -1101,21 +1101,6 @@
     
     
     
-  
-    
-    
-    
-    
-  
-    
-    
-    
-    
-  
-    
-    
-    
-    
       
         
         
@@ -1149,6 +1134,23 @@
     
     
     
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
     
   
     
@@ -1410,10 +1412,10 @@
     <div class="d-flex flex-wrap mt-3 mb-1 me-3">
       
         
-        <a class="post-tag btn btn-outline-primary" href="/tags/%E8%8B%8F%E8%BD%BC%E4%BC%A0/">苏轼传</a>
+        <a class="post-tag btn btn-outline-primary" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
       
         
-        <a class="post-tag btn btn-outline-primary" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+        <a class="post-tag btn btn-outline-primary" href="/tags/%E8%8B%8F%E8%BD%BC%E4%BC%A0/">苏轼传</a>
       
         
         <a class="post-tag btn btn-outline-primary" href="/tags/llm/">LLM</a>
@@ -1608,7 +1610,7 @@
   "
 >
   <p>©
-    <time>2024</time>
+    <time>2025</time>
 
     
       <a href="https://github.com/AuroraLHL">Hongliang Lu</a>.
@@ -1712,21 +1714,6 @@
     
     
     
-  
-    
-    
-    
-    
-  
-    
-    
-    
-    
-  
-    
-    
-    
-    
       
         
         
@@ -1760,6 +1747,23 @@
     
     
     
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
     
   
     
@@ -2021,10 +2025,10 @@
     <div class="d-flex flex-wrap mt-3 mb-1 me-3">
       
         
-        <a class="post-tag btn btn-outline-primary" href="/tags/%E8%8B%8F%E8%BD%BC%E4%BC%A0/">苏轼传</a>
+        <a class="post-tag btn btn-outline-primary" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
       
         
-        <a class="post-tag btn btn-outline-primary" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+        <a class="post-tag btn btn-outline-primary" href="/tags/%E8%8B%8F%E8%BD%BC%E4%BC%A0/">苏轼传</a>
       
         
         <a class="post-tag btn btn-outline-primary" href="/tags/llm/">LLM</a>

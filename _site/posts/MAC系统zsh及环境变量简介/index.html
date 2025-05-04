@@ -34,15 +34,15 @@
 <meta property="og:locale" content="en" />
 <meta name="description" content="Zsh简介 从 macOS Catalina 开始，Mac 使用 zsh 作为默认登录 Shell 和交互式 Shell。默认情况下，Mac 使用 zsh 或 bash 作为登录 Shell 和交互式 Shell 的命令行解释器： 从 macOS Catalina 开始，zsh (Z shell) 是所有新建用户帐户的默认 Shell。 bash 是 macOS Mojave 及更早版本中的默认 Shell。 zsh 与 Bourne Shell (sh) 高度兼容，并且与 bash 基本兼容（存在一些差别）。要进一步了解 zsh 及其全面的命令行完成系统，请在&ldquo;终端&rdquo;中输入： man zsh 总的来说，Zsh是一个UNIX命令解释器(shell)，可以作为交互式登录shell和shell脚本命令处理器使用。在标准shell中，zsh最类似于ksh，但包含许多增强功能。Zsh具有命令行编辑、内置拼写纠正、可编程命令补全、shell功能(具有自动加载)、历史机制和许多其他功能。 环境变量 shell 使用环境变量储存信息，例如当前用户的名称、主机名称以及任何命令的默认路径。在 shell 上下文中执行的所有命令都会继承环境变量，部分命令取决于环境变量。 你可以创建环境变量并用来控制命令行为，无需修改命令本身。例如，你可以使用环境变量来让命令将调试信息打印到控制台。若要查看所有环境变量，请输入： env 当你从 shell 启动 App 时，该 App 将继承大部分的 shell 环境，包括导出的环境变量。这种形式的继承有利于进行 App 的动态配置。例如，你的 App 可以检查某个环境变量的存在（或值），并据此更改其行为。 设置环境变量 export 命令用于设置或显示环境变量，格式为：export[变量名]=[变量值]，例如： export PATH=&quot;/opt/homebrew/bin:$PATH&quot; 上面PATH设置时，路径后面加了&quot;:$PATH&quot;，表示之前PATH的值 ，不加入使得PATH为设置的值（唯一）。注：冒号表示并列。 shell的环境变量一般都保存在配置文件中，下面简要介绍一下各种shell的配置文件。 配置文件 shell的配置文件有两种，一种是全局配置文件，一种是用户配置文件。推荐设置用户个人自己的环境变量，尽量不破坏Mac系统全局变量。比如若是zsh，那么推荐改动~/.zshrc文件。(注意下面有些文件可能没有，每个电脑不一样) 全局配置文件 配置文件 描述 /etc/profile 系统级别 /etc/paths 系统级别 /etc/bashrc 基于bash /etc/zprofile 基于zsh /etc/zshrc 基于zsh 用户配置文件 配置文件 描述 ~/bash_profile 基于bash（shell） ~/etc/zprofile 基于zsh（shell） ~/.zshrc 基于（shell） 以zsh为例，介绍一下不同文件的作用。.zprofile 和 .zshrc 这两个文件都是与 Zsh shell 相关的配置文件，它们的作用略有不同： .zprofile: zprofile 文件是在登录时（login shell）被执行的。当您从登录管理器或远程登录时，Zsh 将被作为登录 shell 启动，并且会执行 .zprofile 中的命令。这通常用于设置一些与登录会话相关的环境变量和执行初始化命令。 .zshrc: .zshrc 文件则是在交互式 non-login shell 启动时被执行的。也就是说，当您在一个已经登录的终端中启动新的 Zsh shell 时，会执行 .zshrc 中的命令。这个文件通常包含了定制提示符、别名、自定义函数等与交互式使用相关的设置。 因此，zprofile 主要用于设置登录会话相关的环境变量和执行初始化命令，而 .zshrc 则主要用于定制交互式 shell 的行为和环境设置。 参考资料 在Mac上的&ldquo;终端&rdquo;使用环境变量 Mac系统 - Mac的环境变量" />
 <meta property="og:description" content="Zsh简介 从 macOS Catalina 开始，Mac 使用 zsh 作为默认登录 Shell 和交互式 Shell。默认情况下，Mac 使用 zsh 或 bash 作为登录 Shell 和交互式 Shell 的命令行解释器： 从 macOS Catalina 开始，zsh (Z shell) 是所有新建用户帐户的默认 Shell。 bash 是 macOS Mojave 及更早版本中的默认 Shell。 zsh 与 Bourne Shell (sh) 高度兼容，并且与 bash 基本兼容（存在一些差别）。要进一步了解 zsh 及其全面的命令行完成系统，请在&ldquo;终端&rdquo;中输入： man zsh 总的来说，Zsh是一个UNIX命令解释器(shell)，可以作为交互式登录shell和shell脚本命令处理器使用。在标准shell中，zsh最类似于ksh，但包含许多增强功能。Zsh具有命令行编辑、内置拼写纠正、可编程命令补全、shell功能(具有自动加载)、历史机制和许多其他功能。 环境变量 shell 使用环境变量储存信息，例如当前用户的名称、主机名称以及任何命令的默认路径。在 shell 上下文中执行的所有命令都会继承环境变量，部分命令取决于环境变量。 你可以创建环境变量并用来控制命令行为，无需修改命令本身。例如，你可以使用环境变量来让命令将调试信息打印到控制台。若要查看所有环境变量，请输入： env 当你从 shell 启动 App 时，该 App 将继承大部分的 shell 环境，包括导出的环境变量。这种形式的继承有利于进行 App 的动态配置。例如，你的 App 可以检查某个环境变量的存在（或值），并据此更改其行为。 设置环境变量 export 命令用于设置或显示环境变量，格式为：export[变量名]=[变量值]，例如： export PATH=&quot;/opt/homebrew/bin:$PATH&quot; 上面PATH设置时，路径后面加了&quot;:$PATH&quot;，表示之前PATH的值 ，不加入使得PATH为设置的值（唯一）。注：冒号表示并列。 shell的环境变量一般都保存在配置文件中，下面简要介绍一下各种shell的配置文件。 配置文件 shell的配置文件有两种，一种是全局配置文件，一种是用户配置文件。推荐设置用户个人自己的环境变量，尽量不破坏Mac系统全局变量。比如若是zsh，那么推荐改动~/.zshrc文件。(注意下面有些文件可能没有，每个电脑不一样) 全局配置文件 配置文件 描述 /etc/profile 系统级别 /etc/paths 系统级别 /etc/bashrc 基于bash /etc/zprofile 基于zsh /etc/zshrc 基于zsh 用户配置文件 配置文件 描述 ~/bash_profile 基于bash（shell） ~/etc/zprofile 基于zsh（shell） ~/.zshrc 基于（shell） 以zsh为例，介绍一下不同文件的作用。.zprofile 和 .zshrc 这两个文件都是与 Zsh shell 相关的配置文件，它们的作用略有不同： .zprofile: zprofile 文件是在登录时（login shell）被执行的。当您从登录管理器或远程登录时，Zsh 将被作为登录 shell 启动，并且会执行 .zprofile 中的命令。这通常用于设置一些与登录会话相关的环境变量和执行初始化命令。 .zshrc: .zshrc 文件则是在交互式 non-login shell 启动时被执行的。也就是说，当您在一个已经登录的终端中启动新的 Zsh shell 时，会执行 .zshrc 中的命令。这个文件通常包含了定制提示符、别名、自定义函数等与交互式使用相关的设置。 因此，zprofile 主要用于设置登录会话相关的环境变量和执行初始化命令，而 .zshrc 则主要用于定制交互式 shell 的行为和环境设置。 参考资料 在Mac上的&ldquo;终端&rdquo;使用环境变量 Mac系统 - Mac的环境变量" />
-<link rel="canonical" href="http://localhost:4000/posts/MAC%E7%B3%BB%E7%BB%9Fzsh%E5%8F%8A%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B/" />
-<meta property="og:url" content="http://localhost:4000/posts/MAC%E7%B3%BB%E7%BB%9Fzsh%E5%8F%8A%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B/" />
+<link rel="canonical" href="https://auroralhl.github.io/posts/MAC%E7%B3%BB%E7%BB%9Fzsh%E5%8F%8A%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B/" />
+<meta property="og:url" content="https://auroralhl.github.io/posts/MAC%E7%B3%BB%E7%BB%9Fzsh%E5%8F%8A%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B/" />
 <meta property="og:site_name" content="Hongliang Lu" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2023-12-17T16:27:19+08:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="MAC系统zsh及环境变量简介" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2023-12-17T16:27:19+08:00","datePublished":"2023-12-17T16:27:19+08:00","description":"Zsh简介 从 macOS Catalina 开始，Mac 使用 zsh 作为默认登录 Shell 和交互式 Shell。默认情况下，Mac 使用 zsh 或 bash 作为登录 Shell 和交互式 Shell 的命令行解释器： 从 macOS Catalina 开始，zsh (Z shell) 是所有新建用户帐户的默认 Shell。 bash 是 macOS Mojave 及更早版本中的默认 Shell。 zsh 与 Bourne Shell (sh) 高度兼容，并且与 bash 基本兼容（存在一些差别）。要进一步了解 zsh 及其全面的命令行完成系统，请在&ldquo;终端&rdquo;中输入： man zsh 总的来说，Zsh是一个UNIX命令解释器(shell)，可以作为交互式登录shell和shell脚本命令处理器使用。在标准shell中，zsh最类似于ksh，但包含许多增强功能。Zsh具有命令行编辑、内置拼写纠正、可编程命令补全、shell功能(具有自动加载)、历史机制和许多其他功能。 环境变量 shell 使用环境变量储存信息，例如当前用户的名称、主机名称以及任何命令的默认路径。在 shell 上下文中执行的所有命令都会继承环境变量，部分命令取决于环境变量。 你可以创建环境变量并用来控制命令行为，无需修改命令本身。例如，你可以使用环境变量来让命令将调试信息打印到控制台。若要查看所有环境变量，请输入： env 当你从 shell 启动 App 时，该 App 将继承大部分的 shell 环境，包括导出的环境变量。这种形式的继承有利于进行 App 的动态配置。例如，你的 App 可以检查某个环境变量的存在（或值），并据此更改其行为。 设置环境变量 export 命令用于设置或显示环境变量，格式为：export[变量名]=[变量值]，例如： export PATH=&quot;/opt/homebrew/bin:$PATH&quot; 上面PATH设置时，路径后面加了&quot;:$PATH&quot;，表示之前PATH的值 ，不加入使得PATH为设置的值（唯一）。注：冒号表示并列。 shell的环境变量一般都保存在配置文件中，下面简要介绍一下各种shell的配置文件。 配置文件 shell的配置文件有两种，一种是全局配置文件，一种是用户配置文件。推荐设置用户个人自己的环境变量，尽量不破坏Mac系统全局变量。比如若是zsh，那么推荐改动~/.zshrc文件。(注意下面有些文件可能没有，每个电脑不一样) 全局配置文件 配置文件 描述 /etc/profile 系统级别 /etc/paths 系统级别 /etc/bashrc 基于bash /etc/zprofile 基于zsh /etc/zshrc 基于zsh 用户配置文件 配置文件 描述 ~/bash_profile 基于bash（shell） ~/etc/zprofile 基于zsh（shell） ~/.zshrc 基于（shell） 以zsh为例，介绍一下不同文件的作用。.zprofile 和 .zshrc 这两个文件都是与 Zsh shell 相关的配置文件，它们的作用略有不同： .zprofile: zprofile 文件是在登录时（login shell）被执行的。当您从登录管理器或远程登录时，Zsh 将被作为登录 shell 启动，并且会执行 .zprofile 中的命令。这通常用于设置一些与登录会话相关的环境变量和执行初始化命令。 .zshrc: .zshrc 文件则是在交互式 non-login shell 启动时被执行的。也就是说，当您在一个已经登录的终端中启动新的 Zsh shell 时，会执行 .zshrc 中的命令。这个文件通常包含了定制提示符、别名、自定义函数等与交互式使用相关的设置。 因此，zprofile 主要用于设置登录会话相关的环境变量和执行初始化命令，而 .zshrc 则主要用于定制交互式 shell 的行为和环境设置。 参考资料 在Mac上的&ldquo;终端&rdquo;使用环境变量 Mac系统 - Mac的环境变量","headline":"MAC系统zsh及环境变量简介","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/posts/MAC%E7%B3%BB%E7%BB%9Fzsh%E5%8F%8A%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B/"},"url":"http://localhost:4000/posts/MAC%E7%B3%BB%E7%BB%9Fzsh%E5%8F%8A%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2023-12-17T16:27:19+08:00","datePublished":"2023-12-17T16:27:19+08:00","description":"Zsh简介 从 macOS Catalina 开始，Mac 使用 zsh 作为默认登录 Shell 和交互式 Shell。默认情况下，Mac 使用 zsh 或 bash 作为登录 Shell 和交互式 Shell 的命令行解释器： 从 macOS Catalina 开始，zsh (Z shell) 是所有新建用户帐户的默认 Shell。 bash 是 macOS Mojave 及更早版本中的默认 Shell。 zsh 与 Bourne Shell (sh) 高度兼容，并且与 bash 基本兼容（存在一些差别）。要进一步了解 zsh 及其全面的命令行完成系统，请在&ldquo;终端&rdquo;中输入： man zsh 总的来说，Zsh是一个UNIX命令解释器(shell)，可以作为交互式登录shell和shell脚本命令处理器使用。在标准shell中，zsh最类似于ksh，但包含许多增强功能。Zsh具有命令行编辑、内置拼写纠正、可编程命令补全、shell功能(具有自动加载)、历史机制和许多其他功能。 环境变量 shell 使用环境变量储存信息，例如当前用户的名称、主机名称以及任何命令的默认路径。在 shell 上下文中执行的所有命令都会继承环境变量，部分命令取决于环境变量。 你可以创建环境变量并用来控制命令行为，无需修改命令本身。例如，你可以使用环境变量来让命令将调试信息打印到控制台。若要查看所有环境变量，请输入： env 当你从 shell 启动 App 时，该 App 将继承大部分的 shell 环境，包括导出的环境变量。这种形式的继承有利于进行 App 的动态配置。例如，你的 App 可以检查某个环境变量的存在（或值），并据此更改其行为。 设置环境变量 export 命令用于设置或显示环境变量，格式为：export[变量名]=[变量值]，例如： export PATH=&quot;/opt/homebrew/bin:$PATH&quot; 上面PATH设置时，路径后面加了&quot;:$PATH&quot;，表示之前PATH的值 ，不加入使得PATH为设置的值（唯一）。注：冒号表示并列。 shell的环境变量一般都保存在配置文件中，下面简要介绍一下各种shell的配置文件。 配置文件 shell的配置文件有两种，一种是全局配置文件，一种是用户配置文件。推荐设置用户个人自己的环境变量，尽量不破坏Mac系统全局变量。比如若是zsh，那么推荐改动~/.zshrc文件。(注意下面有些文件可能没有，每个电脑不一样) 全局配置文件 配置文件 描述 /etc/profile 系统级别 /etc/paths 系统级别 /etc/bashrc 基于bash /etc/zprofile 基于zsh /etc/zshrc 基于zsh 用户配置文件 配置文件 描述 ~/bash_profile 基于bash（shell） ~/etc/zprofile 基于zsh（shell） ~/.zshrc 基于（shell） 以zsh为例，介绍一下不同文件的作用。.zprofile 和 .zshrc 这两个文件都是与 Zsh shell 相关的配置文件，它们的作用略有不同： .zprofile: zprofile 文件是在登录时（login shell）被执行的。当您从登录管理器或远程登录时，Zsh 将被作为登录 shell 启动，并且会执行 .zprofile 中的命令。这通常用于设置一些与登录会话相关的环境变量和执行初始化命令。 .zshrc: .zshrc 文件则是在交互式 non-login shell 启动时被执行的。也就是说，当您在一个已经登录的终端中启动新的 Zsh shell 时，会执行 .zshrc 中的命令。这个文件通常包含了定制提示符、别名、自定义函数等与交互式使用相关的设置。 因此，zprofile 主要用于设置登录会话相关的环境变量和执行初始化命令，而 .zshrc 则主要用于定制交互式 shell 的行为和环境设置。 参考资料 在Mac上的&ldquo;终端&rdquo;使用环境变量 Mac系统 - Mac的环境变量","headline":"MAC系统zsh及环境变量简介","mainEntityOfPage":{"@type":"WebPage","@id":"https://auroralhl.github.io/posts/MAC%E7%B3%BB%E7%BB%9Fzsh%E5%8F%8A%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B/"},"url":"https://auroralhl.github.io/posts/MAC%E7%B3%BB%E7%BB%9Fzsh%E5%8F%8A%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -789,14 +789,14 @@
 
       
 
-      <a href="https://twitter.com/intent/tweet?text=MAC%E7%B3%BB%E7%BB%9Fzsh%E5%8F%8A%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B%20-%20Hongliang%20Lu&url=http%3A%2F%2Flocalhost%3A4000%2Fposts%2FMAC%25E7%25B3%25BB%25E7%25BB%259Fzsh%25E5%258F%258A%25E7%258E%25AF%25E5%25A2%2583%25E5%258F%2598%25E9%2587%258F%25E7%25AE%2580%25E4%25BB%258B%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter" aria-label="Twitter">
+      <a href="https://twitter.com/intent/tweet?text=MAC%E7%B3%BB%E7%BB%9Fzsh%E5%8F%8A%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B%20-%20Hongliang%20Lu&url=https%3A%2F%2Fauroralhl.github.io%2Fposts%2FMAC%25E7%25B3%25BB%25E7%25BB%259Fzsh%25E5%258F%258A%25E7%258E%25AF%25E5%25A2%2583%25E5%258F%2598%25E9%2587%258F%25E7%25AE%2580%25E4%25BB%258B%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter" aria-label="Twitter">
         <i class="fa-fw fa-brands fa-square-x-twitter"></i>
       </a>
     
 
       
 
-      <a href="https://service.weibo.com/share/share.php?title=MAC%E7%B3%BB%E7%BB%9Fzsh%E5%8F%8A%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B%20-%20Hongliang%20Lu&url=http%3A%2F%2Flocalhost%3A4000%2Fposts%2FMAC%25E7%25B3%25BB%25E7%25BB%259Fzsh%25E5%258F%258A%25E7%258E%25AF%25E5%25A2%2583%25E5%258F%2598%25E9%2587%258F%25E7%25AE%2580%25E4%25BB%258B%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Weibo" aria-label="Weibo">
+      <a href="https://service.weibo.com/share/share.php?title=MAC%E7%B3%BB%E7%BB%9Fzsh%E5%8F%8A%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%80%E4%BB%8B%20-%20Hongliang%20Lu&url=https%3A%2F%2Fauroralhl.github.io%2Fposts%2FMAC%25E7%25B3%25BB%25E7%25BB%259Fzsh%25E5%258F%258A%25E7%258E%25AF%25E5%25A2%2583%25E5%258F%2598%25E9%2587%258F%25E7%25AE%2580%25E4%25BB%258B%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Weibo" aria-label="Weibo">
         <i class="fa-fw fab fa-weibo"></i>
       </a>
     
@@ -851,6 +851,20 @@
         
         
         <li class="text-truncate lh-lg">
+          <a href="/posts/scaling-law/">Scaling Law</a>
+        </li>
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
+          <a href="/posts/Githubpages_tutorial/">Github网站搭建记录</a>
+        </li>
+      
+        
+        
+        
+        <li class="text-truncate lh-lg">
           <a href="/posts/2023%E6%9A%91%E5%81%87%E8%AE%B0%E5%BF%86/">2023暑假记忆</a>
         </li>
       
@@ -866,20 +880,6 @@
         
         <li class="text-truncate lh-lg">
           <a href="/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">深入理解注意力机制【Self-Attention,自注意力模型】</a>
-        </li>
-      
-        
-        
-        
-        <li class="text-truncate lh-lg">
-          <a href="/posts/Githubpages_tutorial/">Github网站搭建记录</a>
-        </li>
-      
-        
-        
-        
-        <li class="text-truncate lh-lg">
-          <a href="/posts/transformer/">Transformer图文详解【Attention is all you need】</a>
         </li>
       
     </ul>
@@ -948,21 +948,6 @@
     
     
     
-  
-    
-    
-    
-    
-  
-    
-    
-    
-    
-  
-    
-    
-    
-    
       
         
         
@@ -996,6 +981,23 @@
     
     
     
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
     
   
     
@@ -1257,10 +1259,10 @@
     <div class="d-flex flex-wrap mt-3 mb-1 me-3">
       
         
-        <a class="post-tag btn btn-outline-primary" href="/tags/%E8%8B%8F%E8%BD%BC%E4%BC%A0/">苏轼传</a>
+        <a class="post-tag btn btn-outline-primary" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
       
         
-        <a class="post-tag btn btn-outline-primary" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+        <a class="post-tag btn btn-outline-primary" href="/tags/%E8%8B%8F%E8%BD%BC%E4%BC%A0/">苏轼传</a>
       
         
         <a class="post-tag btn btn-outline-primary" href="/tags/llm/">LLM</a>
@@ -1497,11 +1499,12 @@ scp [选项] 源文件 目标位置
 
 放弃继续使用这个网站有两个原因：
 
+
   由于当时买的是阿里的轻量级服务器，感觉每次访问速度都比较慢，并且服务器和域名续费居然比一开始买还高很多。
   WordPress还有一个较大的问题是对md文件公式的支持不太好，我写的含有数学公式的md文件直接上传网站公式会显示有问题。
 
 
-于是...</p>
+于...</p>
               </div>
             </div>
           </a>
@@ -1566,7 +1569,7 @@ scp [选项] 源文件 目标位置
   "
 >
   <p>©
-    <time>2024</time>
+    <time>2025</time>
 
     
       <a href="https://github.com/AuroraLHL">Hongliang Lu</a>.
@@ -1670,21 +1673,6 @@ scp [选项] 源文件 目标位置
     
     
     
-  
-    
-    
-    
-    
-  
-    
-    
-    
-    
-  
-    
-    
-    
-    
       
         
         
@@ -1718,6 +1706,23 @@ scp [选项] 源文件 目标位置
     
     
     
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      
     
   
     
@@ -1979,10 +1984,10 @@ scp [选项] 源文件 目标位置
     <div class="d-flex flex-wrap mt-3 mb-1 me-3">
       
         
-        <a class="post-tag btn btn-outline-primary" href="/tags/%E8%8B%8F%E8%BD%BC%E4%BC%A0/">苏轼传</a>
+        <a class="post-tag btn btn-outline-primary" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
       
         
-        <a class="post-tag btn btn-outline-primary" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+        <a class="post-tag btn btn-outline-primary" href="/tags/%E8%8B%8F%E8%BD%BC%E4%BC%A0/">苏轼传</a>
       
         
         <a class="post-tag btn btn-outline-primary" href="/tags/llm/">LLM</a>
