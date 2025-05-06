@@ -34,8 +34,8 @@
 <meta property="og:locale" content="en" />
 <meta name="description" content="在自然语言处理领域，注意力机制（Attention Mechanism）已经成为提升模型性能的重要工具。传统的Encoder-Decoder结构在处理长序列时，常常因为统一语义特征向量的长度限制而导致性能瓶颈。然而，注意力机制通过引入动态上下文向量，成功解决了这一问题，使得模型能够在每个时间步选择与当前输出最相关的信息。" />
 <meta property="og:description" content="在自然语言处理领域，注意力机制（Attention Mechanism）已经成为提升模型性能的重要工具。传统的Encoder-Decoder结构在处理长序列时，常常因为统一语义特征向量的长度限制而导致性能瓶颈。然而，注意力机制通过引入动态上下文向量，成功解决了这一问题，使得模型能够在每个时间步选择与当前输出最相关的信息。" />
-<link rel="canonical" href="https://auroralhl.github.io/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" />
-<meta property="og:url" content="https://auroralhl.github.io/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" />
+<link rel="canonical" href="http://localhost:4000/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" />
+<meta property="og:url" content="http://localhost:4000/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" />
 <meta property="og:site_name" content="Hongliang Lu" />
 <meta property="og:image" content="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407151855074.png" />
 <meta property="og:type" content="article" />
@@ -44,7 +44,7 @@
 <meta property="twitter:image" content="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407151855074.png" />
 <meta property="twitter:title" content="深入理解注意力机制【Self-Attention,自注意力模型】" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-07-26T14:26:24+08:00","datePublished":"2024-07-26T11:39:00+08:00","description":"在自然语言处理领域，注意力机制（Attention Mechanism）已经成为提升模型性能的重要工具。传统的Encoder-Decoder结构在处理长序列时，常常因为统一语义特征向量的长度限制而导致性能瓶颈。然而，注意力机制通过引入动态上下文向量，成功解决了这一问题，使得模型能够在每个时间步选择与当前输出最相关的信息。","headline":"深入理解注意力机制【Self-Attention,自注意力模型】","image":{"lqip":"data:image/webp;base64,UklGRpoAAABXRUJQVlA4WAoAAAAQAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VFIAAAA","url":"https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407151855074.png","@type":"imageObject"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://auroralhl.github.io/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/"},"url":"https://auroralhl.github.io/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-07-26T14:26:24+08:00","datePublished":"2024-07-26T11:39:00+08:00","description":"在自然语言处理领域，注意力机制（Attention Mechanism）已经成为提升模型性能的重要工具。传统的Encoder-Decoder结构在处理长序列时，常常因为统一语义特征向量的长度限制而导致性能瓶颈。然而，注意力机制通过引入动态上下文向量，成功解决了这一问题，使得模型能够在每个时间步选择与当前输出最相关的信息。","headline":"深入理解注意力机制【Self-Attention,自注意力模型】","image":{"lqip":"data:image/webp;base64,UklGRpoAAABXRUJQVlA4WAoAAAAQAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VFIAAAA","url":"https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407151855074.png","@type":"imageObject"},"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/"},"url":"http://localhost:4000/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -1644,14 +1644,14 @@
 
       
 
-      <a href="https://twitter.com/intent/tweet?text=%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E3%80%90Self-Attention,%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%A8%A1%E5%9E%8B%E3%80%91%20-%20Hongliang%20Lu&url=https%3A%2F%2Fauroralhl.github.io%2Fposts%2F%25E6%25B3%25A8%25E6%2584%258F%25E5%258A%259B%25E6%259C%25BA%25E5%2588%25B6%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter" aria-label="Twitter">
+      <a href="https://twitter.com/intent/tweet?text=%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E3%80%90Self-Attention,%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%A8%A1%E5%9E%8B%E3%80%91%20-%20Hongliang%20Lu&url=http%3A%2F%2Flocalhost%3A4000%2Fposts%2F%25E6%25B3%25A8%25E6%2584%258F%25E5%258A%259B%25E6%259C%25BA%25E5%2588%25B6%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter" aria-label="Twitter">
         <i class="fa-fw fa-brands fa-square-x-twitter"></i>
       </a>
     
 
       
 
-      <a href="https://service.weibo.com/share/share.php?title=%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E3%80%90Self-Attention,%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%A8%A1%E5%9E%8B%E3%80%91%20-%20Hongliang%20Lu&url=https%3A%2F%2Fauroralhl.github.io%2Fposts%2F%25E6%25B3%25A8%25E6%2584%258F%25E5%258A%259B%25E6%259C%25BA%25E5%2588%25B6%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Weibo" aria-label="Weibo">
+      <a href="https://service.weibo.com/share/share.php?title=%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E3%80%90Self-Attention,%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%A8%A1%E5%9E%8B%E3%80%91%20-%20Hongliang%20Lu&url=http%3A%2F%2Flocalhost%3A4000%2Fposts%2F%25E6%25B3%25A8%25E6%2584%258F%25E5%258A%259B%25E6%259C%25BA%25E5%2588%25B6%2F" target="_blank" rel="noopener" data-bs-toggle="tooltip" data-bs-placement="top" title="Weibo" aria-label="Weibo">
         <i class="fa-fw fab fa-weibo"></i>
       </a>
     

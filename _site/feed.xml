@@ -1,17 +1,17 @@
 
 
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <id>https://auroralhl.github.io/</id>
+  <id>http://localhost:4000/</id>
   <title>Hongliang Lu</title>
   <subtitle>This is a website dedicated to recording study notes and sharing knowledge, covering areas such as machine learning, deep learning, and large language models. By sharing practical experiences and theoretical knowledge, it aims to help readers better understand and apply these technologies.</subtitle>
-  <updated>2025-05-04T13:37:24+08:00</updated>
+  <updated>2025-05-06T21:18:09+08:00</updated>
   <author>
     <name>Hongliang Lu</name>
-    <uri>https://auroralhl.github.io/</uri>
+    <uri>http://localhost:4000/</uri>
   </author>
-  <link rel="self" type="application/atom+xml" href="https://auroralhl.github.io/feed.xml"/>
+  <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml"/>
   <link rel="alternate" type="text/html" hreflang="en"
-    href="https://auroralhl.github.io/"/>
+    href="http://localhost:4000/"/>
   <generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator>
   <rights> © 2025 Hongliang Lu </rights>
   <icon>/assets/img/favicons/favicon.ico</icon>
@@ -21,13 +21,13 @@
   
   <entry>
     <title>Scaling Law</title>
-    <link href="https://auroralhl.github.io/posts/scaling-law/" rel="alternate" type="text/html" title="Scaling Law" />
+    <link href="http://localhost:4000/posts/scaling-law/" rel="alternate" type="text/html" title="Scaling Law" />
     <published>2024-11-08T16:12:00+08:00</published>
   
     <updated>2024-11-08T16:20:03+08:00</updated>
   
-    <id>https://auroralhl.github.io/posts/scaling-law/</id>
-    <content src="https://auroralhl.github.io/posts/scaling-law/" />
+    <id>http://localhost:4000/posts/scaling-law/</id>
+    <content src="http://localhost:4000/posts/scaling-law/" />
     <author>
       <name>Hongliang Lu</name>
     </author>
@@ -67,13 +67,13 @@ Scaling Law背后的基本思想...</summary>
   
   <entry>
     <title>Transformer图文详解【Attention is all you need】</title>
-    <link href="https://auroralhl.github.io/posts/transformer/" rel="alternate" type="text/html" title="Transformer图文详解【Attention is all you need】" />
+    <link href="http://localhost:4000/posts/transformer/" rel="alternate" type="text/html" title="Transformer图文详解【Attention is all you need】" />
     <published>2024-07-26T11:50:00+08:00</published>
   
     <updated>2024-07-26T11:50:00+08:00</updated>
   
-    <id>https://auroralhl.github.io/posts/transformer/</id>
-    <content src="https://auroralhl.github.io/posts/transformer/" />
+    <id>http://localhost:4000/posts/transformer/</id>
+    <content src="http://localhost:4000/posts/transformer/" />
     <author>
       <name>Hongliang Lu</name>
     </author>
@@ -101,13 +101,13 @@ Transformer 的核心概念是 自注意力机制（Self-Attention Mechanism）�
   
   <entry>
     <title>深入理解注意力机制【Self-Attention,自注意力模型】</title>
-    <link href="https://auroralhl.github.io/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" rel="alternate" type="text/html" title="深入理解注意力机制【Self-Attention,自注意力模型】" />
+    <link href="http://localhost:4000/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" rel="alternate" type="text/html" title="深入理解注意力机制【Self-Attention,自注意力模型】" />
     <published>2024-07-26T11:39:00+08:00</published>
   
     <updated>2024-07-26T14:26:24+08:00</updated>
   
-    <id>https://auroralhl.github.io/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/</id>
-    <content src="https://auroralhl.github.io/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" />
+    <id>http://localhost:4000/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/</id>
+    <content src="http://localhost:4000/posts/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" />
     <author>
       <name>Hongliang Lu</name>
     </author>
@@ -141,13 +141,13 @@ Attention机制通过在每个时间输入...</summary>
   
   <entry>
     <title>详解注意力机制上篇【RNN,seq2seq等基础知识】</title>
-    <link href="https://auroralhl.github.io/posts/nlp%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="alternate" type="text/html" title="详解注意力机制上篇【RNN,seq2seq等基础知识】" />
+    <link href="http://localhost:4000/posts/nlp%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="alternate" type="text/html" title="详解注意力机制上篇【RNN,seq2seq等基础知识】" />
     <published>2024-07-26T11:28:00+08:00</published>
   
     <updated>2024-07-26T11:28:00+08:00</updated>
   
-    <id>https://auroralhl.github.io/posts/nlp%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</id>
-    <content src="https://auroralhl.github.io/posts/nlp%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" />
+    <id>http://localhost:4000/posts/nlp%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</id>
+    <content src="http://localhost:4000/posts/nlp%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" />
     <author>
       <name>Hongliang Lu</name>
     </author>
@@ -173,13 +173,13 @@ Attention机制通过在每个时间输入...</summary>
   
   <entry>
     <title>机器学习入门简介</title>
-    <link href="https://auroralhl.github.io/posts/ML1/" rel="alternate" type="text/html" title="机器学习入门简介" />
+    <link href="http://localhost:4000/posts/ML1/" rel="alternate" type="text/html" title="机器学习入门简介" />
     <published>2024-07-24T00:00:00+08:00</published>
   
     <updated>2024-07-25T23:05:02+08:00</updated>
   
-    <id>https://auroralhl.github.io/posts/ML1/</id>
-    <content src="https://auroralhl.github.io/posts/ML1/" />
+    <id>http://localhost:4000/posts/ML1/</id>
+    <content src="http://localhost:4000/posts/ML1/" />
     <author>
       <name>Hongliang Lu</name>
     </author>
