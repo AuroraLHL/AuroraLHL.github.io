@@ -2,8 +2,8 @@
 layout: post
 title: "Understanding Attention Mechanism: Self-Attention and Attention Models"
 date: 2024-07-26 11:39 +0800
-categories: [人工智能,大语言模型]
-tags: [机器学习,LLM]
+categories: [AI, Large Language Models]
+tags: [Machine Learning, LLM]
 math: true
 image:
   path: https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407151855074.png

@@ -2,8 +2,8 @@
 layout: post
 title: "Transformer Architecture Explained: Attention is All You Need"
 date: 2024-07-26 11:50 +0800
-categories: [人工智能,大语言模型]
-tags: [机器学习,LLM]
+categories: [AI, Large Language Models]
+tags: [Machine Learning, LLM]
 math: true
 ---
 

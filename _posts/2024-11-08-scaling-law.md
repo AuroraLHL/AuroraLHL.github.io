@@ -2,8 +2,8 @@
 layout: post
 title: Scaling Law
 date: 2024-11-08 16:12 +0800
-categories: [人工智能,大语言模型]
-tags: [机器学习,LLM]
+categories: [AI, Large Language Models]
+tags: [Machine Learning, LLM]
 math: true
 
 

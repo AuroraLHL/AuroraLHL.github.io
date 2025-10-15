@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Building Personal Website with GitHub Pages"
-categories: [各种教程,网站搭建]
-tags: [网站搭建,Github]
+categories: [Tutorial, Web Development]
+tags: [Website Building, Github]
 ---
 ## 前言
 
