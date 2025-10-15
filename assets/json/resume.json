@@ -148,14 +148,6 @@
       "startDate": "2025-05-01",
       "endDate": "2025-09-01",
       "url": ""
-    },
-    {
-      "name": "WebAgent Development & Evaluation",
-      "summary": "Built comprehensive WebAgent training infrastructure with PPO/GRPO implementations and developed evaluation benchmarks for OS environments.",
-      "highlights": ["WebAgent Architecture", "PPO/GRPO", "Agent Evaluation", "OS Environment"],
-      "startDate": "2025-01-01",
-      "endDate": "2025-05-01",
-      "url": ""
     }
   ]
 }
