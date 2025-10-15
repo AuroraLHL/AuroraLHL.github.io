@@ -9,6 +9,7 @@ image:
   path: https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407151855074.png
   lqip: data:image/webp;base64,UklGRpoAAABXRUJQVlA4WAoAAAAQAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VFIAAAA
 ---
+
 在自然语言处理领域，注意力机制（Attention Mechanism）已经成为提升模型性能的重要工具。**传统的Encoder-Decoder结构在处理长序列时，常常因为统一语义特征向量的长度限制而导致性能瓶颈**。然而，注意力机制通过引入动态上下文向量，成功解决了这一问题，使得模型能够在每个时间步选择与当前输出最相关的信息。
 
 > 本篇博客将详细介绍注意力机制的基本原理、一般形式以及自注意力模型，并通过具体例子和图示来更好地理解这些关键概念。
@@ -44,7 +45,7 @@ image:
 
 这些权重 $a_{i j}$ 是怎么来的?事实上, $a_{i j}$ 同样是从模型中学出的, 它实际和Decoder的第i阶段的隐状态、Encoder第j个阶段的隐状态有关，在下面一小节我们会介绍$a_{ij}$如何计算.
 
-+ 这里的$c_1,c_2,c_3$就是**attention值**;
+- 这里的$c_1,c_2,c_3$就是**attention值**;
 
 ## 二、一般模型
 

@@ -5,9 +5,8 @@ date: 2024-11-08 16:12 +0800
 categories: [AI, Large Language Models]
 tags: [Machine Learning, LLM]
 math: true
-
-
 ---
+
 # 一、什么是 Scaling Law
 
 **Scaling Law**（缩放法则）是人工智能和机器学习中一类理论，它描述了随着模型规模（例如参数数量）、训练数据量、计算资源的增加，模型性能如何提升的规律。简单来说，**Scaling Law 研究的是模型性能与模型规模之间的关系**。
@@ -16,9 +15,9 @@ math: true
 
 > 在生成模型中被广泛观察到的现象，对于计算量C，模型参数量N和数据大小D，当不受另外两个因素影响时，模型的性能与每个因素都呈幂律关系：
 >
-> + 性能$\propto N^{\alpha}$
-> + 性能$\propto D^{\beta}$
-> + 性能$\propto C^{\gamma}$
+> - 性能$\propto N^{\alpha}$
+> - 性能$\propto D^{\beta}$
+> - 性能$\propto C^{\gamma}$
 >
 > 这些公式中的 α、β、γ 是对应维度的缩放指数。通常模型性能可以用Test Loss来表示，Loss越小说明模型性能越好。
 
