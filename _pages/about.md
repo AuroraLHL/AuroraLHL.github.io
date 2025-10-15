@@ -10,8 +10,9 @@ profile:
   image_circular: true # crops the image to make it circular
   more_info: >
 
-selected_papers: true # includes a list of papers marked as "selected={true}"
 social: false # social icons will be displayed next to name
+
+selected_papers: true # includes a list of papers marked as "selected={true}"
 
 announcements:
   enabled: true # includes a list of news items
