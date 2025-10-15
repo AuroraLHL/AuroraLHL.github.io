@@ -77,38 +77,19 @@
       "name": "Machine Learning",
       "level": "Advanced",
       "icon": "fa-solid fa-brain",
-      "keywords": [
-        "Reinforcement Learning",
-        "Large Language Models",
-        "Deep Learning",
-        "Optimization Algorithms",
-        "LLM4OPT"
-      ]
+      "keywords": ["Reinforcement Learning", "Large Language Models", "Deep Learning", "Optimization Algorithms", "LLM4OPT"]
     },
     {
       "name": "Programming",
       "level": "Advanced",
       "icon": "fa-solid fa-code",
-      "keywords": [
-        "Python",
-        "C++",
-        "MATLAB",
-        "JavaScript",
-        "PyTorch",
-        "TensorFlow"
-      ]
+      "keywords": ["Python", "C++", "MATLAB", "JavaScript", "PyTorch", "TensorFlow"]
     },
     {
       "name": "Optimization",
       "level": "Advanced",
       "icon": "fa-solid fa-chart-line",
-      "keywords": [
-        "Mathematical Optimization",
-        "Metaheuristic Algorithms",
-        "CPLEX",
-        "Gurobi",
-        "OR-Tools"
-      ]
+      "keywords": ["Mathematical Optimization", "Metaheuristic Algorithms", "CPLEX", "Gurobi", "OR-Tools"]
     }
   ],
   "languages": [
@@ -127,22 +108,12 @@
     {
       "name": "Optimization Algorithms",
       "icon": "fa-solid fa-chart-line",
-      "keywords": [
-        "Mathematical Optimization",
-        "Metaheuristic Algorithms",
-        "Evolutionary Algorithms",
-        "Combinatorial Optimization"
-      ]
+      "keywords": ["Mathematical Optimization", "Metaheuristic Algorithms", "Evolutionary Algorithms", "Combinatorial Optimization"]
     },
     {
       "name": "Large Language Models",
       "icon": "fa-solid fa-robot",
-      "keywords": [
-        "LLM4OPT",
-        "Reinforcement Learning",
-        "Natural Language Processing",
-        "AI Applications"
-      ]
+      "keywords": ["LLM4OPT", "Reinforcement Learning", "Natural Language Processing", "AI Applications"]
     }
   ],
   "references": [],

@@ -6,7 +6,7 @@ subtitle: <a href='https://www.pku.edu.cn/'>Peking University</a>. Graduate Stud
 
 profile:
   align: right
-  image: prof_pic.jpg
+  image: lhl.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
     <p>College of Engineering</p>
