@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='https://www.pku.edu.cn/'>Peking University</a>. Graduate Student. RL Algorithm Engineer.
+# subtitle: <a href='https://www.pku.edu.cn/'>Peking University</a>. Graduate Student. RL Algorithm Engineer.
 
 profile:
   align: right
@@ -11,7 +11,7 @@ profile:
   more_info: >
 
 selected_papers: true # includes a list of papers marked as "selected={true}"
-social: true # includes social icons at the bottom of the page
+social: false # social icons will be displayed next to name
 
 announcements:
   enabled: true # includes a list of news items
