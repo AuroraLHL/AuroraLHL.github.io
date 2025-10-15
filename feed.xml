@@ -1,84 +1,114 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://auroralhl.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://auroralhl.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2025-10-15T12:30:41+00:00</updated><id>https://auroralhl.github.io/feed.xml</id><title type="html">blank</title><subtitle>Graduate student at Peking University specializing in Agentic RL, WebAgent/OSAgent systems, and Self-Play training paradigms. Research focuses on enhancing LLM agent capabilities through novel RL approaches. Experienced RL algorithm engineer with internships at Alibaba and Moonshot AI. </subtitle><entry><title type="html">a post with plotly.js</title><link href="https://auroralhl.github.io/blog/2025/plotly/" rel="alternate" type="text/html" title="a post with plotly.js"/><published>2025-03-26T14:24:00+00:00</published><updated>2025-03-26T14:24:00+00:00</updated><id>https://auroralhl.github.io/blog/2025/plotly</id><content type="html" xml:base="https://auroralhl.github.io/blog/2025/plotly/"><![CDATA[<p>This is an example post with some <a href="https://plotly.com/javascript/">plotly</a> code.</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">plotly
-</span><span class="sb">{
-  "data": [
-    {
-      "x": [1, 2, 3, 4],
-      "y": [10, 15, 13, 17],
-      "type": "scatter"
-    },
-    {
-      "x": [1, 2, 3, 4],
-      "y": [16, 5, 11, 9],
-      "type": "scatter"
-    }
-  ]
-}</span>
-<span class="p">```</span>
-</code></pre></div></div> <p>Which generates:</p> <pre><code class="language-plotly">{
-  "data": [
-    {
-      "x": [1, 2, 3, 4],
-      "y": [10, 15, 13, 17],
-      "type": "scatter"
-    },
-    {
-      "x": [1, 2, 3, 4],
-      "y": [16, 5, 11, 9],
-      "type": "scatter"
-    }
-  ]
-}
-</code></pre> <p>Also another example chart.</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">plotly
-</span><span class="sb">{
-  "data": [
-    {
-      "x": [1, 2, 3, 4],
-      "y": [10, 15, 13, 17],
-      "mode": "markers"
-    },
-    {
-      "x": [2, 3, 4, 5],
-      "y": [16, 5, 11, 9],
-      "mode": "lines"
-    },
-    {
-      "x": [1, 2, 3, 4],
-      "y": [12, 9, 15, 12],
-      "mode": "lines+markers"
-    }
-  ],
-  "layout": {
-    "title": {
-      "text": "Line and Scatter Plot"
-    }
-  }
-}</span>
-<span class="p">```</span>
-</code></pre></div></div> <p>This is how it looks like:</p> <pre><code class="language-plotly">{
-  "data": [
-    {
-      "x": [1, 2, 3, 4],
-      "y": [10, 15, 13, 17],
-      "mode": "markers"
-    },
-    {
-      "x": [2, 3, 4, 5],
-      "y": [16, 5, 11, 9],
-      "mode": "lines"
-    },
-    {
-      "x": [1, 2, 3, 4],
-      "y": [12, 9, 15, 12],
-      "mode": "lines+markers"
-    }
-  ],
-  "layout": {
-    "title": {
-      "text": "Line and Scatter Plot"
-    }
-  }
-}
-</code></pre>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="charts"/><summary type="html"><![CDATA[this is what included plotly.js code could look like]]></summary></entry><entry><title type="html">a post with image galleries</title><link href="https://auroralhl.github.io/blog/2024/photo-gallery/" rel="alternate" type="text/html" title="a post with image galleries"/><published>2024-12-04T01:59:00+00:00</published><updated>2024-12-04T01:59:00+00:00</updated><id>https://auroralhl.github.io/blog/2024/photo-gallery</id><content type="html" xml:base="https://auroralhl.github.io/blog/2024/photo-gallery/"><![CDATA[<p>The images in this post are all zoomable, arranged into different mini-galleries using different libraries.</p> <h2 id="lightbox2"><a href="https://lokeshdhakar.com/projects/lightbox2/">Lightbox2</a></h2> <p><a href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-2500.jpg" data-lightbox="roadtrip"><img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-200.jpg"/></a> <a href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-2500.jpg" data-lightbox="roadtrip"><img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-200.jpg"/></a> <a href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-2500.jpg" data-lightbox="roadtrip"><img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-200.jpg"/></a></p> <hr/> <h2 id="photoswipe"><a href="https://photoswipe.com/">PhotoSwipe</a></h2> <div class="pswp-gallery pswp-gallery--single-column" id="gallery--getting-started"> <a href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-2500.jpg" data-pswp-width="1669" data-pswp-height="2500" target="_blank"> <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-200.jpg" alt=""/> </a> <a href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/7/img-2500.jpg" data-pswp-width="1875" data-pswp-height="2500" data-cropped="true" target="_blank"> <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/7/img-200.jpg" alt=""/> </a> <a href="https://unsplash.com" data-pswp-src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-2500.jpg" data-pswp-width="2500" data-pswp-height="1666" target="_blank"> <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-200.jpg" alt=""/> </a> <div> <a href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/6/img-2500.jpg" data-pswp-width="2500" data-pswp-height="1667" target="_blank"> <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/6/img-200.jpg" alt=""/> </a> </div> </div> <hr/> <h2 id="spotlight-js"><a href="https://nextapps-de.github.io/spotlight/">Spotlight JS</a></h2> <div class="spotlight-group"> <a class="spotlight" href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-2500.jpg"> <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-200.jpg"/> </a> <a class="spotlight" href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-2500.jpg"> <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-200.jpg"/> </a> <a class="spotlight" href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-2500.jpg"> <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-200.jpg"/> </a> </div> <div class="spotlight-group"> <a class="spotlight" href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/4/img-2500.jpg"> <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/4/img-200.jpg"/> </a> <a class="spotlight" href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/5/img-2500.jpg"> <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/5/img-200.jpg"/> </a> <a class="spotlight" href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/6/img-2500.jpg"> <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/6/img-200.jpg"/> </a> </div> <hr/> <h2 id="venobox"><a href="https://veno.es/venobox/">Venobox</a></h2> <p><a class="venobox" data-gall="myGallery" href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-2500.jpg"><img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/1/img-200.jpg"/></a> <a class="venobox" data-gall="myGallery" href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-2500.jpg"><img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-200.jpg"/></a> <a class="venobox" data-gall="myGallery" href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-2500.jpg"><img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-200.jpg"/></a></p>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="images"/><summary type="html"><![CDATA[this is what included image galleries could look like]]></summary></entry><entry><title type="html">Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra</title><link href="https://auroralhl.github.io/blog/2024/google-gemini-updates-flash-15-gemma-2-and-project-astra/" rel="alternate" type="text/html" title="Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra"/><published>2024-05-14T00:00:00+00:00</published><updated>2024-05-14T00:00:00+00:00</updated><id>https://auroralhl.github.io/blog/2024/google-gemini-updates-flash-15-gemma-2-and-project-astra</id><content type="html" xml:base="https://auroralhl.github.io/blog/2024/google-gemini-updates-flash-15-gemma-2-and-project-astra/"><![CDATA[<p>May 14, 2024 We’re introducing a series of updates across the Gemini family of models, including the new 1.5 Flash, our lightweight model for speed and efficiency, and Project Astra, our vision for the future of AI assistants. In December, we launched our first natively multimodal model Gemini 1.0 in three sizes: Ultra, Pro and Nano. Just a few months later we released 1.5 Pro, with enhanced performance and a breakthrough long context window of 1 million tokens.Developers and enterprise customers have been putting 1.5 Pro to use in incredible ways and finding its long context window, multimodal reasoning capabilities and impressive overall performance incredibly useful.We know from user feedback that some applications need lower latency and a lower cost to serve. This inspired us to keep innovating, so today, we’re introducing Gemini 1.5 Flash: a model that’s lighter-weight than 1.5 Pro, and designed to be fast and efficient to serve at scale.Both 1.5 Pro and 1.5 Flash are available in public preview with a 1 million token context window in Google AI Studio and Vertex AI. And now, 1.5 Pro is also available with a 2 million token context window via waitlist to developers using the API and to Google Cloud customers.We’re also introducing updates across the Gemini family of models, announcing our next generation of open models, Gemma 2, and sharing progress on the future of AI assistants, with Project Astra.Context lengths of leading foundation models compared with Gemini 1.5’s 2 million token capability1.5 Flash is the newest addition to the Gemini model family and the fastest Gemini model served in the API. It’s optimized for high-volume, high-frequency tasks at scale, is more cost-efficient to serve and features our breakthrough long context window.While it’s a lighter weight model than 1.5 Pro, it’s highly capable of multimodal reasoning across vast amounts of information and delivers impressive quality for its size.The new Gemini 1.5 Flash model is optimized for speed and efficiency, is highly capable of multimodal reasoning and features our breakthrough long context window.1.5 Flash excels at summarization, chat applications, image and video captioning, data extraction from long documents and tables, and more. This is because it’s been trained by 1.5 Pro through a process called “distillation,” where the most essential knowledge and skills from a larger model are transferred to a smaller, more efficient model.Read more about 1.5 Flash in our updated Gemini 1.5 technical report, on the Gemini technology page, and learn about 1.5 Flash’s availability and pricing.Over the last few months, we’ve significantly improved 1.5 Pro, our best model for general performance across a wide range of tasks.Beyond extending its context window to 2 million tokens, we’ve enhanced its code generation, logical reasoning and planning, multi-turn conversation, and audio and image understanding through data and algorithmic advances. We see strong improvements on public and internal benchmarks for each of these tasks.1.5 Pro can now follow increasingly complex and nuanced instructions, including ones that specify product-level behavior involving role, format and style. We’ve improved control over the model’s responses for specific use cases, like crafting the persona and response style of a chat agent or automating workflows through multiple function calls. And we’ve enabled users to steer model behavior by setting system instructions.We added audio understanding in the Gemini API and Google AI Studio, so 1.5 Pro can now reason across image and audio for videos uploaded in Google AI Studio. And we’re now integrating 1.5 Pro into Google products, including Gemini Advanced and in Workspace apps.Read more about 1.5 Pro in our updated Gemini 1.5 technical report and on the Gemini technology page.Gemini Nano is expanding beyond text-only inputs to include images as well. Starting with Pixel, applications using Gemini Nano with Multimodality will be able to understand the world the way people do — not just through text, but also through sight, sound and spoken language.Read more about Gemini 1.0 Nano on Android.Today, we’re also sharing a series of updates to Gemma, our family of open models built from the same research and technology used to create the Gemini models.We’re announcing Gemma 2, our next generation of open models for responsible AI innovation. Gemma 2 has a new architecture designed for breakthrough performance and efficiency, and will be available in new sizes.The Gemma family is also expanding with PaliGemma, our first vision-language model inspired by PaLI-3. And we’ve upgraded our Responsible Generative AI Toolkit with LLM Comparator for evaluating the quality of model responses.Read more on the Developer blog.As part of Google DeepMind’s mission to build AI responsibly to benefit humanity, we’ve always wanted to develop universal AI agents that can be helpful in everyday life. That’s why today, we’re sharing our progress in building the future of AI assistants with Project Astra (advanced seeing and talking responsive agent).To be truly useful, an agent needs to understand and respond to the complex and dynamic world just like people do — and take in and remember what it sees and hears to understand context and take action. It also needs to be proactive, teachable and personal, so users can talk to it naturally and without lag or delay.While we’ve made incredible progress developing AI systems that can understand multimodal information, getting response time down to something conversational is a difficult engineering challenge. Over the past few years, we’ve been working to improve how our models perceive, reason and converse to make the pace and quality of interaction feel more natural.Building on Gemini, we’ve developed prototype agents that can process information faster by continuously encoding video frames, combining the video and speech input into a timeline of events, and caching this information for efficient recall.By leveraging our leading speech models, we also enhanced how they sound, giving the agents a wider range of intonations. These agents can better understand the context they’re being used in, and respond quickly, in conversation.With technology like this, it’s easy to envision a future where people could have an expert AI assistant by their side, through a phone or glasses. And some of these capabilities are coming to Google products, like the Gemini app and web experience, later this year.We’ve made incredible progress so far with our family of Gemini models, and we’re always striving to advance the state-of-the-art even further. By investing in a relentless production line of innovation, we’re able to explore new ideas at the frontier, while also unlocking the possibility of new and exciting Gemini use cases.Learn more about Gemini and its capabilities. Your information will be used in accordance with Google’s privacy policy.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      Done. Just one step more.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://auroralhl.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://auroralhl.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2025-10-15T13:01:36+00:00</updated><id>https://auroralhl.github.io/feed.xml</id><title type="html">blank</title><subtitle>Graduate student at Peking University specializing in Agentic RL, WebAgent/OSAgent systems, and Self-Play training paradigms. Research focuses on enhancing LLM agent capabilities through novel RL approaches. Experienced RL algorithm engineer with internships at Alibaba and Moonshot AI. </subtitle><entry><title type="html">Scaling Law</title><link href="https://auroralhl.github.io/blog/2024/scaling-law/" rel="alternate" type="text/html" title="Scaling Law"/><published>2024-11-08T08:12:00+00:00</published><updated>2024-11-08T08:12:00+00:00</updated><id>https://auroralhl.github.io/blog/2024/scaling-law</id><content type="html" xml:base="https://auroralhl.github.io/blog/2024/scaling-law/"><![CDATA[<h1 id="一什么是-scaling-law">一、什么是 Scaling Law</h1> <p><strong>Scaling Law</strong>（缩放法则）是人工智能和机器学习中一类理论，它描述了随着模型规模（例如参数数量）、训练数据量、计算资源的增加，模型性能如何提升的规律。简单来说，<strong>Scaling Law 研究的是模型性能与模型规模之间的关系</strong>。</p> <p><strong>定义【Scaling Law】</strong><sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup></p> <blockquote> <p>在生成模型中被广泛观察到的现象，对于计算量C，模型参数量N和数据大小D，当不受另外两个因素影响时，模型的性能与每个因素都呈幂律关系：</p> <ul> <li>性能$\propto N^{\alpha}$</li> <li>性能$\propto D^{\beta}$</li> <li>性能$\propto C^{\gamma}$</li> </ul> <p>这些公式中的 α、β、γ 是对应维度的缩放指数。通常模型性能可以用Test Loss来表示，Loss越小说明模型性能越好。</p> </blockquote> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202411072223214.png" alt="截屏2024-10-19 10.54.28"/></p> <p>Scaling Law背后的基本思想是：<strong>模型的性能可以通过简单的扩展（例如增加模型参数、训练数据或计算资源）来不断提升</strong>，并且这种提升往往遵循一定的幂律关系。通过研究这种关系，研究者可以预测模型在不同规模下的性能表现，指导大模型的设计和训练。</p> <h1 id="二scaling-law的应用">二、Scaling Law的应用</h1> <p>Scaling Law总结出来的一个规律是：</p> \[C\approx6ND\] <p>其中C是计算量，N是参数量，D是训练数据量。举个例子：</p> <blockquote> <p>假设一个模型有 10亿个参数（$N=10^9$ ）, 并且训练数据集的规模是$\mathrm{D}=10^{12}$ （1万亿个 token）.使用公式 C = 6ND, 总的计算量就是:</p> \[C=6 \times 10^9 \times 10^{12}=6 \times 10^{21} \mathrm{FLOPs}\] <p>这表明要训练这个模型, 大约需要$6\times 10^{21}$ 次浮点运算。</p> </blockquote> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202411072223216.png" alt="截屏2024-09-25 19.46.14"/>这个规律有什么用呢?通过前面的Scaling Law我们知道，训练大模型时，<strong>增加模型的参数量或者训练的数据量，模型性能会得到提升</strong>。但是我们并不能无止境的增加，因为现实训练模型收到计算量的制约，训练一个语言大模型是很费钱的。<strong>所以当给定一个计算量budget，我们怎么分配N和D得到一个最好的模型呢</strong>？（因为现实情况我们通常可以知道我们有多少张卡，可以用多久）</p> <p>这个问题可以建模为如下的优化问题：</p> \[N_{opt}(C),D_{opt}(C)=\underset{N,D\text{ s.t. FLOPs}(N,D)=C}{\operatorname*{argmin}}L(N,D),\\ \hat{L}(N,D)\triangleq E+\frac A{N^\alpha}+\frac B{D^\beta}.\] <h2 id="1-最佳模型参数数据量求解方法">1 最佳模型参数，数据量求解方法</h2> <p>这个多变量问题怎么解呢？主要有三种方法：</p> <ol> <li>固定模型大小，改变训练数据</li> <li>固定计算量，改变模型大小</li> <li>拟合幂律曲线</li> </ol> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202411072223217.png" alt="截屏2024-09-26 10.00.51"/></p> <p>根据上表的结果，得出a=0.5,b=0.5</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202411072223221.png" alt="image-20240926103233403"/>根据图3右边两图所得到的点，向外延伸，可以得到给定计算量C最佳的N、D.</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202411072223222.png" alt="截屏2024-09-26 10.35.43"/></p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202411072223223.png" alt="image-20240926103557968"/></p> <h2 id="2-llama31的scaling-law">2 LLaMA3.1的Scaling Law</h2> <p>如下图所示，是LLaMA3.1中的Scaling Law，LLaMA3.1发布了3个模型，分别是8B,70B,405B.这个405B是怎么定下来的呢，难道是领导拍脑袋想出来的吗（国内可能是hh).显然他们做了实验，先在小数据和小模型上进行实验（左图），<strong>然后根据实验结果画出Scaling Law曲线，找到对应计算量的最优模型大小和最优训练数据量。</strong> <img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202411072223224.png" alt="截屏2024-09-26 10.42.58"/></p> <h2 id="3-应用示例">3 应用示例</h2> <blockquote> <ul> <li>假设你有1000张H100显卡，并且可以用6个月。</li> <li>假设你有10T的数据。</li> <li>那么你应该训练多大的模型？</li> </ul> </blockquote> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202411072223225.png" alt="image-20240927145027916"/></p> <p><strong>另一种更快的估计方法：</strong></p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202411072223226.png" alt="image-20240927145042459"/></p> <h1 id="三未来挑战">三、未来挑战</h1> <p>尽管 Scaling Law 提供了重要的理论指导，仍然存在一些挑战：</p> <ul> <li><strong>计算成本问题</strong>：大规模扩展模型的参数和训练数据通常需要极高的计算成本。虽然 Scaling Law 提供了理论依据，但大规模训练的实际成本可能难以承受。</li> <li><strong>数据质量</strong>：Scaling Law 假设数据量的增加会提升模型性能，但在实际应用中，数据的质量同样至关重要，低质量数据可能会导致性能下降甚至模型偏差。</li> <li><strong>性能饱和</strong>：Scaling Law 研究表明，性能提升并不是无限的，通常会在某个点达到瓶颈。因此，研究者需要找到其他方法（如新架构、知识蒸馏）来进一步提高性能。</li> </ul> <h1 id="参考资料">参考资料</h1> <div class="footnotes" role="doc-endnotes"> <ol> <li id="fn:1"> <p>Scaling Laws for Neural Language Models <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p> </li> </ol> </div>]]></content><author><name></name></author><category term="AI"/><category term="Large Language Models"/><category term="Machine Learning"/><category term="LLM"/><summary type="html"><![CDATA[一、什么是 Scaling Law]]></summary></entry><entry><title type="html">Transformer Architecture Explained: Attention is All You Need</title><link href="https://auroralhl.github.io/blog/2024/transformer/" rel="alternate" type="text/html" title="Transformer Architecture Explained: Attention is All You Need"/><published>2024-07-26T03:50:00+00:00</published><updated>2024-07-26T03:50:00+00:00</updated><id>https://auroralhl.github.io/blog/2024/transformer</id><content type="html" xml:base="https://auroralhl.github.io/blog/2024/transformer/"><![CDATA[<p>🚀在自然语言处理（NLP）领域，Transformer架构已经成为最先进的技术之一，其核心概念是自注意力机制（Self-Attention Mechanism）。</p> <p>📚在前面的两小节中，我们已经介绍了注意力机制的基础知识，包括RNN、Seq2Seq等传统方法的基本概念和实现。此外，我们详细讨论了自注意力机制（Self-Attention）及其在现代NLP模型中的重要性。自注意力机制允许模型在处理每个输入时“关注”输入序列的不同部分，从而理解单词与其他单词之间的关系，而不是逐个地线性处理输入。</p> <p>🔥在理解了自注意力机制的基础上，我们来介绍大语言模型的基础——Transformer结构，Attention is all you need！</p> <h2 id="一transformer框架">一、Transformer框架</h2> <p><strong>Transformer</strong> 的核心概念是 <strong>自注意力机制（Self-Attention Mechanism）</strong>，它允许模型在处理每个输入时“关注”输入序列的不同部分。这种机制让模型能够理解每个单词或符号与其他单词或符号之间的关系，而不是逐个地线性处理输入。原始论文给出的Transformer结构如下图所示：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407151624024.png" alt="截屏2024-07-15 16.24.24"/></p> <p>上图所示的Transformer 主要由两个部分组成：</p> <ul> <li><strong>编码器（Encoder）</strong>：将输入序列转换为一个隐表示（向量表示）；</li> <li><strong>解码器（Decoder）</strong>：从隐表示生成输出序列.</li> </ul> <p><strong>编码器</strong> 和 <strong>解码器</strong> 都由多个<strong>层（layers)</strong> 组成，每层都包括:</p> <ol> <li>一个 <strong>多头自注意力机制</strong> ;</li> <li>一个 <strong>前馈神经网络（Feed-Forward Neural Network, FFN）</strong>；</li> <li><strong>残差结构以及层归一化操作</strong>.</li> </ol> <p>下面详细分析Transformer结构每个部分的作用及计算过程。</p> <h2 id="二encoder">二、Encoder</h2> <h3 id="1自注意力机制">（1）自注意力机制</h3> <p>在上一小节我们详细介绍了注意力机制，本节我们仅介绍其在Transformer结构中的计算过程。对于输入序列$\mathbf{X}=[x_1,x_2,\ldots,x_n]$,每个元素$x_i$首先被投影到三个不同的向量 :</p> <ol> <li>查询向量(Query)Q</li> <li>键向量( Key) K</li> <li>值向量( Value) V</li> </ol> <p>这些向量的计算公式如下：</p> \[\mathbf{Q}=\mathbf{X}\mathbf{W}^Q,\quad\mathbf{K}=\mathbf{X}\mathbf{W}^K,\quad\mathbf{V}=\mathbf{X}\mathbf{W}^V\] <p>其中，$\mathbf{W}^Q,\mathbf{W}^K,\mathbf{W}^V$是可学习的权重矩阵。自注意力的核心公式是计算每个查询向量与所有键向量之间的相似度，原文采用的是缩放点积模型 :</p> \[\text{Attention}(\mathbf{Q},\mathbf{K},\mathbf{V})=\text{softmax}\biggl(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}}\biggr)\mathbf{V}\] <p>这里，$\frac1{\sqrt{d_k}}$是缩放因子，<strong>用于避免相似度值过大</strong>。softmax 函数将相似度转换为权重，最后乘以 V 得到加权的值向量。下面用一个实例的图示来描述这个计算过程，并且能够清晰的看到各个部分的维度：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211517524.png" alt="截屏2024-07-21 15.17.02"/></p> <p>如上图所示，$X_1,X_2$分别与$\mathbf{W}^Q,\mathbf{W}^K,\mathbf{W}^V$相乘可以得到$q、k、v$，下面假设一些值进行计算：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211518279.png" alt="截屏2024-07-21 15.18.22"/></p> <p>可以看到最后得到的注意力值$z_i$维度和$v_i$的维度一致.如果$X_1,X_2$拼接成矩阵，那么其计算过程图示如下：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211523009.png" alt="截屏2024-07-21 15.23.50"/></p> <p>可以看到最后的$Z$就是由$z_1,z_2$拼接得到，并且$Z$与$V$的维度仍保持一致.</p> <h3 id="2多-头-注-意-力-机-制--multi--head-attention-">（2）多 头 注 意 力 机 制 ( Multi- Head Attention )</h3> <p>为了让模型捕捉到不同子空间的特征，多头注意力机制将上述注意力机制应用多个头( head ) :</p> \[\mathrm{MultiHead}( \mathbf{Q} , \mathbf{K} , \mathbf{V} ) = [ \mathrm{head}_1, \mathrm{head}_2, \ldots , \mathrm{head}_h] \mathbf{W} ^O\] <p>其中，每个 head$_i$是一个独立的自注意力机制 :</p> \[\mathrm{head}_i=\mathrm{Attention}(\mathbf{QW}_i^Q,\mathbf{KW}_i^K,\mathbf{VW}_i^V)\\\] <p>$\mathbf{W}^O$是用于连接各个头结果的权重矩阵.下面用一个图例来描述多头注意力机制的计算过程：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211533446.png" alt="截屏2024-07-21 15.33.17"/></p> <p>如上图所示，$h=2$，左右两边结构完全一样，每个head的计算方式也完全一样。当$h=8$时，我们可以计算得到8个$Z_i$：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211535208.png" alt="截屏2024-07-21 15.35.35"/></p> <p>多头注意力机制就是将多个head的输出拼接起来，同时再乘以一个大的参数矩阵$W^O$</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211536896.png" alt="截屏2024-07-21 15.36.03"/></p> <p>由上图可知，<strong>最后得到的$Z$的维度与$X$的维度保持一致.这是为了方便后面的layer当作输入，在Encoder结构中，只有第一层需要将输入Embedding成$X$，后面的层直接使用上一层的输出当作输入</strong>.下图是一个多头注意力机制计算过程的完整图示：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211554008.png" alt="截屏2024-07-21 15.54.22"/></p> <p>到目前为止介绍的多头注意力机制结构存在两个问题：</p> <ol> <li>与循环神经网络不同，自注意力机制并<strong>不按顺序构建信息</strong>，这个结构没有对输入顺序的内在表示，也就是说，输入的顺序完全不影响网络输出，但是我们知道句子里单词的顺序是重要的。所以Transformer结构中中引入了一个技巧——<strong>位置编码（Positional Encoding）</strong>.</li> <li>注意到在上面的计算过程中，除了Softmax都是线性计算，使得网络的表达能力受限，Transformer中在每个多头注意力机制后引入一个<strong>前 馈 神 经 网 络 ( Feed- Forward Network ）</strong>来增强网络的表示能力.</li> </ol> <h3 id="3位置编码positional-encoding">（3）位置编码（Positional Encoding）</h3> <p>为了编码每个词的位置信息，原始论文中提出用一个新的向量$p_i$来编码位置信息，其维度和Embedding的维度一致，在编码器的第一层，我们将$p_i$与$x_i$叠加得到最终的输入向量矩阵$X$.</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211610228.png" alt="截屏2024-07-21 16.10.43"/></p> <p>这个位置向量怎么得到呢？有以下几种方法：</p> <ol> <li> <p>绝对位置编码:正弦位置表示，原论文给的计算公式如下：</p> \[\begin{aligned}PE_{(pos,2i)}&amp;=\sin(pos/10000^{2i/d_{\mathrm{model}}})\\PE_{(pos,2i+1)}&amp;=\cos(pos/10000^{2i/d_{\mathrm{model}}})\end{aligned}\] <p>其中：</p> <ul> <li>pos表示单词在句子中的绝对位置，pos=0，1，2…，例如：Jerry在”Tom chase Jerry”中的pos=2；</li> <li>$d_{model}$表示词向量的维度，在这里$d_{model}$=512；</li> <li>2i和2i+1表示奇偶性，i表示词向量中的第几维，例如这里$d_{model}$=512，故i=0，1，2…255.</li> </ul> </li> <li> <p>绝对位置编码:通过学习表示，$p_i$是一个可学习的参数，通过训练来学习到每个词的位置表示.</p> </li> </ol> <h3 id="4残差residuals">（4）残差（Residuals)</h3> <p>由Transformer的结构我们可以看到，在经过Multi-Head Attention得到矩阵$Z$之后，并没有直接传入全连接神经网络FNN，而是经过了一步：Add＆Normalize。</p> <p>Add，就是在Z的基础上加了一个残差块X，加入残差块X的目的是为了防止在深度神经网络训练中发生退化问题，退化的意思就是深度神经网络通过增加网络的层数，Loss逐渐减小，然后趋于稳定达到饱和，然后再继续增加网络层数，Loss反而增大。</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211630840.png" alt="截屏2024-07-21 16.30.14"/></p> <h3 id="5层归一化">（5）层归一化</h3> <p>在进行了残差连接后，还要对数据进行层归一化，其目的有二：</p> <ol> <li>能够加快训练的速度;</li> <li>提高训练的稳定性.</li> </ol> <p>为什么使用Layer Normalization（LN）而不使用Batch Normalization（BN）呢？，LN是在同一个样本中不同神经元之间进行归一化，而BN是在同一个batch中不同样本之间的同一位置的神经元之间进行归一化。对多个词向量进行BN归一化没有意义，但是可以对每个词向量的数据进行归一化，加快训练速度。</p> <p>对于给定的输入$x$,其维度为$(N,L)$,其中$N$是批量大小(词的个数），$L$是特征维度（词向量维度）。层归一化的计算公式为：</p> \[\mu=\frac1L\sum_{j=1}^Lx_{ij}\\ \sigma^2=\frac1L\sum_{j=1}^L(x_{ij}-\mu)^2\\ \hat{x}_{ij}=\frac{x_{ij}-\mu}{\sqrt{\sigma^2+\epsilon}}\\ y_{ij}=\gamma\hat{x}_{ij}+\beta\] <p>其中，$\gamma$和$\beta$是可训练参数，$\epsilon$是防止除零的小常数。</p> <h3 id="6前-馈-神-经-网-络--feed--forward-network-">（6）前 馈 神 经 网 络 ( Feed- Forward Network ）</h3> <p>每个编码器和解码器层还包括一个前馈神经网络：</p> \[\mathrm{FFN}(\mathbf{x})=\max(0,\mathbf{x}\mathbf{W}_1+\mathbf{b}_1)\mathbf{W}_2+\mathbf{b}_2\] <p>这里的全连接层是一个两层的神经网络，先线性变换，然后ReLU非线性，再线性变换。这里的x就是我们Multi-Head Attention的输出Z，若Z是(2,64)维的矩阵，假设W1是(64,1024)，其中W2与W1维度相反(1024,64)，那么按照上面的公式：</p> \[FFN(Z)=(2,64)\times(64,1024)\times(1024,64)=(2,64)\] <p>我们发现维度没有发生变化，这两层网络就是为了将输入的Z映射到更加高维的空间中(2,64)x(64,1024)=(2,1024)，然后通过非线性函数ReLU进行筛选，筛选完后再变回原来的维度。然后经过Add＆Normalize，输入下一个encoder中，经过6个encoder后输入到decoder中.</p> <h2 id="三decoder">三、Decoder</h2> <p>接下来来看Decoder部分，其结构如下所示，和Encoder很像，但是多了一个Masked Multi-Head Attention层，这是干嘛用的呢？这是为了防止Decoder在训练的时候“作弊”，在每个时间步t只允许看到这之前的信息，不能利用t+1后的信息。下面来详细的介绍每个部分。</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211830605.png" alt="截屏2024-07-21 18.30.23"/></p> <h3 id="1解码器的输入">（1）解码器的输入</h3> <p>Decoder的输入分为两类：一种是训练时的输入，一种是预测时的输入。</p> <ol> <li>训练时的输入就是已经对准备好对应的target数据。例如翻译任务，Encoder输入”Tom chase Jerry”，Decoder输入”汤姆追逐杰瑞”。</li> <li>预测时的输入，一开始输入的是起始符，然后每次输入是上一时刻Transformer的输出。例如，输入”“，输出”汤姆”，输入”汤姆”，输出”汤姆追逐”，输入”汤姆追逐”，输出”汤姆追逐杰瑞”，输入”汤姆追逐杰瑞”，输出”汤姆追逐杰瑞”结束。</li> </ol> <p>下面动图所示是解码器的第一个时间步，输入是起始符，不过也会用到编码器的信息：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211843754.gif" alt="transformer_decoding_1"/></p> <p>下面动图展示了Decoder后面几个时间步的输入，是上一个时间步解码器的输入：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211843554.gif" alt="transformer_decoding_2"/></p> <h3 id="2masked-multi-head-attention">（2）Masked Multi-Head Attention</h3> <p>与Encoder的Multi-Head Attention计算原理一样，只是多加了一个mask码。mask 表示掩码，它对某些值进行掩盖，使其在参数更新时不产生效果。两种模型的结构对比如下图所示：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211901018.png" alt="截屏2024-07-21 19.01.53"/></p> <p>Transformer 模型里面涉及两种 mask，分别是 padding mask 和 sequence mask。为什么需要添加这两种mask码呢？</p> <p>==1.padding mask== 什么是 padding mask 呢？因为每个批次输入序列长度是不一样的也就是说，我们要对输入序列进行对齐。具体来说，就是给在较短的序列后面填充 0。但是如果输入的序列太长，则是截取左边的内容，把多余的直接舍弃。因为这些填充的位置，其实是没什么意义的，所以我们的attention机制不应该把注意力放在这些位置上，所以我们需要进行一些处理。 具体的做法是，把这些位置的值加上一个非常大的负数(负无穷)，这样的话，<strong>经过 softmax，这些位置的概率就会接近0！</strong></p> <p>==2.sequence mask== sequence mask 是<strong>为了使得 decoder 不能看见未来的信息。</strong>对于一个序列，在 time_step 为 t 的时刻，我们的解码输出应该只能依赖于 t 时刻之前的输出，而不能依赖 t 之后的输出。因此我们需要想一个办法，把 t 之后的信息给隐藏起来。这在训练的时候有效，因为训练的时候每次我们是将target数据完整输入进decoder中地，预测时不需要，预测的时候我们只能得到前一时刻预测出的输出。</p> <p>通过sequence mask，可以使得网络进行并行计算.具体做法是在每个时间步t，我们屏蔽对未来词的注意力，将对未来的词（token）的attention值设置为-∞，其余部分的Attention值计算同前面介绍的方法一致，下图给出了一个示例：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211905309.png" alt="image-20240721190529252"/></p> <p>Decoder中的Multi-Head Attention层的工作原理和Encoder一样，<strong>只是它从下面的Masked Multi-Head Attention层创建查询矩阵Q，并从编码器堆栈的输出中获取键和值矩阵（K、V）。</strong></p> <h3 id="3decoder的输出">（3）Decoder的输出</h3> <p>解码器输出一个浮点数向量，如何将其转化为一个单词呢？这就是最终的线性层（Linear layer）和后续的Softmax层的工作。</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211917409.png" alt="截屏2024-07-21 19.17.51"/></p> <p>线性层是一个简单的全连接神经网络，它将解码器生成的向量投射到一个更大得多的向量上，这个向量称为<strong>logits向量</strong>。假设我们的模型知道10,000个独特的英文单词（模型的“输出词汇”），这些单词是从训练数据集中学习到的。这将使logits向量为10,000维，每维对应一个唯一单词的得分。这就是我们通过线性层解释模型输出的方式。然后，Softmax层将这些得分转化为概率（所有概率都是正数，总和为1.0）。选择概率最高的index，并将其对应的单词作为该时间步的输出。</p> <h2 id="四复杂度分析及改进方法介绍">四、复杂度分析及改进方法介绍</h2> <p>总的来说，自注意力模型的时间和空间复杂度与<strong>输入序列长度$N$呈2次关系</strong>，可以不严格的表示为$O(N^2)$.</p> <h3 id="1时间复杂度">（1）时间复杂度</h3> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211928934.png" alt="截屏2024-07-21 19.28.20"/></p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211929340.png" alt="截屏2024-07-21 19.29.49"/></p> <h3 id="2空间复杂度">（2）空间复杂度</h3> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211930137.png" alt="截屏2024-07-21 19.30.31"/></p> <h3 id="3改进方法">（3）改进方法</h3> <p>通过上面两小节的分析，我们知道Self Attention的时间和空间复杂度是输入序列的$O(N^2)$，这对于处理长文本来说效率太低了，目前学界提出了很多改进Self Attention模型的方法：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211944746.png" alt="截屏2024-07-21 19.44.28"/></p> <h2 id="参考资料">参考资料</h2> <ol> <li><a href="https://proceedings.neurips.cc/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf">Attention is all you need</a></li> <li><a href="https://jalammar.github.io/illustrated-transformer/">The Illustrated Transformer</a></li> <li>https://blog.csdn.net/Tink1995/article/details/105080033</li> </ol>]]></content><author><name></name></author><category term="AI"/><category term="Large Language Models"/><category term="Machine Learning"/><category term="LLM"/><summary type="html"><![CDATA[🚀在自然语言处理（NLP）领域，Transformer架构已经成为最先进的技术之一，其核心概念是自注意力机制（Self-Attention Mechanism）。]]></summary></entry><entry><title type="html">Understanding Attention Mechanism: Self-Attention and Attention Models</title><link href="https://auroralhl.github.io/blog/2024/attention-mechanism/" rel="alternate" type="text/html" title="Understanding Attention Mechanism: Self-Attention and Attention Models"/><published>2024-07-26T03:39:00+00:00</published><updated>2024-07-26T03:39:00+00:00</updated><id>https://auroralhl.github.io/blog/2024/attention-mechanism</id><content type="html" xml:base="https://auroralhl.github.io/blog/2024/attention-mechanism/"><![CDATA[<p>在自然语言处理领域，注意力机制（Attention Mechanism）已经成为提升模型性能的重要工具。<strong>传统的Encoder-Decoder结构在处理长序列时，常常因为统一语义特征向量的长度限制而导致性能瓶颈</strong>。然而，注意力机制通过引入动态上下文向量，成功解决了这一问题，使得模型能够在每个时间步选择与当前输出最相关的信息。</p> <blockquote> <p class="prompt-tip">本篇博客将详细介绍注意力机制的基本原理、一般形式以及自注意力模型，并通过具体例子和图示来更好地理解这些关键概念。</p> </blockquote> <h2 id="一语言模型实例">一、语言模型实例</h2> <p>在Encoder-Decoder结构中，Encoder把所有的输入序列都编码成一个统一的语义特征c再解码：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202405262030938.png" alt="截屏2022-06-02 下午8.26.20"/></p> <p><strong>因此， c中必须包含原始序列中的所有信息，它的长度就成了限制模型性能的瓶颈</strong>。如机器翻译问题，当要翻译的句子较长时，一个c可能存不下那么多信息，就会造成翻译精度的下降。</p> <p><strong>Attention机制</strong>通过在每个时间输入不同的c来解决这个问题，下图是带有Attention机制的Decoder：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202405281637491.png" alt="截屏2022-06-02 下午8.37.47"/></p> <p>每一个c会自动去选取与当前所要输出的y最合适的上下文信息。具体来说:</p> <ol> <li>用 $a_{i j}$ 衡量 Encoder中第j阶段的$h_j$和解码时第i阶段的相关性;</li> <li>最终Decoder中第i阶段的输入的上下文信息 $c_{i}$ 就来自于所有 $h_{j}$ 对 $a_{i j}$ 的加权和。</li> </ol> <p>以机器翻译为例（将中文翻译成英文）：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202405281637341.png" alt="截屏2022-06-02 下午8.42.38"/></p> <p>输入的序列是“我爱中国”:</p> <ol> <li>因此, Encoder中的h1、h2、h3、h4就可以分别看做是“我”、 “爱”、“中”、“国”所代表的信息;</li> <li>在翻译成英语时, 第一个上下文$c_1$应该和“我”这个字最相关, 因此对应的 $a_{11}$ 就比较大, 而相应的 $a_{12} 、 a_{13} 、 a_{14}$ 就比较小;</li> <li>c2应该和“爱”最相关, 因此对应的 $a_{22}$ 就比较大;</li> <li>最后的$c_3$和$h_3、h_4$最相关, 因此 $a_{33} 、 a_{34}$ 的值就比较大。</li> </ol> <p>这些权重 $a_{i j}$ 是怎么来的?事实上, $a_{i j}$ 同样是从模型中学出的, 它实际和Decoder的第i阶段的隐状态、Encoder第j个阶段的隐状态有关，在下面一小节我们会介绍$a_{ij}$如何计算.</p> <ul> <li>这里的$c_1,c_2,c_3$就是<strong>attention值</strong>;</li> </ul> <h2 id="二一般模型">二、一般模型</h2> <p>刚刚我们是基于Encoder-Decoder模型来介绍attention机制的，下面我们更一般的来介绍注意力机制.</p> <p>用$X=[x_1,\cdots,x_N]\in\mathbb{R}^{D\times N}$ 表示$N$组输入信息，其中$D$ 维向量 $\boldsymbol{x}_n\in$ $\mathbb{R}^D,n\in[1,N]$表示一组输入信息.为了节省计算资源，不需要将所有信息都输入神经网络，只需要从$\boldsymbol X$ 中选择一些和任务相关的信息.注意力机制的计算可以分为两步：</p> <ol> <li>一是在所有输入信息上<strong>计算注意力分布</strong>；</li> <li>二是根据注意力分布来<strong>计算输入信息的加权平均</strong>.</li> </ol> <p>为了从$N$个输入向量$[\boldsymbol x_1,\cdotp\cdotp\cdotp,\boldsymbol x_N]$中选择出和某个特定任务相关的信息，我们需要引入一个和任务相关的表示，称为<strong>查询向量(Query Vector)</strong>, 并通过一个打分函数来衡<strong>量每个输入向量和查询向量之间的相关性</strong>. 给定一个和任务相关的查询向量$\boldsymbol q$,我们用注意力变量$z\in[1,N]$来表示被选择信息的索引位置，即$z=n$ 表示选择了第$n$ 个输入向量.为了方便计算，我们采用一种“软性”的信息选择机制.首先计算在给定$q$和$X$下，选择第$n$个输入向量的概率$\alpha_n$,</p> \[\begin{aligned}\alpha_{n}&amp;=p(z=n|X,\boldsymbol{q})\\&amp;=\operatorname{softmax}\left(s(\boldsymbol{x}_n,\boldsymbol{q})\right)\\&amp;=\frac{\exp\left(s(\boldsymbol{x}_n,\boldsymbol{q})\right)}{\sum_{j=1}^N\exp\left(s(\boldsymbol{x}_j,\boldsymbol{q})\right)},\end{aligned}\] <p>其中$\alpha_n$ 称为<strong>注意力分布( Attention Distribution)</strong>,$s(\boldsymbol x,\boldsymbol{q})$ 为<strong>注意力打分函数.</strong></p> <blockquote> <p>注意力打分函数$\mathbf{s}(\mathbf{x},\mathbf{q})$：计算输入向量和查询向量之间的相关性，常用如下模型</p> \[\begin{aligned}&amp;\bullet\text{ 加性模型: }\mathbf{s}(\mathbf{x},\mathbf{q})=\mathbf{v}^{T}\mathrm{tanh}(\mathbf{W}\mathbf{x}+\mathbf{U}\mathbf{q}).\\&amp;\bullet\text{ 点积模型: }\mathbf{s}(\mathbf{x},\mathbf{q})=\mathbf{x}^{T}\mathbf{q}.\\&amp;\bullet\text{ 缩放点积模型: }\mathbf{s}(\mathbf{x},\mathbf{q})=\frac{\mathbf{x}^{T}\mathbf{q}}{\sqrt{D}}.\\&amp;\bullet\text{ 双线性模型: }\mathbf{s}(\mathbf{x},\mathbf{q})=\mathbf{x}^{T}\mathbf{W}\mathbf{q}.\end{aligned}\] <p>这里$\mathbf{W},\mathbf{U},\mathbf{v}$为可学习的参数，$D$为输入向量的维度.</p> </blockquote> <p><strong>Note:</strong></p> <ol> <li>在前面的例子中，$h_1,h_2,h_3,h_4$就是输入向量$X$;</li> <li>$h’_1,h’_2,h’_3$就是查询向量$q$;</li> <li>$a_{ij}$就是注意力分布，这里我们给出了注意力分布怎么计算的.</li> </ol> <p>得到注意力分布后，对输入向量加权平均可以得到attention值：</p> \[\begin{aligned}\operatorname{att}(X,\boldsymbol{q})&amp;=\sum_{n=1}^N\alpha_nx_n,\\&amp;=\mathbb{E}_{z\sim p(z|X,\boldsymbol{q})}[x_z].\end{aligned}\] <p>下图（a）清晰的描述了attention的计算过程.</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407151828526.png" alt="截屏2024-07-15 18.28.38"/></p> <p>更一般地，我们可以用键值对( key-value pair)格式来表示输入信息，其中“键”用来计算注意力分布$\alpha_n$,“值”用来计算聚合信息.用$\left(\boldsymbol{K},\boldsymbol{V}\right)=\left[\left(\boldsymbol{k}_1,\boldsymbol{\upsilon}_1\right),\cdots,\left(\boldsymbol{k}_N,\boldsymbol{\upsilon}_N\right)\right]$表示$N$组输入信息，给定任务相关的查询向量$q$时，注意力函数为</p> \[\begin{aligned}\operatorname{att}\Big((\boldsymbol{K},\boldsymbol{V}),\boldsymbol{q}\Big)&amp;=\sum_{n=1}^N\alpha_n\boldsymbol{v}_n,\\&amp;=\sum_{n=1}^N\frac{\exp\left(s(\boldsymbol{k}_n,\boldsymbol{q})\right)}{\sum_j\exp\left(s(\boldsymbol{k}_j,\boldsymbol{q})\right)}\boldsymbol{v}_n,\end{aligned}\] <p>其中 $s(\boldsymbol{k}_n,\boldsymbol{q})$ 为打分函数.图8.1给出键值对注意力机制的示例.当$K=V$时，键值对模式就等价于普通的注意力机制.</p> <h2 id="三自注意力模型self-attention">三、自注意力模型(Self-Attention)</h2> <p>由键值对注意力模式我们可以进一步引出 <code class="language-plaintext highlighter-rouge">自注意力模型</code>的概念，该模型通过注意力机制可以建立输入序列长距离依赖关系。自注意力模型计算过程如下图所示：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407151855074.png" alt="截屏2024-07-15 18.54.23"/></p> <p>🔥Note:</p> <ol> <li>$X$为输入矩阵；</li> <li>$W^Q、W^K、W^V$是可学习的参数矩阵；</li> <li>最后得到的$Z$为attention值矩阵;</li> </ol> <blockquote> <p class="prompt-tip">为什么叫自注意力模型呢？<strong>因为我们可以看到这里Q、K、V都是由$X$通过一个线性变换投影得到的，而矩阵$W$是可学习的，所以由$X$到$Z$的映射权重是可学习的，是动态调整的。</strong></p> </blockquote> <p>如下图所示，红色表示当前的词，蓝色阴影表示与红色词的相关程度，通过自注意力模型，我们可以自动学到每个词与前面词的相关关系。</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407151902576.png" alt="截屏2024-07-15 19.02.19"/></p> <h2 id="四self-attention模型的复杂度分析">四、Self-Attention模型的复杂度分析</h2> <p>总的来说，自注意力模型的时间和空间复杂度与<strong>输入序列长度$N$呈2次关系</strong>，可以不严格的表示为$O(N^2)$.</p> <h3 id="1时间复杂度">（1）时间复杂度</h3> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211928934.png" alt="截屏2024-07-21 19.28.20"/></p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211929340.png" alt="截屏2024-07-21 19.29.49"/></p> <h3 id="2空间复杂度">（2）空间复杂度</h3> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407211930137.png" alt="截屏2024-07-21 19.30.31"/></p> <h2 id="参考资料">参考资料</h2> <ol> <li><a href="https://github.com/scutan90/DeepLearning-500-questions">深度学习500问</a></li> <li>邱锡鹏，神经网络与深度学习，机械工业出版社，https://nndl.github.io/, 2020.</li> </ol>]]></content><author><name></name></author><category term="AI"/><category term="Large Language Models"/><category term="Machine Learning"/><category term="LLM"/><summary type="html"><![CDATA[在自然语言处理领域，注意力机制（Attention Mechanism）已经成为提升模型性能的重要工具。传统的Encoder-Decoder结构在处理长序列时，常常因为统一语义特征向量的长度限制而导致性能瓶颈。然而，注意力机制通过引入动态上下文向量，成功解决了这一问题，使得模型能够在每个时间步选择与当前输出最相关的信息。]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407151855074.png"/><media:content medium="image" url="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407151855074.png" xmlns:media="http://search.yahoo.com/mrss/"/></entry><entry><title type="html">NLP Fundamentals: RNN, Seq2Seq and Attention Mechanism Basics</title><link href="https://auroralhl.github.io/blog/2024/nlp-fundamentals/" rel="alternate" type="text/html" title="NLP Fundamentals: RNN, Seq2Seq and Attention Mechanism Basics"/><published>2024-07-26T03:28:00+00:00</published><updated>2024-07-26T03:28:00+00:00</updated><id>https://auroralhl.github.io/blog/2024/nlp-fundamentals</id><content type="html" xml:base="https://auroralhl.github.io/blog/2024/nlp-fundamentals/"><![CDATA[<p>🔥 在自然语言处理（NLP）领域，理解和生成自然语言的能力对于构建智能系统至关重要。从文本分类、机器翻译到对话系统，底层技术的不断进步推动了NLP的发展。在这些技术中，循环神经网络（RNN）及其变种如长短期记忆网络（LSTM）、Seq2Seq模型和注意力机制（Attention Mechanism）扮演了重要角色。</p> <p>📚 本系列博客将从基础知识开始，逐步深入探讨大语言模型在NLP中的应用。我们将从RNN的经典结构出发，介绍其工作原理和局限性，接着探讨Seq2Seq模型及其在机器翻译中的应用，最后深入解读注意力机制及其在现代深度学习模型中的重要性。</p> <h2 id="一rnn经典结构">一、RNN经典结构</h2> <p><strong>循环神经网络（Recurrent Neural Network, RNN</strong>)是一类以序列数据为输入，在序列的演进方向进行递归且所有节点（循环单元）按链式连接的递归神经网络（recursive neural network）。对循环神经网络的研究始于二十世纪 80-90 年代，并在二十一世纪初发展为深度学习算法之一，其中双向循环神经网络和长短期记忆网络（Long Short-Term Memory networks，LSTM）是常见的循环神经网络。</p> <p>经典循环神经网络的单个神经元如下图所示，它由输入层、一个隐藏层和一个输出层组成：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202405261918426.png" alt="截屏2024-05-26 19.18.11"/></p> <ol> <li>$x_t$ 是一个向量，它表示<strong>t时刻</strong>输入层的值；</li> <li>$h_{t-1},h_t$ 分别表示<strong>t-1时刻和t时刻</strong>隐藏层的值.</li> </ol> <p>其中$h_t$的计算如下：</p> \[h_t=f(Uh_{t-1}+Wx_t+b),\] <p>其中$\mathbf{x}_t\in\mathbb{R}^M$ 为$t$时刻网络的输入，$\mathbf{U}\in\mathbb{R}^{D\times D}$ 为状态-状态权重矩阵，$\mathbf{W}\in\mathbb{R}^{D\times M}$为状态-输入权重矩阵，$\mathbf{b}\in\mathbb{R}^D$ 为偏置向量，$f$为<strong>激活函数</strong>.上面是RNN网络中的单个结点，下面给出长度为$T$的RNN网络，我们可以更清晰的看到前一时刻对后一时刻的影响.</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202405261929403.png" alt="截屏2024-05-26 19.29.15"/></p> <p>现在看上去就比较清楚了, 这个网络在 $\mathrm{t}$ 时刻接收到输入 $\mathrm{x}<em>{t}$ 之后, 隐藏层的值是 $h_t$, 输出值是 $\mathrm{y}</em>{t}$ 。关键一点是, $h_t$ 的值不仅仅取决于 $\mathrm{x}<em>{t}$, 还取决于 $\mathrm{h}</em>{t-1}$ 。可以用下面的公式来表示循环神经网络的计算方法:</p> \[\mathrm{y}_{t}=V \mathrm{h}_{t}\quad (1)\] \[\mathrm{h}_{t}=f\left(W \mathrm{x}_{t}+U \mathrm{h}_{t-1}\right)\quad(2)\] <ol> <li>式 1 是输出层的计算公式, 输出层是一个全连接层, 也就是它的每个节点都和隐藏层的每个节点相连，$\mathrm{V}$ 是输出层的权重矩阵.</li> <li>式 2 是隐藏层的计算公式, 它是循环层。 $\mathrm{U}$ 是输入 $x$ 的权重矩阵, $\mathrm{W}$ 是上一次的值 $\mathrm{h}_{t-1}$ 作为这一次的输入的权重矩阵, $f$ 是激活函数.（这里我们省略$b$）</li> </ol> <p>从上面的公式可以看出, 循环层和全连接层的区别就是循环层多了一个权重矩阵 $\mathrm{W}$ 。如果反复把式 2 带入到式 1 , 将得到:</p> \[\begin{aligned} \mathrm{y}_{t} &amp;=V \mathrm{h}_{t} \\ &amp;=V f\left(W \mathrm{x}_{t}+U \mathrm{h}_{t-1}\right) \\ &amp;=V f\left(W \mathrm{x}_{t}+U f\left(W \mathrm{x}_{t-1}+U \mathrm{h}_{t-2}\right) \right)\\ &amp;=V f\left(W \mathrm{x}_{t}+U f\left(W \mathrm{x}_{t-1}+U f\left(W \mathrm{x}_{t-2}+U \mathrm{h}_{t-3}\right)\right)\right) \\ &amp;=V f\left(W \mathrm{x}_{t}+U f\left(W \mathrm{x}_{t-1}+U f\left(W \mathrm{x}_{t-2}+U f\left(W \mathrm{x}_{t-3}+\ldots\right)\right)\right)\right) \end{aligned}\] <p>从上面可以看出, 循环神经网络的输出值$\mathrm{y}_t$, 是受前面历次输入值 $ x<em>{t}, x</em>{t-1}, \cdots,x_1$影响的, 这就是为什么循环神经网络可以往前看任意多个输入值的原因。</p> <p><strong>Note:</strong></p> <ul> <li>从以上结构可看出，<strong>传统的RNN结构的输⼊和输出等⻓.</strong></li> <li>我们可以看到每个节点会<strong>共用参数</strong>$W,U,V$.</li> </ul> <h2 id="二vector-to-sequence结构">二、vector-to-sequence结构</h2> <p>有时我们要处理的问题输⼊是⼀个单独的值，输出是⼀个序列。</p> <p>此时，有两种主要建模⽅式：</p> <ol> <li> <p><strong>⽅式⼀：</strong>可只在其中的某⼀个序列进⾏计算，⽐如序列第⼀个进⾏输⼊计算，其建模⽅式如下：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202405281636083.png" alt="截屏2022-06-02 下午8.13.43"/></p> </li> <li> <p>把输⼊信息X作为每个阶段的输⼊，其建模⽅式如下：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202405281636216.png" alt="截屏2022-06-02 下午8.14.19"/></p> </li> </ol> <h2 id="三sequence-to-vector结构">三、sequence-to-vector结构</h2> <p>有时我们要处理的问题输⼊是⼀个序列，输出是⼀个单独的值，此时通常在最后的⼀个序列上进⾏输出变换，其建模如下所⽰：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202405281636872.png" alt="截屏2024-05-26 16.56.09"/></p> <h2 id="四seq2seq模型">四、Seq2Seq模型</h2> <p>RNN最重要的一个变种：Seq2Seq，这种结构又叫Encoder-Decoder模型。</p> <p>原始的sequence-to-sequence结构的RNN要求序列等长，然⽽我们遇到的⼤部分问题序列都是不等长的，如机器翻译中，源语⾔和⽬标语⾔的句⼦往往并没有相同的长度。</p> <h3 id="1-encoder">1 Encoder</h3> <p>将输⼊数据编码成⼀个上下⽂向量 c，这部分称为<strong>Encoder</strong>，其⽰意如下所⽰：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202405281637454.png" alt="截屏2022-06-02 下午8.19.38"/></p> <p>得到c有多种⽅式：</p> <ol> <li>最简单的⽅法就是把Encoder的最后⼀个隐状态赋值给c ：$c=h_4$</li> <li>还可以对最后的隐状态做⼀个变换得到 :$c=q(h_4)$</li> <li>也可以对所有的隐状态做变换:$c=q(h_1+h_2+h_3+h_4)$</li> </ol> <h3 id="2-decoder">2 Decoder</h3> <p><strong>拿到c之后，就用另一个RNN网络对其进行解码</strong>，这部分RNN网络被称为<strong>Decoder</strong>。具体做法就是将c当做初始状态输入到Decoder中：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202405281637667.png" alt="截屏2022-06-02 下午8.24.57"/></p> <p>还可以将c作为Decoder的每⼀步输⼊，⽰意图如下所⽰：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202405281637809.png" alt="截屏2022-06-02 下午8.26.20"/></p> <p>由于这种Encoder-Decoder结构不限制输入和输出的序列长度，因此应用的范围非常广泛，比如：</p> <ul> <li>机器翻译，Encoder-Decoder的最经典应用，事实上这一结构就是在机器翻译领域最先提出的；</li> <li>文本摘要，输入是一段文本序列，输出是这段文本序列的摘要序列；</li> <li>阅读理解，将输入的文章和问题分别编码，再对其进行解码得到问题的答案；</li> <li>语音识别，输入是语音信号序列，输出是文字序列。</li> </ul> <h2 id="五embedding">五、Embedding</h2> <h3 id="1-什么是-embedding">1 什么是 Embedding？</h3> <p>Embedding 是一种将离散的、高维的输入数据（如单词或符号）转换为连续的、低维的向量表示的方法。其目的是捕捉输入数据中的语义和结构信息，使其在向量空间中具有有意义的分布。</p> <h3 id="2-为什么需要-embedding">2 为什么需要 Embedding？</h3> <p>在 NLP 中，原始的文本数据通常由单词、子词或字符组成，这些元素本质上是离散的符号。传统的处理方法（如 one-hot 编码）会将每个单词表示为一个高维的稀疏向量，缺点如下：</p> <ol> <li><strong>维度过高</strong>：词汇表中的每个单词都需要一个独立的维度，对于大型词汇表，这会导致向量的维度非常高。</li> <li><strong>稀疏性</strong>：大多数维度都是 0，只有一个维度是 1，这导致向量非常稀疏。</li> <li><strong>缺乏语义信息</strong>：one-hot 向量无法捕捉单词之间的语义关系，如“国王”与“王后”之间的关系。</li> </ol> <p>Embedding 方法通过学习一个低维的、连续的向量表示来解决这些问题。每个单词或符号都被表示为一个实数向量，这些向量在训练过程中被优化，以捕捉单词之间的语义和语法关系。</p> <h3 id="3-embedding-的实现">3 Embedding 的实现</h3> <p>在深度学习模型（如 Transformer）中，embedding 通常通过一个可训练的查找表实现。查找表的每一行对应一个词汇表中的单词，行中的值是该单词的嵌入向量。这些嵌入向量在模型训练过程中不断调整，以优化模型的性能。</p> <p>具体步骤如下：</p> <ol> <li><strong>初始化</strong>：将每个单词初始化为一个随机的或预训练的向量。</li> <li><strong>训练</strong>：在训练过程中，模型根据任务目标不断调整这些向量，使得它们能够更好地表示单词的语义和语法信息。</li> <li><strong>使用</strong>：训练完成后，这些向量就可以用于各种 NLP 任务，如文本分类、情感分析、机器翻译等。</li> </ol> <h3 id="4-例子">4 例子</h3> <p>假设我们有一个简单的词汇表：[“猫”, “狗”, “鱼”]。通过 embedding 层，这些单词会被转换为低维的向量，如：</p> <ul> <li>“猫” -&gt; [0.2, -1.3, 0.5]</li> <li>“狗” -&gt; [0.3, -1.2, 0.4]</li> <li>“鱼” -&gt; [-0.5, 0.8, -0.1]</li> </ul> <p>这些向量的维度通常比原始 one-hot 向量的维度小得多（如 300 维，而不是数万维），并且这些向量可以捕捉到单词之间的语义相似性。例如，“猫”与“狗”的向量可能比较接近，而“鱼”的向量则相对远一些。</p> <h3 id="5-总结">5 总结</h3> <p>Embedding 是一种将离散的输入数据转换为连续的、低维向量表示的方法，广泛应用于自然语言处理任务中。它能够有效地捕捉单词之间的语义和语法关系，提高模型的处理能力和表现。在 Transformer 等深度学习模型中，embedding 层是关键组成部分，负责将输入序列转换为模型可以处理的向量形式。</p> <h2 id="六实例机器翻译">六、实例：机器翻译</h2> <p>神经机器翻译（Neural Machine Translation, NMT）是一种基于深度学习技术的机器翻译方法。与传统的统计机器翻译（Statistical Machine Translation, SMT）不同，NMT 使用神经网络模型来<strong>直接建模源语言到目标语言之间的翻译过程。</strong>下图是Encoder编码的过程：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407091030337.png" alt="截屏2024-07-09 10.30.50"/></p> <p>Note:</p> <ol> <li>在翻译的时候，我们需要对词进行Embedding，将其变成一个连续的向量表达.</li> </ol> <p>Decoder的过程如下图所示：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407091033500.png" alt="截屏2024-07-09 10.33.31"/></p> <p>Note:</p> <ol> <li>用Softmax来得到预测的每个词的概率，概率最大的作为当前预测词</li> </ol> <h2 id="参考资料">参考资料</h2> <ol> <li><a href="https://github.com/scutan90/DeepLearning-500-questions">深度学习500问</a></li> <li>邱锡鹏，神经网络与深度学习，机械工业出版社，<a href="https://nndl.github.io/, 2020.">https://nndl.github.io/, 2020.</a></li> </ol>]]></content><author><name></name></author><category term="AI"/><category term="Large Language Models"/><category term="Machine Learning"/><category term="LLM"/><summary type="html"><![CDATA[🔥 在自然语言处理（NLP）领域，理解和生成自然语言的能力对于构建智能系统至关重要。从文本分类、机器翻译到对话系统，底层技术的不断进步推动了NLP的发展。在这些技术中，循环神经网络（RNN）及其变种如长短期记忆网络（LSTM）、Seq2Seq模型和注意力机制（Attention Mechanism）扮演了重要角色。]]></summary></entry><entry><title type="html">Building Personal Website with GitHub Pages</title><link href="https://auroralhl.github.io/blog/2024/Githubpages_tutorial/" rel="alternate" type="text/html" title="Building Personal Website with GitHub Pages"/><published>2024-07-24T00:00:00+00:00</published><updated>2024-07-24T00:00:00+00:00</updated><id>https://auroralhl.github.io/blog/2024/Githubpages_tutorial</id><content type="html" xml:base="https://auroralhl.github.io/blog/2024/Githubpages_tutorial/"><![CDATA[<h2 id="前言">前言</h2> <p>23年7月份我第一次搭建了自己的个人博客，用的是WordPress+Argon模板，效果如下：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407261106424.png" alt="截屏2024-07-26 11.04.21"/></p> <p>放弃继续使用这个网站有两个原因：</p> <ol> <li>由于当时买的是阿里的轻量级服务器，感觉每次访问速度都比较慢，并且服务器和域名续费居然比一开始买还高很多。</li> <li>WordPress还有一个较大的问题是对md文件公式的支持不太好，我写的含有数学公式的md文件直接上传网站公式会显示有问题。</li> </ol> <p>于是放弃WordPress，转而用Github Pages+Jekyll模板搭建。下面记录Github个人网站的搭建过程。</p> <h2 id="一介绍">一、介绍</h2> <h3 id="1-github-pages是什么">1 Github Pages是什么</h3> <p>Github Pages官网： <a href="https://pages.github.com/">https://pages.github.com/</a></p> <p>GitHub Pages 是 GitHub 提供的一个免费的静态网站托管服务，它允许 GitHub 用户创建和托管自己的静态网站，这些网站可以通过特定的 GitHub 仓库进行管理和托管。</p> <p>GitHub Pages 的主要特点包括：</p> <ul> <li><strong>免费托管</strong>： GitHub Pages 提供免费的静态网站托管服务，允许用户将自己的网站内容托管在 GitHub 上，用户不需要支付额外的托管费用；</li> <li><strong>使用简单：</strong> 创建和管理 GitHub Pages 静态网站相对简单，特别是对于熟悉 GitHub 的用户来说，用户只需在自己的 GitHub 帐户中创建一个特定名称的仓库，将网站文件上传到该仓库即可；</li> <li><strong>自定义域名：</strong> 用户可以选择使用自定义域名来访问他们的 GitHub Pages 网站，这使得它们更适合个人网站、博客和项目页面；</li> <li><strong>支持多种静态网站生成工具：</strong> GitHub Pages 支持多种静态网站生成工具，如 Jekyll、Hugo、Gatsby 等，以及纯HTML、CSS 和 JavaScript 等前端技术，这使得用户能够根据自己的需求选择适合他们的工具；</li> <li><strong>自动构建：</strong> GitHub Pages 可以自动构建用户上传的网站内容，无需用户手动生成或编译网页，这使得发布网站变得更加简单。</li> </ul> <p>对于开发人员和技术爱好者来说， GitHub Pages 是一个很好的选择，用于托管个人网站、博客、文档、项目页面等静态内容，它提供了一个方便的方式来分享和展示自己的作品。</p> <h3 id="2-静态网站生成工具">2 静态网站生成工具</h3> <p>GitHub Pages支持多种静态网站生成工具。以下是一些GitHub Pages支持的主要静态网站生成工具：</p> <ul> <li>Jekyll（ <a href="https://jekyllrb.com">https://jekyllrb.com</a>）： Jekyll是GitHub Pages的默认静态网站生成工具，它使用Markdown文件和Liquid模板引擎来创建静态网站，Jekyll对于博客和文档站点非常流行。</li> <li>Hugo（ <a href="https://gohugo.io/">https://gohugo.io/</a>）： Hugo是另一个受欢迎的静态网站生成工具，它非常快速且易于使用，它使用Go语言编写，支持多种主题和内容组织方式。</li> <li>Gatsby（ <a href="https://www.gatsbyjs.com/">https://www.gatsbyjs.com/</a>）： Gatsby是基于React的静态网站生成工具，它可以构建高性能、现代化的网站，Gatsby适用于博客、电子商务、应用程序文档等。</li> <li>VuePress（ <a href="https://vuepress.vuejs.org/">https://vuepress.vuejs.org/</a>）： VuePress是Vue.js驱动的静态网站生成工具，专注于文档站点，它支持Markdown文件和Vue组件。</li> <li>Hexo（ <a href="https://hexo.io/">https://hexo.io/</a>）： Hexo是一个快速、简单的博客框架，使用Markdown文件来生成静态博客，它是Node.js应用程序。</li> </ul> <p>这些静态网站生成工具各有利弊，我选择了Jekyll，下面简要介绍一下Jekyll及其使用。</p> <h3 id="3-jekyll">3 Jekyll</h3> <h4 id="简介">简介</h4> <p>Jekyll 是一个<strong>静态网站生成器，可以帮助我们使用简单的文本文件来创建静态网站。</strong>我们可以使用Markdown, HTML, CSS 以及 Liquid 模板语言来编写内容和设计网站布局。其特点如下：</p> <ul> <li>Jekyll 将这些文件转换成静态网页,我们可以将这些生成的网页文件直接部署到网站托管服务上 (不一定放在GitHub 里，放在你自己的服务器上加上买个域名也可以)。</li> <li>Jekyll 模板是其他人搭好的一个框架，在我们不需要操心其他样式的时候，我们只需要写 Markdown 文件就可以生成想要的静态网页。这就像我们制作 PPT 时用的其他人写好的模板，然 后我们只需要往里面填内容就行。当然如果我们想进行个性化修改，就得去扒一下模板的源码， 看看如何修改 CSS 和 HTML 文件了。</li> </ul> <h4 id="jekyll-和-github-的关系">Jekyll 和 GitHub 的关系</h4> <p>GitHub 支持使用 Jekyll 构建和托管网站。<strong>我们可以在 GitHub 上创建一个特定的仓库，将 Jekyll 项目代码“推送到该仓厍中。GitHub 将自动检测到这是一个 Jekyll 项目，并在后台使用 Jekyll 构建网站。</strong>我们可以通过 GitHub Pages 服务将该网站部署到一个专门的域名，也就是：<code class="language-plaintext highlighter-rouge">username.github.io</code></p> <blockquote> <p>总的来说就是：<strong>本地Jekyll项目+远程Github Pages</strong>.具体步骤就是：</p> <ol> <li>在Github上创建一个 <code class="language-plaintext highlighter-rouge">username.github.io</code>的仓库，用于托管网站；</li> <li>在本地用Jekyll创建一个网站项目，上传到Github的仓库（当然可以用模板）；</li> </ol> </blockquote> <h3 id="4-mac系统jekyll的安装及使用">4 Mac系统Jekyll的安装及使用</h3> <h4 id="安装">安装</h4> <p>要在 mac上安装 Jekyll，需要确保系统已安装 Ruby，通常mac预装了Ruby，我们不要使用系统的ruby，否则会有冲突，以下是安装 Jekyll 的步骤以及注释：</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># homebrew安装ruby</span>
+brew <span class="nb">install </span>ruby
+
+<span class="c"># 通过以下命令，可以查看ruby的安装路径</span>
+brew info ruby
+
+<span class="c"># 安装完成以后，修改.bash_profile文件,path路径加多/opt/homebrew/opt/ruby/bin，例如：export PATH=/opt/homebrew/opt/ruby/bin:$PATH</span>
+vi ~/.zshrc
+<span class="nb">source</span> ~/.zshrc
+
+<span class="c"># 验证ruby 版本，如果打印最新的版本，如：ruby 3.x.x表示安装最新的了</span>
+ruby <span class="nt">-v</span>
+
+<span class="c"># 安装Jekyll</span>
+gem <span class="nb">install</span> <span class="nt">--user-install</span> bundler jekyll
+
+<span class="c"># 安装成功之后，调整gem的运行环境(gem的bin目录一般在~/.gem/ruby/ruby版本/bin目录),export PATH路径增加“$HOME/.gem/ruby/ruby版本/bin”</span>
+vi ~/.zshrc
+<span class="nb">source</span> ~/.zshrc
+
+<span class="c"># 验证jekyll安装是否成功</span>
+jekyll <span class="nt">-v</span>
+</code></pre></div></div> <h4 id="jekyll的简单使用">Jekyll的简单使用</h4> <p>首先，新建一个jekyll项目：</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll new test-site
+</code></pre></div></div> <p>运行过程如下：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407241305592.png" alt="截屏2024-07-24 13.05.31"/></p> <p>打开test-site文件夹，可以看到有以下一些文件：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407241306392.png" alt="截屏2024-07-24 13.06.27"/></p> <p>在终端进入对应项目目录，然后执行：</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">exec </span>jekyll serve
+</code></pre></div></div> <p>可以看到项目以及启动：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407241308944.png" alt="截屏2024-07-24 13.08.16"/></p> <p>在浏览器可以访问对应的地址(http://http://127.0.0.1:4000)即能在本地预览</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407241309367.png" alt="截屏2024-07-24 13.09.26"/></p> <p>在Jekyll生成项目的目录下，有一个比较重要的文件：<code class="language-plaintext highlighter-rouge">_config.yaml</code>，这个config文件用于指定 Jekyll 站点的各种设置和选项，包含了许多可配置的选项，用于自定义网站的行为和外观，生成的文件内容如下:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Welcome to Jekyll!</span>
+<span class="c1">#</span>
+<span class="c1"># This config file is meant for settings that affect your whole blog, values</span>
+<span class="c1"># which you are expected to set up once and rarely edit after that. If you find</span>
+<span class="c1"># yourself editing this file very often, consider using Jekyll's data files</span>
+<span class="c1"># feature for the data you need to update frequently.</span>
+<span class="c1">#</span>
+<span class="c1"># For technical reasons, this file is *NOT* reloaded automatically when you use</span>
+<span class="c1"># 'bundle exec jekyll serve'. If you change this file, please restart the server process.</span>
+<span class="c1">#</span>
+<span class="c1"># If you need help with YAML syntax, here are some quick references for you:</span>
+<span class="c1"># https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml</span>
+<span class="c1"># https://learnxinyminutes.com/docs/yaml/</span>
+<span class="c1">#</span>
+<span class="c1"># Site settings</span>
+<span class="c1"># These are used to personalize your new site. If you look in the HTML files,</span>
+<span class="c1"># you will see them accessed via blank, , and so on.</span>
+<span class="c1"># You can create any custom variable you would like, and they will be accessible</span>
+<span class="c1"># in the templates via .</span>
+
+<span class="c1"># 指定网站的标题</span>
+<span class="na">title</span><span class="pi">:</span> <span class="s">Your awesome title</span>
+<span class="c1"># 指定联系人邮箱地址</span>
+<span class="na">email</span><span class="pi">:</span> <span class="s">your-email@example.com</span>
+<span class="c1"># 网站的简要描述</span>
+<span class="na">description</span><span class="pi">:</span> <span class="pi">&gt;-</span> <span class="c1"># this means to ignore newlines until "baseurl:"</span>
+  <span class="s">Write an awesome description for your new site here. You can edit this</span>
+  <span class="s">line in _config.yml. It will appear in your document head meta (for</span>
+  <span class="s">Google search results) and in your feed.xml site description.</span>
+<span class="c1"># 站点的子目录，如果你的网站托管在子目录下，需要指定</span>
+<span class="na">baseurl</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span> <span class="c1"># the subpath of your site, e.g. /blog</span>
+<span class="c1"># 网站的基本 URL 地址</span>
+<span class="na">url</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span> <span class="c1"># the base hostname &amp; protocol for your site, e.g. http://example.com</span>
+<span class="c1"># 推特的用户名</span>
+<span class="na">twitter_username</span><span class="pi">:</span> <span class="s">jekyllrb</span>
+<span class="c1"># github的用户名</span>
+<span class="na">github_username</span><span class="pi">:</span> <span class="s">jekyll</span>
+
+<span class="c1"># 指定要使用的 Jekyll 主题，如果不使用主题，则为空</span>
+<span class="na">theme</span><span class="pi">:</span> <span class="s">minima</span>
+<span class="c1"># 列出要在站点构建过程中使用的插件</span>
+<span class="na">plugins</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">jekyll-feed</span>
+<span class="c1"># Exclude from processing.</span>
+<span class="c1"># The following items will not be processed, by default.</span>
+<span class="c1"># Any item listed under the `exclude:` key here will be automatically added to</span>
+<span class="c1"># the internal "default list".</span>
+<span class="c1">#</span>
+<span class="c1"># Excluded items can be processed by explicitly listing the directories or</span>
+<span class="c1"># their entries' file path in the `include:` list.</span>
+<span class="c1">#</span>
+<span class="c1"># exclude:</span>
+<span class="c1">#   - .sass-cache/</span>
+<span class="c1">#   - .jekyll-cache/</span>
+<span class="c1">#   - gemfiles/</span>
+<span class="c1">#   - Gemfile</span>
+<span class="c1">#   - Gemfile.lock</span>
+<span class="c1">#   - node_modules/</span>
+<span class="c1">#   - vendor/bundle/</span>
+<span class="c1">#   - vendor/cache/</span>
+<span class="c1">#   - vendor/gems/</span>
+<span class="c1">#   - vendor/ruby/</span>
+</code></pre></div></div> <p>详细的参数，可以参考： https://jekyllrb.com/docs/configuration/.</p> <h2 id="二快速搭建第一个github-pages网站">二、快速搭建第一个Github Pages网站</h2> <p>在搭建前，默认已经注册成功了Github用户，现在开始根据官网教程一步一步的搭建。GithubPages的站点类型有几种：</p> <ol> <li><strong>个人或组织站点（User or Organization sites）</strong>：对于个人或组织站点，每个GitHub用户或组织只能有一个站点，它通常使用username.github.io或organizationname.github.io的格式，这是GitHub Pages的默认站点，通常用于个人网站、博客等。</li> <li><strong>项目站点（Project sites）：</strong>对于项目站点，每个GitHub仓库可以有一个关联的GitHub Pages站点，这意味着对于每个项目，您可以创建一个独立的GitHub Pages站点，无需限制。</li> </ol> <p>下面参考<a href="https://blog.51cto.com/u_15294985/7978684">保姆级教程：从零构建GitHub Pages静态网站</a>介绍如何搭建个人站点：</p> <p><strong>Step1： 新建一个项目</strong></p> <p>登录Github： https://github.com/，在顶部菜单栏点击“+”，然后“New repository”新建仓库，输入项目的相关信息，然后“Create repository”创建仓库：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407241314292.png" alt="21000208_6532a4807911e93728"/></p> <p><strong>Step2： 创建一个界面文件</strong></p> <p>首先创建一个文件：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407241314762.png" alt="21000208_6532a480a0a9623847"/></p> <p>输入文件内容，点击提交：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407241315651.png" alt="21000208_6532a480c462f8177"/></p> <p>输入提交信息，点击提交:</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407241315973.png" alt="21000208_6532a480ee4a747098"/></p> <p><strong>Step3： 访问</strong></p> <p>大概等待几十秒，访问：https://用户名.github.io/，即可部署第一个属于自己的静态网站了，可以看到部署成功了。</p> <p>在Github有了 <code class="language-plaintext highlighter-rouge">username.github.io</code>仓库后，我们进需要把Jekyll创建的项目与这个仓库关联起来，每次更新将本地文件推送到Github上，Github Pages就能自动生成网页！</p> <h2 id="三静态网站模板chirpy">三、静态网站模板——Chirpy</h2> <p>为了使我们的网站比较好看，网上有很多模板可以用，可以从如下网址获取模板：</p> <ul> <li><a href="https://github.com/topics/jekyll-theme">https://github.com/topics/jekyll-theme</a></li> <li><a href="https://jekyllthemes.org/">https://jekyllthemes.org/</a></li> <li><a href="https://jekyllthemes.io/">https://jekyllthemes.io/</a></li> </ul> <p>我选择了Github上的<a href="https://github.com/cotes2020/jekyll-theme-chirpy/">Chirpy</a>模板，其网页Demo如下：<img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407241330803.png" alt="截屏2024-07-24 13.30.13"/></p> <p>在其主页上有详细的部署教程，此处不在赘述。</p> <h3 id="1-个人定制">1 个人定制</h3> <p>一些个人定制可以参考：https://huanyushi.github.io/posts/chirpy-blog-customization/</p> <p>个人觉得原始网页的帖子显示不是很好看，于是修改一下使得帖子边框更明显，并且鼠标悬停在上面会有轻微移动效果。修改完的具体效果如下：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407251646884.png" alt="截屏2024-07-25 16.46.11"/></p> <p>只需要在 <code class="language-plaintext highlighter-rouge">assets/css/jekyll-theme-chirpy.scss</code>文件中加入以下代码即可：</p> <div class="language-scss highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* 覆盖主题的博客帖子边框样式 */</span>
+<span class="nc">.card-wrapper.card</span> <span class="p">{</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">3px</span> <span class="nb">solid</span> <span class="mh">#e3e5e7</span> <span class="o">!</span><span class="n">important</span><span class="p">;</span> <span class="cm">/* 使用更显眼的蓝色边框 */</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">2px</span><span class="p">;</span> <span class="cm">/* 适中的内边距 */</span>
+  <span class="nl">margin-bottom</span><span class="p">:</span> <span class="m">2px</span><span class="p">;</span> <span class="cm">/* 适中的下边距 */</span>
+  <span class="nl">border-radius</span><span class="p">:</span> <span class="m">8px</span><span class="p">;</span> <span class="cm">/* 适中的圆角 */</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="mh">#f9f9f9</span><span class="p">;</span> <span class="cm">/* 淡灰色背景，增强边框的对比 */</span>
+  <span class="nl">box-shadow</span><span class="p">:</span> <span class="m">0</span> <span class="m">4px</span> <span class="m">6px</span> <span class="nf">rgba</span><span class="p">(</span><span class="m">0</span><span class="o">,</span> <span class="m">0</span><span class="o">,</span> <span class="m">0</span><span class="o">,</span> <span class="m">0</span><span class="mi">.1</span><span class="p">);</span> <span class="cm">/* 轻微的阴影 */</span>
+  <span class="nl">transition</span><span class="p">:</span>
+    <span class="n">transform</span> <span class="m">0</span><span class="mi">.3s</span> <span class="nb">ease</span><span class="o">,</span>
+    <span class="n">box-shadow</span> <span class="m">0</span><span class="mi">.3s</span> <span class="nb">ease</span><span class="p">;</span> <span class="cm">/* 添加平滑过渡效果 */</span>
+<span class="p">}</span>
+
+<span class="nc">.card-wrapper.card</span><span class="nd">:hover</span> <span class="p">{</span>
+  <span class="nl">transform</span><span class="p">:</span> <span class="nf">translateY</span><span class="p">(</span><span class="m">-5px</span><span class="p">);</span> <span class="cm">/* 鼠标悬停时轻微上移 */</span>
+  <span class="nl">box-shadow</span><span class="p">:</span> <span class="m">0</span> <span class="m">8px</span> <span class="m">12px</span> <span class="nf">rgba</span><span class="p">(</span><span class="m">0</span><span class="o">,</span> <span class="m">0</span><span class="o">,</span> <span class="m">0</span><span class="o">,</span> <span class="m">0</span><span class="mi">.2</span><span class="p">);</span> <span class="cm">/* 增加阴影效果 */</span>
+<span class="p">}</span>
+</code></pre></div></div> <p>其他效果的更改，结合ChatGPT也很方便。</p> <h2 id="四wordpress迁移到github">四、WordPress迁移到Github</h2> <p>Github个人网站搭建好后，我需要把WordPress上的文章迁移过来，Jekyll有一个 <code class="language-plaintext highlighter-rouge">jekyll-import</code>包支持从各种其他网站迁移到Jekyll，超级方便！其中从WordPress迁移过来的说明文档链接为：https://import.jekyllrb.com/docs/wordpress/。我用的主要命令是：</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll-import wordpress <span class="se">\</span>
+  <span class="nt">--dbname</span> wordpress <span class="se">\ </span><span class="c"># 数据库名</span>
+  <span class="nt">--user</span> lhl <span class="se">\ </span><span class="c">#SQL用户名</span>
+  <span class="nt">--password</span> 密码 <span class="se">\</span>
+  <span class="nt">--host</span> 服务器公网地址 <span class="se">\</span>
+  <span class="nt">--port</span> 3306 <span class="se">\</span>
+  <span class="nt">--table_prefix</span> wp_
+</code></pre></div></div> <p>不过这个命令用的时候也有很多问题，利用ChatGPT可以一一解决，此处不再赘述。用这个命令成功的将原网站的文章全都迁移过来，至此，我的网站迁移计划大功告成！</p> <h2 id="参考资料">参考资料</h2> <ol> <li><a href="https://blog.51cto.com/u_15294985/7978684">保姆级教程：从零构建GitHub Pages静态网站</a></li> <li><a href="https://chirpy.cotes.page/posts/write-a-new-post/">Chirpy</a></li> <li><a href="https://www.zhihu.com/question/20223939/answer/3486773682">有哪些简洁明快的 Jekyll 模板？</a></li> </ol>]]></content><author><name></name></author><category term="Tutorial"/><category term="Web Development"/><category term="Website Building"/><category term="Github"/><summary type="html"><![CDATA[前言]]></summary></entry><entry><title type="html">Introduction to Machine Learning</title><link href="https://auroralhl.github.io/blog/2024/ML1/" rel="alternate" type="text/html" title="Introduction to Machine Learning"/><published>2024-07-24T00:00:00+00:00</published><updated>2024-07-24T00:00:00+00:00</updated><id>https://auroralhl.github.io/blog/2024/ML1</id><content type="html" xml:base="https://auroralhl.github.io/blog/2024/ML1/"><![CDATA[<h2 id="一基本概念">一、基本概念</h2> <h3 id="什么是机器学习">什么是机器学习</h3> <p>总的来说，机器学习就是大数据时代背景下<strong>处理数据的各种方法</strong>的总称。机器学习利用各种数理模型对数据进行建模，对数据进行预测和分析，在实际应用中指导决策。</p> <p>我们通常将用于学习的数据对象或者实例称为<strong>样例或者样本</strong>，每个样例x采用一个向量 $x=(x^{(1)},x^{(2)},\cdots,x^{(n)})^T$来表示.</p> <ul> <li>向量的每个分量对应样例的一个<strong>特征或者属性.</strong></li> <li>n为样例$x$的特征个数，也称为<strong>维数，</strong>$x^{(i)}$为样例x的第i 维属性的属性值.</li> <li>属性张成的空间$\chi$为<strong>特征空间，也称为样本空间或输入空间</strong>，记作$\chi$.</li> </ul> \[x=(x^{(1)},x^{(2)},\cdots,x^{(n)})^T\in\mathcal{X}\] <p>一般而言，数据对象的特征和学习任务相关，如果有不相关的特征可能会影响模型的预测能力。</p> <h3 id="机器学习的分类">机器学习的分类</h3> <p>机器学习一般包括监督学习、无监督学习、半监督学习、强化学习等。</p> <h4 id="监督学习">监督学习</h4> <p>监督学习 (Supervised learning)基于给定的<strong>标记数据集</strong>$T={(x_i,y_i)}_{i=1}^N$学习从输入空间$\chi$ 到输出空间$\gamma$ 的映射 (模型)，并利用该映射对未见 (unseen) 实例x对应的输出y进行预测。监督学习有两个核心问题：</p> <ul> <li> <p><strong>分类(classification)问题</strong>：输出空间$\gamma$是一个离散值的集合(通常也是有限的).</p> <ul> <li>$\mathcal{Y}={c_1,c_2,\cdots,c_M}$, 其中$M$为类别的个数.</li> <li> <p>二分类(binary classification)问题：$M=2.$</p> <ul> <li>$\mathcal{Y}={+1,-1}.$</li> <li>$\mathcal{Y}={0,1}.$</li> </ul> </li> <li>多分类(multi-class classification) 问题：$M&gt;2.$</li> </ul> </li> <li> <p><strong>回归 (regression) 问题</strong>：输出空间$\gamma=\mathbb{R}.$</p> </li> </ul> <h4 id="无监督学习">无监督学习</h4> <p>无监督学习( Unsupervised learning) 基于给定的<strong>无标记的数据集</strong>$T={x_i}_{i=1}^N$，发现数据中隐含的知识或者模式(interesting patterns)，并将学得的模式应用于未见实例。</p> <ul> <li>无监督学习通常也被称为知识发现(knowledge discovery)；</li> <li>通常没有明确的知识模式类型、衡量学习结果等的度量，依赖于具体学习场景和应用领域；</li> <li>更具有主观性和挑战性.</li> </ul> <p>一个典型的无监督学习任务——<strong>聚类</strong>，聚类的目的是将无标记的数据集$T={x_i}_{i=1}^N$划分成若干子集。</p> <ul> <li>这些子集通常互不相交，称每个子集为簇 N，每个簇对应于一个潜在的概念；</li> <li>属于同一子集的样本数据尽<strong>可能相互相似</strong>；</li> <li>不同子集的样本尽可能不同</li> </ul> <h4 id="半监督学习和强化学习">半监督学习和强化学习</h4> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407241358100.png" alt="截屏2023-12-20 12.22.59"/></p> <h2 id="二模型选择">二、模型选择</h2> <h3 id="机器学习三要素">机器学习三要素</h3> <p>机器学习方法都是由模型、策略和算法构成的，即机器学习方法由三要素构成，可以简单地表示为：</p> <blockquote> <p>机器学习方法＝<strong>模型＋策略＋算法</strong></p> </blockquote> <ul> <li><strong>模型：</strong>在监督学习过程中，模型就是所要学习的<strong>条件概率分布或决策函数</strong>。模型的假设空间包含所有可能的条件概率分布或决策函数；</li> <li><strong>策略：</strong>有了模型的假设空间，机器学习接着需要考虑的是按照什么样的<strong>准则</strong>学习或选择最优的模型；</li> <li><strong>算法：</strong>算法是指学习模型的具体计算方法；</li> </ul> <h3 id="学习策略">学习策略</h3> <p>机器学习关心的问题是要学什么样的模型，在监督学习过程中，模型就是所要学习的条件概率分布或决策函数。模型的<strong>假设空间(hypothesis space)</strong>包含所有可能的条件概率分布或决策函数。例如，假设决策函数是输入变量的线性函数，那么模型的假设空间就是所有这些线性函数构成的函数集合，假设空间中的模型一般有无穷多个。那么怎么选出最好的模型呢，首先引入损失函数与风险函数的概念：</p> <ul> <li><strong>损失函数</strong>度量模型一次预测的好坏；</li> <li><strong>风险函数</strong>度量平均意义下模型预测的好坏。</li> </ul> <p>在假设空间$\mathcal{F}$ 中选取模型 $f$ 作为决策函数，对于给定的输入 X,由 $f(X)$ 给出相应的输出$Y$,这个输出的预测值 $f(X)$ 与真实值$Y$ 可能一致也可能不一致，用一个<strong>损失函数(loss function)或代价函数(cost function)</strong>来度量预测错误的程度。损失函数是 $f(X)$ 和 Y 的非负实值函数，记作 $L(Y,f(X))$。机器学习常用的损失函数有以下几种：</p> <ol> <li> <p><strong>0-1 损失函数</strong>(0-1 loss function)</p> \[L(Y,f(X))=\begin{cases}&amp;1,\quad Y\neq f(X)\\&amp;0,\quad Y=f(X)\end{cases}\] </li> <li> <p><strong>平方损失函数</strong>(quadratic loss function)</p> \[L(Y,f(X))=(Y-f(X))^2\] </li> <li> <p><strong>对数损失函数</strong>(logarithmic loss function)或对数似然损失函数(log-likelihood loss function)</p> </li> </ol> \[\begin{aligned}L(Y,P(Y|X))&amp;=-\log P(Y|X)\end{aligned}\] <p>损失函数值越小，模型就越好。由于模型的输入、输出 $(X,Y)$ 是随机变量，遵循联合分布$P(X,Y)$,所以损失函数的期望是:</p> \[\begin{aligned} R_{\mathrm{exp}}(f)&amp; =E_{P}[L(Y,f(X))] \\ &amp;=\int_{\mathcal{X}\times\mathcal{Y}}L(y,f(x))P(x,y)\mathrm{d}x\mathrm{d}y. \end{aligned}\] <p>这是理论上模型 $f(X)$ 关于联合分布 $P(X,Y)$ 的平均意义下的损失，称为<strong>风险函数 (risk function) 或期望损失(expected loss)。</strong>由于联合分布$P(X,Y)$ 是不知道的，所以通常我们不会直接使用风险函数，而是用经验风险。给定一个训练数据集</p> \[T=\left\{\left(x_1, y_1\right),\left(x_2, y_2\right), \cdots,\left(x_N, y_N\right)\right\}\] <p>模型 $f(X)$ 关于训练数据集的平均损失称为<strong>经验风险 (empirical risk)</strong> , 记作 $R_{\text {emp }}$ :</p> \[R_{\text {emp }}(f)=\frac{1}{N} \sum_{i=1}^N L\left(y_i, f\left(x_i\right)\right)\] <ul> <li>期望风险 $R_{\exp }(f)$ 是模型关于联合分布的期望损失；</li> <li>经验风险 $R_{\mathrm{emp}}(f)$ 是模型关于训练样本集的平均损失。</li> </ul> <p>根据大数定律, <strong>当样本容量 $N$ 趋于无穷时, 经验风险 $R_{\mathrm{emp}}(f)$ 趋于期望风险 $R_{\exp }(f)$</strong> 。所以一个很自然的想法是用经验风险估计期望风险。但是, 由于现实中训练样本数目有限, 甚至很小, 所以用经验风险估计期望风险常常并不理想, 要对经验风险进行一定的矫正。这就关系到监督学习的两个基本策略: 经验风险最小化和结构风险最小化。</p> <h4 id="经验风险最小化">经验风险最小化</h4> <p>在假设空间、损失函数以及训练数据集确定的情况下，经验风险函数式(1.14) 就可以确定。经验风险最小化 (empirical risk minimization, ERM) 的策略认为，经验风险最小的模型是最优的模型。根据这一策略，按照经验风险最小化求最优模型就是求解最优化问题：</p> \[\min_{f\in\mathcal{F}}\frac{1}{N}\sum_{i=1}^{N}L(y_i,f(x_i))\] <p>其中$\mathcal{F}$ 是假设空间。当样本容量足够大时，经验风险最小化能保证有很好的学习效果，在现实中被广泛采用。比如，极大似然估计(maximum likelihood estimation) 就是经验风险最小化的一个例子。当模型是条件概率分布、损失函数是对数损失函数时，经验风险最小化就等价于极大似然估计。但是，当样本容量很小时，经验风险最小化学习的效果就未必很好，会产生“<strong>过拟合” (over-fitting)</strong> 现象。</p> <h4 id="结构风险最小化">结构风险最小化</h4> <p><strong>结构风险最小化 (structural risk minimization, SRM) 是为了防止过拟合而提出来的策略</strong>。结构风险最小化等价于正则化(regularization)。结构风险在经验风险上加上表示模型复杂度的正则化项(regularizer)或罚项(penalty term)。在假设空间、损失函数以及训练数据集确定的情况下，结构风险的定义是</p> \[R_{\mathrm{srm}}(f)=\frac1N\sum_{i=1}^NL(y_i,f(x_i))+\lambda J(f)\] <ul> <li>其中，$J(f)$ 为模型的复杂度，是定义在假设空间$\mathcal{F}$上的泛函；</li> <li>模型 $f$ 越复杂，复杂度 $J(f)$ 就越大；反之，模型 $f$ 越简单，复杂度 $J(f)$ 就越小；</li> <li>$\lambda\geqslant0$ 是系数，用以权衡经验风险和模型复杂度；</li> <li>结构风险小需要经验风险与模型复杂度同时小，结构风险小的模型往往对训练数据以及未知的测试数据都有较好的预测。</li> </ul> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407241358063.png" alt="截屏2023-12-20 16.09.55" style="zoom:67%;"/></p> <p>上图给出了模型复杂度与训练误差和测试误差的关系：</p> <ol> <li>模型复杂度小，训练误差较大，被称为<strong>欠拟合</strong>现象；</li> <li>模型复杂度过高，训练误差小，测试误差（泛化误差）大，被称为<strong>过拟合现象</strong>。</li> </ol> <p>比如，贝叶斯估计中的最大后验概率估计(maximum posterior probability estimation, MAP) 就是结构风险最小化的一个例子。当模型是条件概率分布、损失函数是对数损失函数、模型复杂度由模型的先验概率表示时，结构风险最小化就等价于最大后验概率估计。</p> <p>结构风险最小化的策略认为结构风险最小的模型是最优的模型，所以求最优模型就是求解最优化问题：</p> \[\min_{f\in\mathcal{F}}\frac1N\sum_{i=1}^NL(y_i,f(x_i))+\lambda J(f).\] <h3 id="训练误差与泛化误差">训练误差与泛化误差</h3> <ul> <li>训练误差：模型在训练集上的<strong>经验风险</strong>，记为：$\hat{R}(f)=\frac1N\sum_{i=1}^NL(y_i,f(x_i))$；</li> <li>泛化误差：学习的模型在对未知数据的预测能力，也就是<strong>期望风险</strong>，记为$R(f)=E[L(Y,f(X))]$；</li> </ul> <p>通过经验风险最小化，选出的模型记为：</p> \[f_N = \arg \min_{f\in\mathcal{F}} \hat{R}(f).\] <p>$f_N$ 依赖训练数据集的样本容量 $N$。人们更关心的是 $f_N$ 的泛化能力</p> \[R(f_{N})=E[L(Y,f_{N}(X))].\] <p>下面讨论从有限集合$\mathcal{F}={f_1,f_2,\cdots,f_d}$ 中任意选出的函数 $f$ 的<strong>泛化误差上界</strong>。</p> <p><strong>定理 (泛化误差上界)</strong></p> <blockquote> <p>对二类分类问题，当假设空间是有限个函数的集合 $\mathcal{F}=$</p> <p>${f_1,f_2,\cdots,f_d}$ 时，对任意一个函数 $f\in\mathcal{F}$, 至少以概率 $1-\delta,0&lt;\delta&lt;1$, 以下不等式成立：</p> \[R(f)\leqslant\hat{R}(f)+\varepsilon(d,N,\delta)\] <p>其中：</p> \[\varepsilon(d,N,\delta) = \sqrt{\frac{1}{N}(\log d+\log\frac{1}{\delta})}.\] </blockquote> <p>从上述定理我们可以知道：</p> <ul> <li>$R(f)$ 是泛化误差，右端即为泛化误差上界；</li> <li>在泛化误差上界中，第1 项是训练误差，训练误差越小，泛化误差也越小；</li> <li>第2 项 $\varepsilon(d,N,\delta)$ <strong>是 N 的单调递减函数， 当$N$ 趋于无穷时趋于 0</strong>;</li> <li>同时它也是 $\sqrt{\log d}$ 阶的函数<strong>，假设空间 $\mathcal{F}$ 包含的函数越多，其值越大</strong>;</li> <li><strong>训练误差$\hat{R}(f)$小并不能一定保证模型$f_N$的泛化性能好</strong>。</li> </ul> <p>泛化性能与学习算法捕获所有样本的共有知识模式的能力有关经验误差反映的是学习算法捕获训练数据蕴含的知识模式的能力。过小的训练误差可能导致所谓的过拟合 (Overfitting) 现象。</p> <h3 id="泛化误差的偏差-方差分解">泛化误差的偏差-方差分解</h3> <p>我们知道随着模型复杂度的增加，学习算法的学习能力越来越强，训练误差越来越小。而泛化误差先是随着训练误差的缩小而减小，但随着模型复杂度的进一步增加泛化误差不降反升。</p> <p>泛化误差与模型复杂度的关系为什么这样？ 针对回归任务，进一步讨论泛化误差由哪几个部分构成. 我们设$h_\mathrm{T}$是基于训练数据集$T$学习到的回归模型，对给定的$x$, 则学习算法的泛化误差为</p> \[E_T[(h_T(x)-c(x))^2].\] <p>其中，$c(x)$为真实标记。定义学习算法对数据$x$的<strong>期望输出</strong>为</p> \[\bar{h}(x)=E_T[h_T(x)].\] <p>$x$的期望输出与真实标记c$(x)$之间的差别称为<strong>偏差</strong>，即</p> \[Bias(x)=E_T[(h_T(x)-c(x)]=\bar{h}(x)-c(x).\] <ul> <li>偏差描述了学习算法对$x$的预测期望相对于x的真实输出的偏离程度；</li> <li><strong>偏差反映了学习算法的学习能力，偏差越小，说明学习算法的学习能力越强</strong>.</li> </ul> <p>基于相同样本容量的不同训练数据集产生的<strong>预测方差</strong>为</p> \[Var(x)=E_T[(h_T(x)-\bar{h}(x))^2].\] <ul> <li>方差刻画学习算法使用相同容量的不同训练数据集所导致的学习性能的变动情况；</li> <li><strong>方差越小，说明学习算法对数据扰动的容忍能力越强</strong>.</li> </ul> <p>接下来，我们对泛化误差进行如下分解：</p> \[\begin{aligned} E_T[(h_T(x)-c(x))^2] &amp;=E_T[h_T^2(x)-2h_T(x)c(x)+c^2(x)] \\ &amp;=E_T[h_T^2(x)]-2E_T[h_T(x)]c(x)+c^2(x) \\ &amp;= E_T[h_T^2(x)]-2\bar{h}(x)c(x)+c^2(x) \\ &amp;=E_T[h_T^2(x)]-\bar{h}^2(x)+\bar{h}^2(x)-2\bar{h}(x)c(x)+c^2(x) \\ &amp;=E_T[(h_T(x)-\bar{h}(x))^2]+(\bar{h}(x)-c(x))^2 \\ &amp;=-Var(x)+Bias^2(x). \\ \end{aligned}\] <p>这说明泛化误差可分解为<strong>方差和偏差</strong>的平方之和。由于噪声等的存在，使得$x$对应的观测$y$未必一定有</p> \[y=c(x).\] <p>我们不妨设</p> \[y=c(x)+\varepsilon,\] <p>其中$\varepsilon$为噪声，假定$\varepsilon$服从分布$\varepsilon$且其期望为0，即$E[\varepsilon]=0$.那么可以得到：</p> \[E_{T\sim D|T|,\varepsilon\sim\mathcal{E}}[(h_T(x)-y)^2]=Var(x)+Bias^2(x)+E[\varepsilon^2],\] <p>即泛化误差可以<strong>分解为方差、偏差和噪声三部分</strong>，其中噪声部分也称为不可约误差，反映了学习问题本身的难度.</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202407241358130.png" alt="截屏2023-12-20 16.36.21"/></p> <p>方差和偏差通常是相互抵触的:</p> <ul> <li>当模型复杂度过于简单时，拟合能力比较弱，<strong>对数据扰动不敏感</strong>,此时偏差在泛化误差中起主导作用；</li> <li>随着模型复杂度的提高，算法的拟合能力不断增强，偏差逐渐减少。但学习能力的提高也带来过拟合的风险，使得学习算法<strong>对数据扰动逐渐敏感</strong>，方差在泛化误差中的比重逐渐增大，最终导致泛化误差不断增大。</li> </ul> <h3 id="正则化">正则化</h3> <p>正则化一般具有如下形式:</p> \[\min _{f \in \mathcal{F}} \frac{1}{N} \sum_{i=1}^N L\left(y_i, f\left(x_i\right)\right)+\lambda \Omega(f)\] <p>其中:</p> <ol> <li>第 1 项是经验风险；</li> <li>第 2 项是正则化项, $\lambda \geqslant 0$ 为正则化参数；</li> </ol> <p>正则化项可以取不同的形式。例如, 在回归问题中, 正则化项可以是参数向量的 $L_2$ 范数:</p> \[L(w)=\frac{1}{N} \sum_{i=1}^N\left(f\left(x_i ; w\right)-y_i\right)^2+\frac{\lambda}{2}\|w\|^2\] <p>这里, $|w|$ 表示参数向量 $w$ 的 $L_2$ 范数。正则化项也可以是参数向量的 $L_1$ 范数:</p> \[L(w)=\frac{1}{N} \sum_{i=1}^N\left(f\left(x_i ; w\right)-y_i\right)^2+\lambda\|w\|_1\] <p>这里, $|w|_1$ 表示参数向量 $w$ 的 $L_1$ 范数。</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202309141039222.png" alt="截屏2023-09-14 10.39.28"/></p> <h3 id="交叉验证">交叉验证</h3> <p>如果给定的样本数据充足，进行模型选择的一种简单方法是随机地将数据集切分成三部分，分别为训练集（training set）、验证集（validation set）和测试集（test set）。训练集用来训练模型，验证集用于模型的选择，而测试集用于最终对学习方法的评估。</p> <p>但是，在许多实际应用中数据是不充足的。为了选择好的模型，可以采用交叉验证方法。交叉验证的基本想法是重复地使用数据，把给定的数据进行切分，将切分的数据集组合为训练集与测试集，在此基础上反复地进行训练、测试以及模型选择。</p> <p><strong>1 简单交叉验证(留出法）</strong></p> <blockquote> <p>简单交叉验证方法是：</p> <ol> <li>首先随机地将已给数据分为两部分，一部分作为训练集，另一部分作为测试集（例如，70％的数据为训练集，30％的数据为测试集）；</li> <li>然后用训练集在各种条件下（例如，不同的参数个数）训练模型，从而得到不同的模型；</li> <li>在测试集上评价各个模型的测试误差，选出测试误差最小的模型。</li> </ol> </blockquote> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202312201744491.png" alt="截屏2023-12-20 17.43.46"/></p> <p><strong>2 <em>K</em> 折交叉验证</strong></p> <blockquote> <p>应用最多的是 <em>K</em> 折交叉验证（<em>K</em>-fold cross validation），方法如下：</p> <ol> <li>首先将数据集$D$随机划分为$k$个互不相交、大小相似的子集$D_1,D_2,\cdots,D_k.$</li> <li>然进行$k$次训练-测试过程，其中第$i$次训练-学习过程中以$D-D_i$为训练数据集学得模型$h_{D-D_i}$</li> <li>以$D_i$为测试集对$h_{D-D_i}$进行测试评估，得到测试误差$\hat{R}<em>{test}(h</em>{D-D_i}).$</li> <li> <p>以</p> \[\frac1k\sum_{i=1}^k\hat{R}_{test}(h_{D-D_i})\] <p>作为$h_D$在本次数据集随机划分下的测试评估结果。</p> </li> <li>将这一过程对可能的 <em>K</em> 种选择重复进行；最后选出 <em>K</em> 次评测中平均测试误差最小的模型。</li> </ol> <p>比较耗时，每轮要训练K次。</p> </blockquote> <p><strong>3 留一交叉验证</strong></p> <blockquote> <p><em>K</em> 折交叉验证的特殊情形是 <em>K</em> = <em>N</em>，称为留一交叉验证（leave-one-out cross validation），往往在数据缺乏的情况下使用。这里，<em>N</em> 是给定数据集的容量。设数据集为$D$，其误差为：</p> \[\hat{R}(f_D)=\frac1{|D|}\sum_{x\in D}L(f_{D-\{x\}}(x),y).\] <ul> <li>也就是说每次测试集只有一个数据</li> <li>训练N次，数据量大时，计算开销大</li> </ul> </blockquote> <h3 id="自助法">自助法</h3> <p>自助法是为了解决交叉验证法在模型选择阶段<strong>训练集规模比整个样本小</strong>的问题，采用<strong>有放回抽样</strong>对交叉验证法进行改造。其具体策略如下：</p> <ol> <li> <table> <tbody> <tr> <td>先从 $D$ 中以有放回的抽样方式随机抽取 $</td> <td>D</td> <td>$ 个数据来构建训 练数据集 $T$,</td> </tr> </tbody> </table> </li> <li>然后以 $D$ 中没有被抽中的数据构建测试数据集 $T^{\prime}$.</li> </ol> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202309161228538.png" alt="截屏2023-09-16 12.28.29"/></p> <ul> <li>自助法解决了交叉验证法中模型选择阶段和最终模型训练阶段的训练集规模差异问题.</li> </ul> <h2 id="三模型评估">三、模型评估</h2> <h3 id="回归评价指标">回归评价指标</h3> <h4 id="1-mse">1 MSE</h4> <p>回归问题最常用的评价指标是均方误差（Mean Square Error,MSE），其计算公式为：</p> \[MSE(y,\hat y)=\frac{1}{n}\sum_{i=1}^{n}(y_i-\hat y_i)^2\] <h4 id="2-rmse">2 RMSE</h4> <p>均方根误差（Root Mean Square Error,RMSE）：</p> \[RMSE(y,\hat y)=\sqrt{MSE(y,\hat y)}=\sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_i-\hat y_i)^2}\] <p>均方误差和均方根误差通常会放大离群值对模型评估结果的影响，一种克服这个问题的方法是用，平均绝对误差（Mean Absolute Error,MAE)</p> <h4 id="3-mae">3 MAE</h4> <p>平均绝对误差（Mean Absolute Error,MAE):</p> \[MAE(y,\hat y)=\frac{1}{n}\sum_{i=1}^{n}|y_i-\hat y_i|\] <h3 id="分类评价指标">分类评价指标</h3> <p>在二分类问题中，每一个样本可以划分为以下四种类型：</p> <ol> <li>真正(True Positive , TP)：被模型预测为正的正样本。</li> <li>真负(True Negative , TN)：被模型预测为负的负样本。</li> <li>假正(False Positive , FP)：被模型预测为正的负样本。</li> <li>假负(False Negative , FN)：被模型预测为负的正样本。</li> </ol> <p>根据样本的真实标签和预测标签，可以得到一个混淆矩阵：</p> <p><img src="https://aurora-pics.oss-cn-beijing.aliyuncs.com/Pic/202312201756154.png" alt="截屏2022-05-18 下午9.11.58" style="zoom:67%;"/></p> <p>正负样本选择，没有明确规定，根据应用场景进行选择，在机器学习中，往往将<strong>少数样本</strong>定义为正样本，表示希望<strong>模型在训练时更加关注少数样本</strong>。</p> <h4 id="1-正确率">1 正确率</h4> <p>分类问题中最常见的指标是正确率(accuracy)，表示<strong>模型预测正确的样本比例</strong>，给定混淆矩阵时，正确率计算公式如下：</p> \[正确率=\frac{TP+TN}{TP+TN+FP+FN}\] <p>在<strong>类别不均衡</strong>时，正确率不是一个很好的度量模型好坏的指标。</p> <blockquote> <p>比如，在文本情绪分类数据集中，有80%为正向的内容，20%为负向的内容，假如这个模型将所有样本都判断为正向，则正确率有80%!但是显然这个模型并不好</p> </blockquote> <p>对于类别不均衡的数据集，精度和召回率是比正确率更好的性能评价指标</p> <h4 id="2-精度">2 精度</h4> <p><strong>精度(precision)</strong>指正确预测的正样本占所有预测为正样本的比例：</p> \[精度=\frac{TP}{TP+FP}\] <h4 id="3-召回率">3 召回率</h4> <p>召回率（recall)又称为灵敏度或命中率，是指正样本中被正确预测的比例：</p> \[召回率=\frac{TP}{TP+FN}\] <p>通常精度和召回率是负相关的，实际应用中高精度往往对应低召回率，反之亦然，我们需要根据实际问题场景来选择哪一个指标。</p> <h4 id="4-f值">4 F值</h4> <p>单独考虑精度和召回率是片面的，需要综合考虑二者，在二分类问题中，可以定义一个综合考虑精度和召回率的指标，这个指标为F值：</p> \[F=\frac{(1+\beta^2)精度\times 召回率}{\beta^2\times精度+召回率}\] <p>其中$\beta$为正数，其作用是调节精度和召回率的权重，$\beta$越大，召回率的权重越大，$\beta$越小，精度的权重越大。当$\beta=1$时，它是精度和召回率的调和平均数：</p> <h2 id="参考资料">参考资料</h2> <ol> <li>李航 et al. 统计学习方法. 清华大学出版社, 2019.</li> </ol>]]></content><author><name></name></author><category term="AI"/><category term="Machine Learning"/><category term="Machine Learning"/><summary type="html"><![CDATA[一、基本概念]]></summary></entry><entry><title type="html">Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra</title><link href="https://auroralhl.github.io/blog/2024/google-gemini-updates-flash-15-gemma-2-and-project-astra/" rel="alternate" type="text/html" title="Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra"/><published>2024-05-14T00:00:00+00:00</published><updated>2024-05-14T00:00:00+00:00</updated><id>https://auroralhl.github.io/blog/2024/google-gemini-updates-flash-15-gemma-2-and-project-astra</id><content type="html" xml:base="https://auroralhl.github.io/blog/2024/google-gemini-updates-flash-15-gemma-2-and-project-astra/"><![CDATA[<p>May 14, 2024 We’re introducing a series of updates across the Gemini family of models, including the new 1.5 Flash, our lightweight model for speed and efficiency, and Project Astra, our vision for the future of AI assistants. In December, we launched our first natively multimodal model Gemini 1.0 in three sizes: Ultra, Pro and Nano. Just a few months later we released 1.5 Pro, with enhanced performance and a breakthrough long context window of 1 million tokens.Developers and enterprise customers have been putting 1.5 Pro to use in incredible ways and finding its long context window, multimodal reasoning capabilities and impressive overall performance incredibly useful.We know from user feedback that some applications need lower latency and a lower cost to serve. This inspired us to keep innovating, so today, we’re introducing Gemini 1.5 Flash: a model that’s lighter-weight than 1.5 Pro, and designed to be fast and efficient to serve at scale.Both 1.5 Pro and 1.5 Flash are available in public preview with a 1 million token context window in Google AI Studio and Vertex AI. And now, 1.5 Pro is also available with a 2 million token context window via waitlist to developers using the API and to Google Cloud customers.We’re also introducing updates across the Gemini family of models, announcing our next generation of open models, Gemma 2, and sharing progress on the future of AI assistants, with Project Astra.Context lengths of leading foundation models compared with Gemini 1.5’s 2 million token capability1.5 Flash is the newest addition to the Gemini model family and the fastest Gemini model served in the API. It’s optimized for high-volume, high-frequency tasks at scale, is more cost-efficient to serve and features our breakthrough long context window.While it’s a lighter weight model than 1.5 Pro, it’s highly capable of multimodal reasoning across vast amounts of information and delivers impressive quality for its size.The new Gemini 1.5 Flash model is optimized for speed and efficiency, is highly capable of multimodal reasoning and features our breakthrough long context window.1.5 Flash excels at summarization, chat applications, image and video captioning, data extraction from long documents and tables, and more. This is because it’s been trained by 1.5 Pro through a process called “distillation,” where the most essential knowledge and skills from a larger model are transferred to a smaller, more efficient model.Read more about 1.5 Flash in our updated Gemini 1.5 technical report, on the Gemini technology page, and learn about 1.5 Flash’s availability and pricing.Over the last few months, we’ve significantly improved 1.5 Pro, our best model for general performance across a wide range of tasks.Beyond extending its context window to 2 million tokens, we’ve enhanced its code generation, logical reasoning and planning, multi-turn conversation, and audio and image understanding through data and algorithmic advances. We see strong improvements on public and internal benchmarks for each of these tasks.1.5 Pro can now follow increasingly complex and nuanced instructions, including ones that specify product-level behavior involving role, format and style. We’ve improved control over the model’s responses for specific use cases, like crafting the persona and response style of a chat agent or automating workflows through multiple function calls. And we’ve enabled users to steer model behavior by setting system instructions.We added audio understanding in the Gemini API and Google AI Studio, so 1.5 Pro can now reason across image and audio for videos uploaded in Google AI Studio. And we’re now integrating 1.5 Pro into Google products, including Gemini Advanced and in Workspace apps.Read more about 1.5 Pro in our updated Gemini 1.5 technical report and on the Gemini technology page.Gemini Nano is expanding beyond text-only inputs to include images as well. Starting with Pixel, applications using Gemini Nano with Multimodality will be able to understand the world the way people do — not just through text, but also through sight, sound and spoken language.Read more about Gemini 1.0 Nano on Android.Today, we’re also sharing a series of updates to Gemma, our family of open models built from the same research and technology used to create the Gemini models.We’re announcing Gemma 2, our next generation of open models for responsible AI innovation. Gemma 2 has a new architecture designed for breakthrough performance and efficiency, and will be available in new sizes.The Gemma family is also expanding with PaliGemma, our first vision-language model inspired by PaLI-3. And we’ve upgraded our Responsible Generative AI Toolkit with LLM Comparator for evaluating the quality of model responses.Read more on the Developer blog.As part of Google DeepMind’s mission to build AI responsibly to benefit humanity, we’ve always wanted to develop universal AI agents that can be helpful in everyday life. That’s why today, we’re sharing our progress in building the future of AI assistants with Project Astra (advanced seeing and talking responsive agent).To be truly useful, an agent needs to understand and respond to the complex and dynamic world just like people do — and take in and remember what it sees and hears to understand context and take action. It also needs to be proactive, teachable and personal, so users can talk to it naturally and without lag or delay.While we’ve made incredible progress developing AI systems that can understand multimodal information, getting response time down to something conversational is a difficult engineering challenge. Over the past few years, we’ve been working to improve how our models perceive, reason and converse to make the pace and quality of interaction feel more natural.Building on Gemini, we’ve developed prototype agents that can process information faster by continuously encoding video frames, combining the video and speech input into a timeline of events, and caching this information for efficient recall.By leveraging our leading speech models, we also enhanced how they sound, giving the agents a wider range of intonations. These agents can better understand the context they’re being used in, and respond quickly, in conversation.With technology like this, it’s easy to envision a future where people could have an expert AI assistant by their side, through a phone or glasses. And some of these capabilities are coming to Google products, like the Gemini app and web experience, later this year.We’ve made incredible progress so far with our family of Gemini models, and we’re always striving to advance the state-of-the-art even further. By investing in a relentless production line of innovation, we’re able to explore new ideas at the frontier, while also unlocking the possibility of new and exciting Gemini use cases.Learn more about Gemini and its capabilities. Your information will be used in accordance with Google’s privacy policy.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      Done. Just one step more.
     
       Check your inbox to confirm your subscription.
     You are already subscribed to our newsletter.
@@ -89,660 +119,4 @@
     
   Let’s stay in touch. Get the latest news from Google in your inbox.
           Follow Us
-</code></pre></div></div>]]></content><author><name></name></author><summary type="html"><![CDATA[We’re sharing updates across our Gemini family of models and a glimpse of Project Astra, our vision for the future of AI assistants.]]></summary></entry><entry><title type="html">a post with tabs</title><link href="https://auroralhl.github.io/blog/2024/tabs/" rel="alternate" type="text/html" title="a post with tabs"/><published>2024-05-01T00:32:13+00:00</published><updated>2024-05-01T00:32:13+00:00</updated><id>https://auroralhl.github.io/blog/2024/tabs</id><content type="html" xml:base="https://auroralhl.github.io/blog/2024/tabs/"><![CDATA[<p>This is how a post with <a href="https://github.com/Ovski4/jekyll-tabs">tabs</a> looks like. Note that the tabs could be used for different purposes, not only for code.</p> <h2 id="first-tabs">First tabs</h2> <p>To add tabs, use the following syntax:</p> <div class="language-liquid highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">{%</span><span class="w"> </span><span class="nt">tabs</span><span class="w"> </span><span class="nv">group-name</span><span class="w"> </span><span class="cp">%}</span>
-
-<span class="cp">{%</span><span class="w"> </span><span class="nt">tab</span><span class="w"> </span><span class="nv">group-name</span><span class="w"> </span><span class="nv">tab-name-1</span><span class="w"> </span><span class="cp">%}</span>
-
-Content 1
-
-<span class="cp">{%</span><span class="w"> </span><span class="nt">endtab</span><span class="w"> </span><span class="cp">%}</span>
-
-<span class="cp">{%</span><span class="w"> </span><span class="nt">tab</span><span class="w"> </span><span class="nv">group-name</span><span class="w"> </span><span class="nv">tab-name-2</span><span class="w"> </span><span class="cp">%}</span>
-
-Content 2
-
-<span class="cp">{%</span><span class="w"> </span><span class="nt">endtab</span><span class="w"> </span><span class="cp">%}</span>
-
-<span class="cp">{%</span><span class="w"> </span><span class="nt">endtabs</span><span class="w"> </span><span class="cp">%}</span>
-</code></pre></div></div> <p>With this you can generate visualizations like:</p> <ul id="log" class="tab" data-tab="6d22f574-90d1-4698-a1e7-d6e2b1b77094" data-name="log"> <li class="active" id="log-php"> <a href="#">php </a> </li> <li id="log-js"> <a href="#">js </a> </li> <li id="log-ruby"> <a href="#">ruby </a> </li> </ul> <ul class="tab-content" id="6d22f574-90d1-4698-a1e7-d6e2b1b77094" data-name="log"> <li class="active"> <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">var_dump</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">);</span>
-</code></pre></div></div> </li> <li> <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">hello</span><span class="dl">"</span><span class="p">);</span>
-</code></pre></div></div> </li> <li> <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">pputs</span> <span class="dl">'</span><span class="s1">hello</span><span class="dl">'</span>
-</code></pre></div></div> </li> </ul> <h2 id="another-example">Another example</h2> <ul id="data-struct" class="tab" data-tab="5f588d61-22ee-47b7-8e9a-bcd430c05b56" data-name="data-struct"> <li class="active" id="data-struct-yaml"> <a href="#">yaml </a> </li> <li id="data-struct-json"> <a href="#">json </a> </li> </ul> <ul class="tab-content" id="5f588d61-22ee-47b7-8e9a-bcd430c05b56" data-name="data-struct"> <li class="active"> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">hello</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="s2">"</span><span class="s">whatsup"</span>
-  <span class="pi">-</span> <span class="s2">"</span><span class="s">hi"</span>
-</code></pre></div></div> </li> <li> <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"hello"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"whatsup"</span><span class="p">,</span><span class="w"> </span><span class="s2">"hi"</span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div> </li> </ul> <h2 id="tabs-for-something-else">Tabs for something else</h2> <ul id="something-else" class="tab" data-tab="5c50408c-f8dc-4d7c-bbd5-deab3107d7bc" data-name="something-else"> <li class="active" id="something-else-text"> <a href="#">text </a> </li> <li id="something-else-quote"> <a href="#">quote </a> </li> <li id="something-else-list"> <a href="#">list </a> </li> </ul> <ul class="tab-content" id="5c50408c-f8dc-4d7c-bbd5-deab3107d7bc" data-name="something-else"> <li class="active"> <p>Regular text</p> </li> <li> <blockquote> <p>A quote</p> </blockquote> </li> <li> <p>Hipster list</p> <ul> <li>brunch</li> <li>fixie</li> <li>raybans</li> <li>messenger bag</li> </ul> </li> </ul>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="code"/><summary type="html"><![CDATA[this is what included tabs in a post could look like]]></summary></entry><entry><title type="html">a post with typograms</title><link href="https://auroralhl.github.io/blog/2024/typograms/" rel="alternate" type="text/html" title="a post with typograms"/><published>2024-04-29T23:36:10+00:00</published><updated>2024-04-29T23:36:10+00:00</updated><id>https://auroralhl.github.io/blog/2024/typograms</id><content type="html" xml:base="https://auroralhl.github.io/blog/2024/typograms/"><![CDATA[<p>This is an example post with some <a href="https://github.com/google/typograms/">typograms</a> code.</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">typograms
-</span><span class="sb">+----+
-|    |---&gt; My first diagram!
-+----+</span>
-<span class="p">```</span>
-</code></pre></div></div> <p>Which generates:</p> <pre><code class="language-typograms">+----+
-|    |---&gt; My first diagram!
-+----+
-</code></pre> <p>Another example:</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">typograms
-</span><span class="sb">.------------------------.
-|.----------------------.|
-||"https://example.com" ||
-|'----------------------'|
-| ______________________ |
-||                      ||
-||   Welcome!           ||
-||                      ||
-||                      ||
-||  .----------------.  ||
-||  | username       |  ||
-||  '----------------'  ||
-||  .----------------.  ||
-||  |"*******"       |  ||
-||  '----------------'  ||
-||                      ||
-||  .----------------.  ||
-||  |   "Sign-up"    |  ||
-||  '----------------'  ||
-||                      ||
-|+----------------------+|
-.------------------------.</span>
-<span class="p">```</span>
-</code></pre></div></div> <p>which generates:</p> <pre><code class="language-typograms">.------------------------.
-|.----------------------.|
-||"https://example.com" ||
-|'----------------------'|
-| ______________________ |
-||                      ||
-||   Welcome!           ||
-||                      ||
-||                      ||
-||  .----------------.  ||
-||  | username       |  ||
-||  '----------------'  ||
-||  .----------------.  ||
-||  |"*******"       |  ||
-||  '----------------'  ||
-||                      ||
-||  .----------------.  ||
-||  |   "Sign-up"    |  ||
-||  '----------------'  ||
-||                      ||
-|+----------------------+|
-.------------------------.
-</code></pre> <p>For more examples, check out the <a href="https://google.github.io/typograms/#examples">typograms documentation</a>.</p>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="diagrams"/><summary type="html"><![CDATA[this is what included typograms code could look like]]></summary></entry><entry><title type="html">a post that can be cited</title><link href="https://auroralhl.github.io/blog/2024/post-citation/" rel="alternate" type="text/html" title="a post that can be cited"/><published>2024-04-28T15:06:00+00:00</published><updated>2024-04-28T15:06:00+00:00</updated><id>https://auroralhl.github.io/blog/2024/post-citation</id><content type="html" xml:base="https://auroralhl.github.io/blog/2024/post-citation/"><![CDATA[<p>This is an example post that can be cited. The content of the post ends here, while the citation information is automatically provided below. The only thing needed is for you to set the <code class="language-plaintext highlighter-rouge">citation</code> key in the front matter to <code class="language-plaintext highlighter-rouge">true</code>.</p>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="citation"/><summary type="html"><![CDATA[this is what a post that can be cited looks like]]></summary></entry><entry><title type="html">a post with pseudo code</title><link href="https://auroralhl.github.io/blog/2024/pseudocode/" rel="alternate" type="text/html" title="a post with pseudo code"/><published>2024-04-15T00:01:00+00:00</published><updated>2024-04-15T00:01:00+00:00</updated><id>https://auroralhl.github.io/blog/2024/pseudocode</id><content type="html" xml:base="https://auroralhl.github.io/blog/2024/pseudocode/"><![CDATA[<p>This is an example post with some pseudo code rendered by <a href="https://github.com/SaswatPadhi/pseudocode.js">pseudocode</a>. The example presented here is the same as the one in the <a href="https://saswat.padhi.me/pseudocode.js/">pseudocode.js</a> documentation, with only one simple but important change: everytime you would use <code class="language-plaintext highlighter-rouge">$</code>, you should use <code class="language-plaintext highlighter-rouge">$$</code> instead. Also, note that the <code class="language-plaintext highlighter-rouge">pseudocode</code> key in the front matter is set to <code class="language-plaintext highlighter-rouge">true</code> to enable the rendering of pseudo code. As an example, using this code:</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">pseudocode
-</span><span class="sb">% This quicksort algorithm is extracted from Chapter 7, Introduction to Algorithms (3rd edition)
-\begin{algorithm}
-\caption{Quicksort}
-\begin{algorithmic}
-\PROCEDURE{Quicksort}{$$A, p, r$$}
-    \IF{$$p &lt; r$$}
-        \STATE $$q = $$ \CALL{Partition}{$$A, p, r$$}
-        \STATE \CALL{Quicksort}{$$A, p, q - 1$$}
-        \STATE \CALL{Quicksort}{$$A, q + 1, r$$}
-    \ENDIF
-\ENDPROCEDURE
-\PROCEDURE{Partition}{$$A, p, r$$}
-    \STATE $$x = A[r]$$
-    \STATE $$i = p - 1$$
-    \FOR{$$j = p$$ \TO $$r - 1$$}
-        \IF{$$A[j] &lt; x$$}
-            \STATE $$i = i + 1$$
-            \STATE exchange
-            $$A[i]$$ with $$A[j]$$
-        \ENDIF
-        \STATE exchange $$A[i]$$ with $$A[r]$$
-    \ENDFOR
-\ENDPROCEDURE
-\end{algorithmic}
-\end{algorithm}</span>
-<span class="p">```</span>
-</code></pre></div></div> <p>Generates:</p> <pre><code class="language-pseudocode">% This quicksort algorithm is extracted from Chapter 7, Introduction to Algorithms (3rd edition)
-\begin{algorithm}
-\caption{Quicksort}
-\begin{algorithmic}
-\PROCEDURE{Quicksort}{$$A, p, r$$}
-    \IF{$$p &lt; r$$}
-        \STATE $$q = $$ \CALL{Partition}{$$A, p, r$$}
-        \STATE \CALL{Quicksort}{$$A, p, q - 1$$}
-        \STATE \CALL{Quicksort}{$$A, q + 1, r$$}
-    \ENDIF
-\ENDPROCEDURE
-\PROCEDURE{Partition}{$$A, p, r$$}
-    \STATE $$x = A[r]$$
-    \STATE $$i = p - 1$$
-    \FOR{$$j = p$$ \TO $$r - 1$$}
-        \IF{$$A[j] &lt; x$$}
-            \STATE $$i = i + 1$$
-            \STATE exchange
-            $$A[i]$$ with $$A[j]$$
-        \ENDIF
-        \STATE exchange $$A[i]$$ with $$A[r]$$
-    \ENDFOR
-\ENDPROCEDURE
-\end{algorithmic}
-\end{algorithm}
-</code></pre>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="code"/><summary type="html"><![CDATA[this is what included pseudo code could look like]]></summary></entry><entry><title type="html">a post with code diff</title><link href="https://auroralhl.github.io/blog/2024/code-diff/" rel="alternate" type="text/html" title="a post with code diff"/><published>2024-01-27T19:22:00+00:00</published><updated>2024-01-27T19:22:00+00:00</updated><id>https://auroralhl.github.io/blog/2024/code-diff</id><content type="html" xml:base="https://auroralhl.github.io/blog/2024/code-diff/"><![CDATA[<p>You can display diff code by using the regular markdown syntax:</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">diff
-</span><span class="gh">diff --git a/sample.js b/sample.js
-index 0000001..0ddf2ba
-</span><span class="gd">--- a/sample.js
-</span><span class="gi">+++ b/sample.js
-</span><span class="p">@@ -1 +1 @@</span>
-<span class="gd">-console.log("Hello World!")
-</span><span class="gi">+console.log("Hello from Diff2Html!")</span>
-<span class="p">```</span>
-</code></pre></div></div> <p>Which generates:</p> <div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gh">diff --git a/sample.js b/sample.js
-index 0000001..0ddf2ba
-</span><span class="gd">--- a/sample.js
-</span><span class="gi">+++ b/sample.js
-</span><span class="p">@@ -1 +1 @@</span>
-<span class="gd">-console.log("Hello World!")
-</span><span class="gi">+console.log("Hello from Diff2Html!")
-</span></code></pre></div></div> <p>But this is difficult to read, specially if you have a large diff. You can use <a href="https://diff2html.xyz/">diff2html</a> to display a more readable version of the diff. For this, just use <code class="language-plaintext highlighter-rouge">diff2html</code> instead of <code class="language-plaintext highlighter-rouge">diff</code> for the code block language:</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">diff2html
-</span><span class="sb">diff --git a/sample.js b/sample.js
-index 0000001..0ddf2ba
---- a/sample.js
-+++ b/sample.js
-@@ -1 +1 @@
--console.log("Hello World!")
-+console.log("Hello from Diff2Html!")</span>
-<span class="p">```</span>
-</code></pre></div></div> <p>If we use a longer example, for example <a href="https://github.com/rtfpessoa/diff2html/commit/c2c253d3e3f8b8b267f551e659f72b44ca2ac927">this commit from diff2html</a>, it will generate the following output:</p> <pre><code class="language-diff2html">From 2aaae31cc2a37bfff83430c2c914b140bee59b6a Mon Sep 17 00:00:00 2001
-From: Rodrigo Fernandes &lt;rtfrodrigo@gmail.com&gt;
-Date: Sun, 9 Oct 2016 16:41:54 +0100
-Subject: [PATCH 1/2] Initial template override support
-
----
- scripts/hulk.js                    |  4 ++--
- src/diff2html.js                   |  3 +--
- src/file-list-printer.js           | 11 ++++++++---
- src/hoganjs-utils.js               | 29 +++++++++++++++++------------
- src/html-printer.js                |  6 ++++++
- src/line-by-line-printer.js        |  6 +++++-
- src/side-by-side-printer.js        |  6 +++++-
- test/file-list-printer-tests.js    |  2 +-
- test/hogan-cache-tests.js          | 18 +++++++++++++++---
- test/line-by-line-tests.js         |  3 +--
- test/side-by-side-printer-tests.js |  3 +--
- 11 files changed, 62 insertions(+), 29 deletions(-)
-
-diff --git a/scripts/hulk.js b/scripts/hulk.js
-index 5a793c18..a4b1a4d5 100755
---- a/scripts/hulk.js
-+++ b/scripts/hulk.js
-@@ -173,11 +173,11 @@ function namespace(name) {
- // write a template foreach file that matches template extension
- templates = extractFiles(options.argv.remain)
-   .map(function(file) {
--    var openedFile = fs.readFileSync(file, 'utf-8');
-+    var openedFile = fs.readFileSync(file, 'utf-8').trim();
-     var name;
-     if (!openedFile) return;
-     name = namespace(path.basename(file).replace(/\..*$/, ''));
--    openedFile = removeByteOrderMark(openedFile.trim());
-+    openedFile = removeByteOrderMark(openedFile);
-     openedFile = wrap(file, name, openedFile);
-     if (!options.outputdir) return openedFile;
-     fs.writeFileSync(path.join(options.outputdir, name + '.js')
-diff --git a/src/diff2html.js b/src/diff2html.js
-index 21b0119e..64e138f5 100644
---- a/src/diff2html.js
-+++ b/src/diff2html.js
-@@ -7,7 +7,6 @@
-
- (function() {
-   var diffParser = require('./diff-parser.js').DiffParser;
--  var fileLister = require('./file-list-printer.js').FileListPrinter;
-   var htmlPrinter = require('./html-printer.js').HtmlPrinter;
-
-   function Diff2Html() {
-@@ -43,7 +42,7 @@
-
-     var fileList = '';
-     if (configOrEmpty.showFiles === true) {
--      fileList = fileLister.generateFileList(diffJson, configOrEmpty);
-+      fileList = htmlPrinter.generateFileListSummary(diffJson, configOrEmpty);
-     }
-
-     var diffOutput = '';
-diff --git a/src/file-list-printer.js b/src/file-list-printer.js
-index e408d9b2..1e0a2c61 100644
---- a/src/file-list-printer.js
-+++ b/src/file-list-printer.js
-@@ -8,11 +8,16 @@
- (function() {
-   var printerUtils = require('./printer-utils.js').PrinterUtils;
-
--  var hoganUtils = require('./hoganjs-utils.js').HoganJsUtils;
-+  var hoganUtils;
-+
-   var baseTemplatesPath = 'file-summary';
-   var iconsBaseTemplatesPath = 'icon';
-
--  function FileListPrinter() {
-+  function FileListPrinter(config) {
-+    this.config = config;
-+
-+    var HoganJsUtils = require('./hoganjs-utils.js').HoganJsUtils;
-+    hoganUtils = new HoganJsUtils(config);
-   }
-
-   FileListPrinter.prototype.generateFileList = function(diffFiles) {
-@@ -38,5 +43,5 @@
-     });
-   };
-
--  module.exports.FileListPrinter = new FileListPrinter();
-+  module.exports.FileListPrinter = FileListPrinter;
- })();
-diff --git a/src/hoganjs-utils.js b/src/hoganjs-utils.js
-index 9949e5fa..0dda08d7 100644
---- a/src/hoganjs-utils.js
-+++ b/src/hoganjs-utils.js
-@@ -8,18 +8,19 @@
- (function() {
-   var fs = require('fs');
-   var path = require('path');
--
-   var hogan = require('hogan.js');
-
-   var hoganTemplates = require('./templates/diff2html-templates.js');
-
--  var templatesPath = path.resolve(__dirname, 'templates');
-+  var extraTemplates;
-
--  function HoganJsUtils() {
-+  function HoganJsUtils(configuration) {
-+    this.config = configuration || {};
-+    extraTemplates = this.config.templates || {};
-   }
-
--  HoganJsUtils.prototype.render = function(namespace, view, params, configuration) {
--    var template = this.template(namespace, view, configuration);
-+  HoganJsUtils.prototype.render = function(namespace, view, params) {
-+    var template = this.template(namespace, view);
-     if (template) {
-       return template.render(params);
-     }
-@@ -27,17 +28,16 @@
-     return null;
-   };
-
--  HoganJsUtils.prototype.template = function(namespace, view, configuration) {
--    var config = configuration || {};
-+  HoganJsUtils.prototype.template = function(namespace, view) {
-     var templateKey = this._templateKey(namespace, view);
-
--    return this._getTemplate(templateKey, config);
-+    return this._getTemplate(templateKey);
-   };
-
--  HoganJsUtils.prototype._getTemplate = function(templateKey, config) {
-+  HoganJsUtils.prototype._getTemplate = function(templateKey) {
-     var template;
-
--    if (!config.noCache) {
-+    if (!this.config.noCache) {
-       template = this._readFromCache(templateKey);
-     }
-
-@@ -53,6 +53,7 @@
-
-     try {
-       if (fs.readFileSync) {
-+        var templatesPath = path.resolve(__dirname, 'templates');
-         var templatePath = path.join(templatesPath, templateKey);
-         var templateContent = fs.readFileSync(templatePath + '.mustache', 'utf8');
-         template = hogan.compile(templateContent);
-@@ -66,12 +67,16 @@
-   };
-
-   HoganJsUtils.prototype._readFromCache = function(templateKey) {
--    return hoganTemplates[templateKey];
-+    return extraTemplates[templateKey] || hoganTemplates[templateKey];
-   };
-
-   HoganJsUtils.prototype._templateKey = function(namespace, view) {
-     return namespace + '-' + view;
-   };
-
--  module.exports.HoganJsUtils = new HoganJsUtils();
-+  HoganJsUtils.prototype.compile = function(templateStr) {
-+    return hogan.compile(templateStr);
-+  };
-+
-+  module.exports.HoganJsUtils = HoganJsUtils;
- })();
-diff --git a/src/html-printer.js b/src/html-printer.js
-index 585d5b66..13f83047 100644
---- a/src/html-printer.js
-+++ b/src/html-printer.js
-@@ -8,6 +8,7 @@
- (function() {
-   var LineByLinePrinter = require('./line-by-line-printer.js').LineByLinePrinter;
-   var SideBySidePrinter = require('./side-by-side-printer.js').SideBySidePrinter;
-+  var FileListPrinter = require('./file-list-printer.js').FileListPrinter;
-
-   function HtmlPrinter() {
-   }
-@@ -22,5 +23,10 @@
-     return sideBySidePrinter.generateSideBySideJsonHtml(diffFiles);
-   };
-
-+  HtmlPrinter.prototype.generateFileListSummary = function(diffJson, config) {
-+    var fileListPrinter = new FileListPrinter(config);
-+    return fileListPrinter.generateFileList(diffJson);
-+  };
-+
-   module.exports.HtmlPrinter = new HtmlPrinter();
- })();
-diff --git a/src/line-by-line-printer.js b/src/line-by-line-printer.js
-index b07eb53c..d230bedd 100644
---- a/src/line-by-line-printer.js
-+++ b/src/line-by-line-printer.js
-@@ -11,7 +11,8 @@
-   var utils = require('./utils.js').Utils;
-   var Rematch = require('./rematch.js').Rematch;
-
--  var hoganUtils = require('./hoganjs-utils.js').HoganJsUtils;
-+  var hoganUtils;
-+
-   var genericTemplatesPath = 'generic';
-   var baseTemplatesPath = 'line-by-line';
-   var iconsBaseTemplatesPath = 'icon';
-@@ -19,6 +20,9 @@
-
-   function LineByLinePrinter(config) {
-     this.config = config;
-+
-+    var HoganJsUtils = require('./hoganjs-utils.js').HoganJsUtils;
-+    hoganUtils = new HoganJsUtils(config);
-   }
-
-   LineByLinePrinter.prototype.makeFileDiffHtml = function(file, diffs) {
-diff --git a/src/side-by-side-printer.js b/src/side-by-side-printer.js
-index bbf1dc8d..5e3033b3 100644
---- a/src/side-by-side-printer.js
-+++ b/src/side-by-side-printer.js
-@@ -11,7 +11,8 @@
-   var utils = require('./utils.js').Utils;
-   var Rematch = require('./rematch.js').Rematch;
-
--  var hoganUtils = require('./hoganjs-utils.js').HoganJsUtils;
-+  var hoganUtils;
-+
-   var genericTemplatesPath = 'generic';
-   var baseTemplatesPath = 'side-by-side';
-   var iconsBaseTemplatesPath = 'icon';
-@@ -26,6 +27,9 @@
-
-   function SideBySidePrinter(config) {
-     this.config = config;
-+
-+    var HoganJsUtils = require('./hoganjs-utils.js').HoganJsUtils;
-+    hoganUtils = new HoganJsUtils(config);
-   }
-
-   SideBySidePrinter.prototype.makeDiffHtml = function(file, diffs) {
-diff --git a/test/file-list-printer-tests.js b/test/file-list-printer-tests.js
-index a502a46f..60ea3208 100644
---- a/test/file-list-printer-tests.js
-+++ b/test/file-list-printer-tests.js
-@@ -1,6 +1,6 @@
- var assert = require('assert');
-
--var fileListPrinter = require('../src/file-list-printer.js').FileListPrinter;
-+var fileListPrinter = new (require('../src/file-list-printer.js').FileListPrinter)();
-
- describe('FileListPrinter', function() {
-   describe('generateFileList', function() {
-diff --git a/test/hogan-cache-tests.js b/test/hogan-cache-tests.js
-index 190bf6f8..3bb754ac 100644
---- a/test/hogan-cache-tests.js
-+++ b/test/hogan-cache-tests.js
-@@ -1,6 +1,6 @@
- var assert = require('assert');
-
--var HoganJsUtils = require('../src/hoganjs-utils.js').HoganJsUtils;
-+var HoganJsUtils = new (require('../src/hoganjs-utils.js').HoganJsUtils)();
- var diffParser = require('../src/diff-parser.js').DiffParser;
-
- describe('HoganJsUtils', function() {
-@@ -21,16 +21,28 @@ describe('HoganJsUtils', function() {
-       });
-       assert.equal(emptyDiffHtml, result);
-     });
-+
-     it('should render view without cache', function() {
-       var result = HoganJsUtils.render('generic', 'empty-diff', {
-         contentClass: 'd2h-code-line',
-         diffParser: diffParser
-       }, {noCache: true});
--      assert.equal(emptyDiffHtml + '\n', result);
-+      assert.equal(emptyDiffHtml, result);
-     });
-+
-     it('should return null if template is missing', function() {
--      var result = HoganJsUtils.render('generic', 'missing-template', {}, {noCache: true});
-+      var hoganUtils = new (require('../src/hoganjs-utils.js').HoganJsUtils)({noCache: true});
-+      var result = hoganUtils.render('generic', 'missing-template', {});
-       assert.equal(null, result);
-     });
-+
-+    it('should allow templates to be overridden', function() {
-+      var emptyDiffTemplate = HoganJsUtils.compile('&lt;p&gt;&lt;/p&gt;');
-+
-+      var config = {templates: {'generic-empty-diff': emptyDiffTemplate}};
-+      var hoganUtils = new (require('../src/hoganjs-utils.js').HoganJsUtils)(config);
-+      var result = hoganUtils.render('generic', 'empty-diff', {myName: 'Rodrigo Fernandes'});
-+      assert.equal('&lt;p&gt;Rodrigo Fernandes&lt;/p&gt;', result);
-+    });
-   });
- });
-diff --git a/test/line-by-line-tests.js b/test/line-by-line-tests.js
-index 1cd92073..8869b3df 100644
---- a/test/line-by-line-tests.js
-+++ b/test/line-by-line-tests.js
-@@ -14,7 +14,7 @@ describe('LineByLinePrinter', function() {
-         '            File without changes\n' +
-         '        &lt;/div&gt;\n' +
-         '    &lt;/td&gt;\n' +
--        '&lt;/tr&gt;\n';
-+        '&lt;/tr&gt;';
-
-       assert.equal(expected, fileHtml);
-     });
-@@ -422,7 +422,6 @@ describe('LineByLinePrinter', function() {
-         '        &lt;/div&gt;\n' +
-         '    &lt;/td&gt;\n' +
-         '&lt;/tr&gt;\n' +
--        '\n' +
-         '                &lt;/tbody&gt;\n' +
-         '            &lt;/table&gt;\n' +
-         '        &lt;/div&gt;\n' +
-diff --git a/test/side-by-side-printer-tests.js b/test/side-by-side-printer-tests.js
-index 76625f8e..771daaa5 100644
---- a/test/side-by-side-printer-tests.js
-+++ b/test/side-by-side-printer-tests.js
-@@ -14,7 +14,7 @@ describe('SideBySidePrinter', function() {
-         '            File without changes\n' +
-         '        &lt;/div&gt;\n' +
-         '    &lt;/td&gt;\n' +
--        '&lt;/tr&gt;\n';
-+        '&lt;/tr&gt;';
-
-       assert.equal(expectedRight, fileHtml.right);
-       assert.equal(expectedLeft, fileHtml.left);
-@@ -324,7 +324,6 @@ describe('SideBySidePrinter', function() {
-         '        &lt;/div&gt;\n' +
-         '    &lt;/td&gt;\n' +
-         '&lt;/tr&gt;\n' +
--        '\n' +
-         '                    &lt;/tbody&gt;\n' +
-         '                &lt;/table&gt;\n' +
-         '            &lt;/div&gt;\n' +
-
-From f3cadb96677d0eb82fc2752dc3ffbf35ca9b5bdb Mon Sep 17 00:00:00 2001
-From: Rodrigo Fernandes &lt;rtfrodrigo@gmail.com&gt;
-Date: Sat, 15 Oct 2016 13:21:22 +0100
-Subject: [PATCH 2/2] Allow uncompiled templates
-
----
- README.md                 |  3 +++
- src/hoganjs-utils.js      |  7 +++++++
- test/hogan-cache-tests.js | 24 +++++++++++++++++++++++-
- 3 files changed, 33 insertions(+), 1 deletion(-)
-
-diff --git a/README.md b/README.md
-index 132c8a28..46909f25 100644
---- a/README.md
-+++ b/README.md
-@@ -98,6 +98,9 @@ The HTML output accepts a Javascript object with configuration. Possible options
-   - `synchronisedScroll`: scroll both panes in side-by-side mode: `true` or `false`, default is `false`
-   - `matchWordsThreshold`: similarity threshold for word matching, default is 0.25
-   - `matchingMaxComparisons`: perform at most this much comparisons for line matching a block of changes, default is `2500`
-+  - `templates`: object with previously compiled templates to replace parts of the html
-+  - `rawTemplates`: object with raw not compiled templates to replace parts of the html
-+  &gt; For more information regarding the possible templates look into [src/templates](https://github.com/rtfpessoa/diff2html/tree/master/src/templates)
-
- ## Diff2HtmlUI Helper
-
-diff --git a/src/hoganjs-utils.js b/src/hoganjs-utils.js
-index 0dda08d7..b2e9c275 100644
---- a/src/hoganjs-utils.js
-+++ b/src/hoganjs-utils.js
-@@ -17,6 +17,13 @@
-   function HoganJsUtils(configuration) {
-     this.config = configuration || {};
-     extraTemplates = this.config.templates || {};
-+
-+    var rawTemplates = this.config.rawTemplates || {};
-+    for (var templateName in rawTemplates) {
-+      if (rawTemplates.hasOwnProperty(templateName)) {
-+        if (!extraTemplates[templateName]) extraTemplates[templateName] = this.compile(rawTemplates[templateName]);
-+      }
-+    }
-   }
-
-   HoganJsUtils.prototype.render = function(namespace, view, params) {
-diff --git a/test/hogan-cache-tests.js b/test/hogan-cache-tests.js
-index 3bb754ac..a34839c0 100644
---- a/test/hogan-cache-tests.js
-+++ b/test/hogan-cache-tests.js
-@@ -36,7 +36,7 @@ describe('HoganJsUtils', function() {
-       assert.equal(null, result);
-     });
-
--    it('should allow templates to be overridden', function() {
-+    it('should allow templates to be overridden with compiled templates', function() {
-       var emptyDiffTemplate = HoganJsUtils.compile('&lt;p&gt;&lt;/p&gt;');
-
-       var config = {templates: {'generic-empty-diff': emptyDiffTemplate}};
-@@ -44,5 +44,27 @@ describe('HoganJsUtils', function() {
-       var result = hoganUtils.render('generic', 'empty-diff', {myName: 'Rodrigo Fernandes'});
-       assert.equal('&lt;p&gt;Rodrigo Fernandes&lt;/p&gt;', result);
-     });
-+
-+    it('should allow templates to be overridden with uncompiled templates', function() {
-+      var emptyDiffTemplate = '&lt;p&gt;&lt;/p&gt;';
-+
-+      var config = {rawTemplates: {'generic-empty-diff': emptyDiffTemplate}};
-+      var hoganUtils = new (require('../src/hoganjs-utils.js').HoganJsUtils)(config);
-+      var result = hoganUtils.render('generic', 'empty-diff', {myName: 'Rodrigo Fernandes'});
-+      assert.equal('&lt;p&gt;Rodrigo Fernandes&lt;/p&gt;', result);
-+    });
-+
-+    it('should allow templates to be overridden giving priority to compiled templates', function() {
-+      var emptyDiffTemplate = HoganJsUtils.compile('&lt;p&gt;&lt;/p&gt;');
-+      var emptyDiffTemplateUncompiled = '&lt;p&gt;Not used!&lt;/p&gt;';
-+
-+      var config = {
-+        templates: {'generic-empty-diff': emptyDiffTemplate},
-+        rawTemplates: {'generic-empty-diff': emptyDiffTemplateUncompiled}
-+      };
-+      var hoganUtils = new (require('../src/hoganjs-utils.js').HoganJsUtils)(config);
-+      var result = hoganUtils.render('generic', 'empty-diff', {myName: 'Rodrigo Fernandes'});
-+      assert.equal('&lt;p&gt;Rodrigo Fernandes&lt;/p&gt;', result);
-+    });
-   });
- });
-</code></pre>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="code"/><summary type="html"><![CDATA[this is how you can display code diffs]]></summary></entry><entry><title type="html">a post with advanced image components</title><link href="https://auroralhl.github.io/blog/2024/advanced-images/" rel="alternate" type="text/html" title="a post with advanced image components"/><published>2024-01-27T11:46:00+00:00</published><updated>2024-01-27T11:46:00+00:00</updated><id>https://auroralhl.github.io/blog/2024/advanced-images</id><content type="html" xml:base="https://auroralhl.github.io/blog/2024/advanced-images/"><![CDATA[<p>This is an example post with advanced image components.</p> <h2 id="image-slider">Image Slider</h2> <p>This is a simple image slider. It uses the <a href="https://swiperjs.com/">Swiper</a> library. Check the <a href="https://swiperjs.com/demos">examples page</a> for more information of what you can achieve with it.</p> <swiper-container keyboard="true" navigation="true" pagination="true" pagination-clickable="true" pagination-dynamic-bullets="true" rewind="true"> <swiper-slide> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/9-480.webp 480w,/assets/img/9-800.webp 800w,/assets/img/9-1400.webp 1400w," type="image/webp" sizes="95vw"/> <img src="/assets/img/9.jpg" class="img-fluid rounded z-depth-1" width="100%" height="auto" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"/> </picture> </figure> </swiper-slide> <swiper-slide> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/7-480.webp 480w,/assets/img/7-800.webp 800w,/assets/img/7-1400.webp 1400w," type="image/webp" sizes="95vw"/> <img src="/assets/img/7.jpg" class="img-fluid rounded z-depth-1" width="100%" height="auto" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"/> </picture> </figure> </swiper-slide> <swiper-slide> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/8-480.webp 480w,/assets/img/8-800.webp 800w,/assets/img/8-1400.webp 1400w," type="image/webp" sizes="95vw"/> <img src="/assets/img/8.jpg" class="img-fluid rounded z-depth-1" width="100%" height="auto" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"/> </picture> </figure> </swiper-slide> <swiper-slide> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/10-480.webp 480w,/assets/img/10-800.webp 800w,/assets/img/10-1400.webp 1400w," type="image/webp" sizes="95vw"/> <img src="/assets/img/10.jpg" class="img-fluid rounded z-depth-1" width="100%" height="auto" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"/> </picture> </figure> </swiper-slide> <swiper-slide> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/12-480.webp 480w,/assets/img/12-800.webp 800w,/assets/img/12-1400.webp 1400w," type="image/webp" sizes="95vw"/> <img src="/assets/img/12.jpg" class="img-fluid rounded z-depth-1" width="100%" height="auto" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"/> </picture> </figure> </swiper-slide> </swiper-container> <h2 id="image-comparison-slider">Image Comparison Slider</h2> <p>This is a simple image comparison slider. It uses the <a href="https://img-comparison-slider.sneas.io/">img-comparison-slider</a> library. Check the <a href="https://img-comparison-slider.sneas.io/examples.html">examples page</a> for more information of what you can achieve with it.</p> <img-comparison-slider> <figure slot="first"> <picture> <source class="responsive-img-srcset" srcset="/assets/img/prof_pic-480.webp 480w,/assets/img/prof_pic-800.webp 800w,/assets/img/prof_pic-1400.webp 1400w," type="image/webp" sizes="95vw"/> <img src="/assets/img/prof_pic.jpg" class="img-fluid rounded z-depth-1" width="100%" height="auto" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"/> </picture> </figure> <figure slot="second"> <picture> <source class="responsive-img-srcset" srcset="/assets/img/prof_pic_color-480.webp 480w,/assets/img/prof_pic_color-800.webp 800w,/assets/img/prof_pic_color-1400.webp 1400w," type="image/webp" sizes="95vw"/> <img src="/assets/img/prof_pic_color.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"/> </picture> </figure> </img-comparison-slider>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="images"/><summary type="html"><![CDATA[this is what advanced image components could look like]]></summary></entry><entry><title type="html">a post with vega lite</title><link href="https://auroralhl.github.io/blog/2024/vega-lite/" rel="alternate" type="text/html" title="a post with vega lite"/><published>2024-01-27T00:20:00+00:00</published><updated>2024-01-27T00:20:00+00:00</updated><id>https://auroralhl.github.io/blog/2024/vega-lite</id><content type="html" xml:base="https://auroralhl.github.io/blog/2024/vega-lite/"><![CDATA[<p>This is an example post with some <a href="https://vega.github.io/vega-lite/">vega lite</a> code.</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">vega_lite
-</span><span class="sb">{
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "A dot plot showing each movie in the database, and the difference from the average movie rating. The display is sorted by year to visualize everything in sequential order. The graph is for all Movies before 2019.",
-  "data": {
-    "url": "https://raw.githubusercontent.com/vega/vega/main/docs/data/movies.json"
-  },
-  "transform": [
-    {"filter": "datum['IMDB Rating'] != null"},
-    {"filter": {"timeUnit": "year", "field": "Release Date", "range": [null, 2019]}},
-    {
-      "joinaggregate": [{
-        "op": "mean",
-        "field": "IMDB Rating",
-        "as": "AverageRating"
-      }]
-    },
-    {
-      "calculate": "datum['IMDB Rating'] - datum.AverageRating",
-      "as": "RatingDelta"
-    }
-  ],
-  "mark": "point",
-  "encoding": {
-    "x": {
-      "field": "Release Date",
-      "type": "temporal"
-    },
-    "y": {
-      "field": "RatingDelta",
-      "type": "quantitative",
-      "title": "Rating Delta"
-    },
-    "color": {
-      "field": "RatingDelta",
-      "type": "quantitative",
-      "scale": {"domainMid": 0},
-      "title": "Rating Delta"
-    }
-  }
-}</span>
-<span class="p">```</span>
-</code></pre></div></div> <p>Which generates:</p> <pre><code class="language-vega_lite">{
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "A dot plot showing each movie in the database, and the difference from the average movie rating. The display is sorted by year to visualize everything in sequential order. The graph is for all Movies before 2019.",
-  "data": {
-    "url": "https://raw.githubusercontent.com/vega/vega/main/docs/data/movies.json"
-  },
-  "transform": [
-    {"filter": "datum['IMDB Rating'] != null"},
-    {"filter": {"timeUnit": "year", "field": "Release Date", "range": [null, 2019]}},
-    {
-      "joinaggregate": [{
-        "op": "mean",
-        "field": "IMDB Rating",
-        "as": "AverageRating"
-      }]
-    },
-    {
-      "calculate": "datum['IMDB Rating'] - datum.AverageRating",
-      "as": "RatingDelta"
-    }
-  ],
-  "mark": "point",
-  "encoding": {
-    "x": {
-      "field": "Release Date",
-      "type": "temporal"
-    },
-    "y": {
-      "field": "RatingDelta",
-      "type": "quantitative",
-      "title": "Rating Delta"
-    },
-    "color": {
-      "field": "RatingDelta",
-      "type": "quantitative",
-      "scale": {"domainMid": 0},
-      "title": "Rating Delta"
-    }
-  }
-}
-</code></pre> <p>This plot supports both light and dark themes.</p>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="charts"/><summary type="html"><![CDATA[this is what included vega lite code could look like]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name></name></author><summary type="html"><![CDATA[We’re sharing updates across our Gemini family of models and a glimpse of Project Astra, our vision for the future of AI assistants.]]></summary></entry><entry><title type="html">Displaying External Posts on Your al-folio Blog</title><link href="https://auroralhl.github.io/blog/2022/displaying-external-posts-on-your-al-folio-blog/" rel="alternate" type="text/html" title="Displaying External Posts on Your al-folio Blog"/><published>2022-04-23T23:20:09+00:00</published><updated>2022-04-23T23:20:09+00:00</updated><id>https://auroralhl.github.io/blog/2022/displaying-external-posts-on-your-al-folio-blog</id><content type="html" xml:base="https://auroralhl.github.io/blog/2022/displaying-external-posts-on-your-al-folio-blog/"><![CDATA[<h3>External Posts on Your al-folio Blog</h3> <p>If you prefer publishing blog posts on medium.com or other external sources, starting version v0.5.0, <a href="https://github.com/alshedivat/al-folio">al-folio</a> lets you to display your external posts in the blog feed of your website! 🎉🎉</p> <p>Configuring external sources of super simple. After upgrading to v0.5.0, just add the following section to your _config.yml:</p> <pre>external_sources:<br />  - name: medium.com  # name of the source (arbitrary string)<br />    rss_url: <a href="https://medium.com/@al-folio/feed">https://medium.com/@&lt;your-medium-username&gt;/feed</a></pre> <p>The example above adds your medium.com blog post feed as an external source. But you can add arbitrary RSS feeds as sources.</p> <p>Any questions or suggestions? 👉 Start <a href="https://github.com/alshedivat/al-folio/discussions">a discussion on GitHub</a>!</p> <p><img src="https://medium.com/_/stat?event=post.clientViewed&amp;referrerSource=full_rss&amp;postId=b60a1d241a0a" width="1" height="1" alt=""/></p>]]></content><author><name></name></author></entry></feed>
