@@ -24,6 +24,7 @@ latest_posts:
   scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
   limit: 3 # leave blank to include all the blog posts
 ---
+
 I'm currently an M.S. student in Mechanical Engineering at Peking University, where I focus on **LLM for Optimization** and **Agentic Reinforcement Learning**. I received my B.S. degree in Robotics Engineering from Peking University in 2023. Previously, I was an intern at Alibaba QuarkLLM and Moonshot AI RL Team.
 
 My research interests recently focus on **Agentic RL**, **Multi-Agent systems**, and **Self-Play training methodologies** for enhancing LLM agent capabilities. Previously I was working on optimization algorithms and mathematical modeling for LLMs. Throughout my academic journey, I have gained extensive experience in **LLM for Optimization**, particularly in **Optimization Modeling**, and **Agentic RL training** methodologies.
