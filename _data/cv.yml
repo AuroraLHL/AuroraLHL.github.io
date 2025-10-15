@@ -6,20 +6,20 @@
     - name: Email
       value: lhl@pku.edu.cn
     - name: Research Interests
-      value: Optimization Algorithms, Large Language Models, LLM4OPT, Reinforcement Learning
+      value: Agentic RL, WebAgent/OSAgent Systems, Self-Play Training, Large Language Models, Agent Capability Enhancement
     - name: Languages
       value: Chinese (Native), English (Fluent)
 
 - title: Education
   type: time_table
   contents:
-    - title: M.S. in Mechanical Engineering
+    - title: M.S. in Mechanical Engineering (Industrial Engineering Management)
       institution: College of Engineering, Peking University
-      year: 2023 - Present
+      year: 2023 - 2026 (Expected)
       description:
-        - Research focus on Optimization Algorithms
-        - Large Language Models and LLM4OPT
-        - Advanced coursework in machine learning and optimization theory
+        - Research focus on Agentic RL and WebAgent systems
+        - Specialized in Self-Play training paradigms for LLM agents
+        - Coursework: Python Data Science, Deep Learning, Machine Learning, Optimization, Reinforcement Learning, LLM Foundations
     - title: B.S. in Robotics Engineering
       institution: College of Engineering, Peking University
       year: 2019 - 2023
@@ -35,23 +35,35 @@
       institution: Alibaba Group - Quark - Large Model Training and Application - RL Team
       year: 2025.05 - 2025.09
       description:
-        - Developed and optimized reinforcement learning algorithms for large language models
-        - Contributed to model training infrastructure and application development
-        - Collaborated with cross-functional teams on RL-based optimization projects
-    - title: RL Algorithm Engineer (Internship)
+        - Led deep search project development using Agentic RL to enhance LLM reasoning and retrieval capabilities
+        - Designed multi-dimensional reward systems with RFT and forced reflection mechanisms
+        - Implemented asynchronous rollout optimization in Verl framework for accelerated RL training
+        - Pioneered Search Self-Play training paradigm, significantly improving LLM tool-calling abilities
+        - Achieved 10+ point improvement on Browse-Comp-ZH and xbench benchmarks
+        - Submitted Search Self-Play methodology to ICLR 2026
+    - title: RL Algorithm Engineer
       institution: Moonshot AI (Kimi) - RL Team - WebAgent Project
       year: 2025.01 - 2025.05
       description:
-        - Implemented reinforcement learning algorithms for web-based autonomous agents
-        - Developed and tested RL strategies for complex web interaction tasks
-        - Contributed to the advancement of AI agents in web environments
+        - Built WebAgent training infrastructure with PPO and GRPO algorithm adaptations
+        - Developed end-to-end WebAgent capabilities through combined SFT+RL training pipeline
+        - Constructed WebAgent evaluation benchmarks in OS environments
+        - Gained comprehensive expertise in Agent interaction environments, dataset construction, and capability assessment
+        - Mastered full pipeline: Agent environment setup, data synthesis, SFT training, RL training, and evaluation
 
-- title: Research Projects
+- title: Publications
   type: time_table
   contents:
-    - title: LLM4OPT Research
-      year: 2023-Present
-      description: Investigating the application of large language models in optimization problems
+    - title: "OptMATH: A Scalable Bidirectional Data Synthesis Framework for Optimization Modeling"
+      year: 2025
+      description:
+        - "Hongliang Lu*, Zhonglin Xie*, Yaoyu Wu, Can Ren, Yuxuan Chen, Zaiwen Wen"
+        - "arXiv preprint arXiv:2502.11102 (ICML 2025)"
+    - title: "Search Self-Play: Pushing the Frontier of Agent Capability without Supervision"
+      year: 2026
+      description:
+        - "Hongliang Lu*, Yuhang Wen*, Pengyu Cheng, Ruijin Ding, Haotian Xu, Jiaqi Guo, Chutian Wang, Haonan Chen, Xiaoxi Jiang and Guanjun Jiang"
+        - "Under review at ICLR 2026"
 
 - title: Honors and Awards
   type: time_table
@@ -59,30 +71,34 @@
     - year: 2023
       items:
         - Outstanding Graduate, Peking University
-    - year: 2019-2023
+    - year: 2022
       items:
-        - Dean's List, College of Engineering, Peking University
+        - Third Prize, 33rd Beijing University Student Mathematics Competition
 
 - title: Research Interests
   type: nested_list
   contents:
-    - title: Optimization Algorithms
+    - title: Agentic Reinforcement Learning
       items:
-        - Mathematical optimization theory and applications
-        - Metaheuristic and evolutionary algorithms
-    - title: Large Language Models
+        - Agent-based RL training paradigms for LLMs
+        - Multi-agent interaction and coordination
+        - Self-Play training methodologies
+    - title: WebAgent & OSAgent Systems
       items:
-        - LLM4OPT: Applying LLMs to optimization problems
-        - Reinforcement learning for language model training
-    - title: Machine Learning
+        - Web-based autonomous agent development
+        - Operating system interaction agents
+        - Agent capability evaluation and benchmarking
+    - title: Large Language Model Enhancement
       items:
-        - Reinforcement learning algorithms and applications
-        - Deep learning for robotics and automation
+        - Tool-calling and reasoning capability improvement
+        - Search and retrieval augmentation
+        - Agent-environment interaction optimization
 
 - title: Technical Skills
   type: list
   contents:
-    - <u>Programming:</u> Python, C++, MATLAB, JavaScript
-    - <u>Machine Learning:</u> PyTorch, TensorFlow, Scikit-learn, OpenAI Gym
-    - <u>Optimization:</u> CPLEX, Gurobi, OR-Tools
-    - <u>Other Tools:</u> Git, Docker, Linux, LaTeX
+    - <u>Programming Languages:</u> Python (Expert), C++, MATLAB
+    - <u>RL Frameworks:</u> PPO, GRPO, Verl Framework, OpenAI Gym
+    - <u>LLM & Agent Tools:</u> PyTorch, TensorFlow, Agent Environment Construction
+    - <u>Research Tools:</u> LaTeX, Git, Linux, Cloud Computing
+    - <u>Specialized Skills:</u> Agentic RL Training, WebAgent Development, Self-Play Implementation

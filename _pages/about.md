@@ -7,12 +7,8 @@ subtitle: <a href='https://www.pku.edu.cn/'>Peking University</a>. Graduate Stud
 profile:
   align: right
   image: lhl.jpg
-  image_circular: false # crops the image to make it circular
+  image_circular: true # crops the image to make it circular
   more_info: >
-    <p>College of Engineering</p>
-    <p>Peking University</p>
-    <p>Beijing, China</p>
-    <p>Email: lhl@pku.edu.cn</p>
 
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
@@ -27,11 +23,20 @@ latest_posts:
   scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
   limit: 3 # leave blank to include all the blog posts
 ---
+## ABOUT ME
 
-I am currently a Master's student in Mechanical Engineering at the College of Engineering, Peking University, where I focus on **optimization algorithms**, **large language models**, and **LLM4OPT** research. I completed my Bachelor's degree in Robotics Engineering at Peking University in 2023.
+I'm currently an M.S. student in Mechanical Engineering (Industrial Engineering Management) at Peking University, where I focus on **LLM for Optimization** and **Agentic Reinforcement Learning**. I'm also doing my internship at Alibaba QuarkLLM. Previously I was an intern at Moonshot AI RL Team. I received my B.S. degree in Robotics Engineering from Peking University in 2023.
 
-My research interests lie at the intersection of optimization theory and artificial intelligence, particularly in applying large language models to optimization problems. I am passionate about developing novel algorithms that can bridge the gap between traditional optimization methods and modern AI techniques.
+My research interests recently focus on **Agentic RL**, **Multi-Agent systems**, and **Self-Play training methodologies** for enhancing LLM agent capabilities. Previously I was working on optimization algorithms and mathematical modeling for LLMs. Throughout my academic journey, I have gained extensive experience in **LLM for Optimization**, particularly in **Optimization Modeling**, and **Agentic RL training** methodologies.
 
-I have gained valuable industry experience as a **Reinforcement Learning Algorithm Engineer** through internships at leading AI companies. Most recently, I worked at **Alibaba Group's Quark division** (May-September 2025) on large model training and applications, and previously at **Moonshot AI (Kimi)** (January-May 2025) on the WebAgent project, where I developed RL algorithms for web-based autonomous agents.
+## EDUCATION
 
-My technical expertise spans machine learning frameworks (PyTorch, TensorFlow), optimization tools (CPLEX, Gurobi, OR-Tools), and programming languages (Python, C++, MATLAB). I am always interested in collaborating on projects related to optimization algorithms, reinforcement learning, and AI applications.
+**M.S. in Mechanical Engineering**, Peking University, 2023 - 2026 (Expected)
+
+**B.S. in Robotics Engineering**, Peking University, 2019 - 2023
+
+## WORK EXPERIENCE
+
+**RL Algorithm Engineer (Summer Intern)** at Alibaba Group - Quark -LLM Training and Application - RL Team, 2025.05 - 2025.09
+
+**RL Algorithm Engineer (Intern)** at Moonshot AI (Kimi) - RL Team - WebAgent Project, 2025.01 - 2025.05

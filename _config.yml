@@ -7,14 +7,14 @@ first_name: Hongliang
 middle_name:
 last_name: Lu
 contact_note: >
-  Feel free to reach out via email for collaborations or discussions on optimization algorithms, LLMs, and reinforcement learning.
+  Feel free to reach out via email for collaborations or discussions on Agentic RL, WebAgent systems, Self-Play training, and LLM agent capabilities.
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  Graduate student at Peking University focusing on optimization algorithms, large language models, and LLM4OPT. Experienced RL algorithm engineer with internships at Alibaba and Moonshot AI.
+  Graduate student at Peking University specializing in Agentic RL, WebAgent/OSAgent systems, and Self-Play training paradigms. Research focuses on enhancing LLM agent capabilities through novel RL approaches. Experienced RL algorithm engineer with internships at Alibaba and Moonshot AI.
 footer_text: >
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
   Photos from <a href="https://unsplash.com" target="_blank">Unsplash</a>.
-keywords: optimization-algorithms, large-language-models, reinforcement-learning, LLM4OPT, machine-learning, robotics # add your own keywords or leave empty
+keywords: agentic-rl, webagent, self-play, large-language-models, reinforcement-learning, optimization-algorithms, machine-learning, agents # add your own keywords or leave empty
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: ⚛️ # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 

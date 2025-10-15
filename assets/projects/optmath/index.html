@@ -1,0 +1,3597 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@2.0.0/dist/chartjs-chart-matrix.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js">
+</script>
+<script>
+    // Register ChartJS plugins after they're loaded
+    Chart.register(ChartDataLabels);
+</script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OptMATH - A Scalable Bidirectional Data Synthesis Framework</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a69bd;
+            --secondary-color: #6a89cc;
+            --accent-color: #b31b1b;
+            --background-color: #f7f9fc;
+            --text-color: #333;
+            --light-text: #6c757d;
+            --border-color: #e1e4e8;
+            --card-bg: #fff;
+            --code-bg: #f6f8fa;
+            --news-bg: #e3f2fd;
+            --highlight-bg: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+
+        header p {
+            margin: 1rem 0 0;
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        .authors {
+            margin: 1.5rem 0;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .authors .author-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .authors .affiliations {
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            opacity: 0.85;
+        }
+
+        .authors .notes {
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            opacity: 0.75;
+        }
+
+        .authors sup {
+            font-weight: normal;
+            opacity: 0.8;
+        }
+
+        .badges {
+            margin: 1.5rem 0;
+        }
+
+        .badge {
+            display: inline-block;
+            margin: 0 5px;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .badge:hover {
+            transform: translateY(-2px);
+        }
+
+        .badge img {
+            height: 28px;
+        }
+
+        nav {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            margin: 0;
+        }
+
+        nav a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+            background-color: rgba(74, 105, 189, 0.05);
+        }
+
+        section {
+            padding: 3.5rem 0;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.7rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        h4 {
+            color: var(--text-color);
+            font-size: 1.4rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        p,
+        ul,
+        ol {
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-section {
+            background-color: var(--news-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .news-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .news-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .news-date {
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            padding-left: 1.8rem;
+            position: relative;
+            margin-bottom: 0.8rem;
+        }
+
+        .feature-list li:before {
+            content: '•';
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0.3rem;
+            top: -0.2rem;
+        }
+
+        .steps {
+            list-style: none;
+            padding-left: 0;
+            counter-reset: step-counter;
+        }
+
+        .steps li {
+            position: relative;
+            padding-left: 2.8rem;
+            margin-bottom: 1.5rem;
+            counter-increment: step-counter;
+        }
+
+        .steps li:before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2rem;
+            height: 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 2.5rem 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .image-container img:hover {
+            transform: scale(1.01);
+        }
+
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2.5rem 0;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .performance-table thead {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .performance-table th,
+        .performance-table td {
+            padding: 0.8rem;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+
+        .performance-table th {
+            font-weight: 600;
+        }
+
+        .performance-table tr:nth-child(even) {
+            background-color: #f5f7fa;
+        }
+
+        .performance-table tr:hover {
+            background-color: #edf2f7;
+        }
+
+        .performance-table .highlight {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .model-type {
+            font-weight: bold;
+            background-color: #f0f5ff;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            padding: 1.2rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+        }
+
+        code {
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.9em;
+        }
+
+        .tab-code {
+            white-space: pre-wrap;
+            font-size: 0.85rem;
+        }
+
+        .contact-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .contact-list li {
+            margin-bottom: 0.7rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-list i {
+            margin-right: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .contact-list a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .contact-list a:hover {
+            text-decoration: underline;
+            color: var(--secondary-color);
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2.5rem 0;
+            text-align: center;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: underline;
+            transition: opacity 0.2s;
+        }
+
+        footer a:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.2rem;
+            }
+
+            header p {
+                font-size: 1.1rem;
+            }
+
+            .authors .author-list {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.3rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav a {
+                padding: 0.75rem 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .performance-table {
+                font-size: 0.75rem;
+            }
+
+            .performance-table th,
+            .performance-table td {
+                padding: 0.5rem 0.3rem;
+            }
+        }
+
+        /* Interactive section styling */
+        .interactive-section {
+            background-color: #f0f5ff;
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-top: 3.5rem;
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab {
+            padding: 0.9rem 1.8rem;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -1px;
+        }
+
+        .tab:hover {
+            background-color: rgba(74, 105, 189, 0.05);
+        }
+
+        .tab.active {
+            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 1.5rem 0;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .graph-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            height: 400px;
+        }
+
+        .two-column {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            margin: 2.5rem 0;
+        }
+
+        .column {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .input-output-container {
+            margin-top: 2rem;
+        }
+
+        .input-container,
+        .output-container {
+            margin-bottom: 2rem;
+        }
+
+        .highlight-box {
+            background-color: var(--highlight-bg);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box h5 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .math-formula {
+            font-style: italic;
+            font-family: 'Times New Roman', serif;
+            margin: 1rem 0;
+        }
+
+        /* Enhanced responsive design */
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            section {
+                padding: 2.5rem 0;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            h3 {
+                font-size: 1.5rem;
+            }
+
+            .interactive-section {
+                padding: 1.5rem;
+            }
+
+            .graph-container {
+                height: 300px;
+                padding: 1rem;
+            }
+
+            .tab {
+                padding: 0.7rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Dataset section redesign */
+        .dataset-comparison {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .dataset-card {
+            flex: 1;
+            min-width: 280px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .dataset-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .dataset-header {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 1.5rem;
+        }
+
+        .dataset-header h3 {
+            margin: 0;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .dataset-content {
+            padding: 1.5rem;
+        }
+
+        .dataset-content ul {
+            margin-bottom: 1.5rem;
+        }
+
+        .insight-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .insight-card {
+            flex: 1;
+            min-width: 280px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .insight-card h4 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .insight-card p {
+            margin-top: 1rem;
+            margin-bottom: 0;
+            font-size: 0.95rem;
+            color: var(--light-text);
+        }
+
+        .insight-card .image-container {
+            margin: 0.5rem 0;
+        }
+
+        @media (max-width: 768px) {
+
+            .dataset-comparison,
+            .insight-section {
+                flex-direction: column;
+            }
+
+            .dataset-card,
+            .insight-card {
+                width: 100%;
+            }
+        }
+
+        /* OptMATH-Bench improved table styling */
+        .problem-types-visualization {
+            margin-top: 1.5rem;
+        }
+
+        .problem-types-visualization h4 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .benchmark-table-container {
+            overflow-x: auto;
+            margin-bottom: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .benchmark-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .benchmark-table th,
+        .benchmark-table td {
+            padding: 0.75rem 0.5rem;
+            text-align: center;
+        }
+
+        .benchmark-table th {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        .type-col {
+            text-align: left;
+            font-weight: 600;
+            background-color: #f5f7fa;
+            position: sticky;
+            left: 0;
+            z-index: 10;
+        }
+
+        .benchmark-table tbody tr:hover {
+            background-color: rgba(74, 105, 189, 0.05);
+        }
+
+        .progress-cell {
+            position: relative;
+            height: 24px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .progress-bar {
+            position: absolute;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-bar.ip {
+            background-color: rgba(46, 204, 113, 0.7);
+        }
+
+        .progress-bar.lp {
+            background-color: rgba(52, 152, 219, 0.7);
+        }
+
+        .progress-bar.milp {
+            background-color: rgba(155, 89, 182, 0.7);
+        }
+
+        .progress-bar.nlp {
+            background-color: rgba(230, 126, 34, 0.7);
+        }
+
+        .progress-bar.socp {
+            background-color: rgba(231, 76, 60, 0.7);
+        }
+
+        .progress-bar.highlight {
+            background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+            background-size: 1rem 1rem;
+            animation: progress-bar-stripes 1s linear infinite;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1) inset;
+        }
+
+        @keyframes progress-bar-stripes {
+            from {
+                background-position: 1rem 0;
+            }
+
+            to {
+                background-position: 0 0;
+            }
+        }
+
+        .progress-text {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.8);
+        }
+
+        .benchmark-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-right: 0.5rem;
+        }
+
+        .legend-color {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: 0.25rem;
+            border-radius: 3px;
+        }
+
+        .legend-color.ip {
+            background-color: rgba(46, 204, 113, 0.7);
+        }
+
+        .legend-color.lp {
+            background-color: rgba(52, 152, 219, 0.7);
+        }
+
+        .legend-color.milp {
+            background-color: rgba(155, 89, 182, 0.7);
+        }
+
+        .legend-color.nlp {
+            background-color: rgba(230, 126, 34, 0.7);
+        }
+
+        .legend-color.socp {
+            background-color: rgba(231, 76, 60, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .benchmark-legend {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* Backtranslation Example Styles - 修正版 */
+        .backtranslation-diagram {
+            padding: 2rem;
+            margin-top: 1rem;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        .backtranslation-title {
+            text-align: center;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 2rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            background-color: #f0f5ff;
+            padding: 0.8rem;
+            border-radius: 8px;
+        }
+
+        .backtranslation-flow {
+            display: grid;
+            grid-template-columns: 42% 8% 42%;
+            grid-template-rows: auto auto auto;
+            grid-template-areas:
+                "input-left arrow-h input-right"
+                "arrow-v arrow-v arrow-v"
+                "output output output";
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .backtranslation-box {
+            border: 1px dashed #ccc;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .input-box-left {
+            grid-area: input-left;
+        }
+
+        .input-box-right {
+            grid-area: input-right;
+        }
+
+        .output-box {
+            grid-area: output;
+        }
+
+        .box-header {
+            background-color: #4a69bd;
+            color: white;
+            padding: 0.8rem 1rem;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .box-content {
+            padding: 1.2rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            flex-grow: 1;
+            word-wrap: break-word;
+        }
+
+        /* 新增：右侧内容专用样式 */
+        .input-box-right .box-content {
+            white-space: pre-wrap;
+            /* 保留空格和换行 */
+            font-family: monospace;
+            /* 使用等宽字体确保对齐 */
+        }
+
+        .formula-content {
+            font-family: 'Times New Roman', serif;
+        }
+
+        .math-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .math-line {
+            margin-bottom: 0.8rem;
+            padding-left: 1rem;
+            line-height: 1.8;
+        }
+
+        .math-formula {
+            font-style: italic;
+            font-weight: 500;
+            font-family: 'Times New Roman', serif;
+            margin: 0 0.2rem;
+        }
+
+        .notation-list {
+            padding-left: 1.5rem;
+            margin-top: 1.5rem;
+            list-style-type: disc;
+        }
+
+        .notation-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .symbol {
+            font-family: 'Times New Roman', serif;
+            font-weight: 500;
+        }
+
+        .symbol sub {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+
+        .code-content {
+            font-family: monospace;
+            white-space: pre-wrap;
+            font-size: 0.9rem;
+            background-color: #f5f5f5;
+            line-height: 1.4;
+        }
+
+        .code-content pre {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-size: 0.9rem;
+        }
+
+        .description-content p {
+            margin-bottom: 0.7rem;
+        }
+
+        .conversion-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .horizontal-arrow {
+            grid-area: arrow-h;
+            flex-direction: column;
+        }
+
+        .vertical-arrow {
+            grid-area: arrow-v;
+            flex-direction: column;
+            padding: 1.5rem 0;
+        }
+
+        .generator-label,
+        .backtranslation-label {
+            font-weight: 600;
+            text-align: center;
+            color: var(--secondary-color);
+            margin-bottom: 0.7rem;
+            font-size: 1.1rem;
+        }
+
+        .backtranslation-label {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+        }
+
+        .arrow-body {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+
+        .horizontal-arrow .arrow-body {
+            transform: scale(1.5);
+        }
+
+        .vertical-arrow .arrow-body {
+            transform: scale(2);
+        }
+
+        @media (max-width: 992px) {
+            .backtranslation-flow {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto auto auto;
+                grid-template-areas:
+                    "input-left"
+                    "arrow-h"
+                    "input-right"
+                    "arrow-v"
+                    "output";
+                gap: 1rem;
+            }
+
+            .horizontal-arrow {
+                transform: rotate(90deg);
+                height: 60px;
+                margin: 1rem 0;
+            }
+
+            .horizontal-arrow .generator-label {
+                transform: rotate(-90deg);
+            }
+
+            .vertical-arrow {
+                padding: 0.5rem 0;
+            }
+
+            .backtranslation-diagram {
+                padding: 1rem;
+            }
+
+            .box-header {
+                padding: 0.7rem 1rem;
+            }
+
+            .box-content {
+                padding: 1rem;
+            }
+        }
+
+        /* prompt */
+
+
+        /* Enhanced Performance Visualization Styles */
+        .performance-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .benchmark-selector {
+            display: flex;
+            align-items: center;
+        }
+
+        .benchmark-selector label {
+            margin-right: 0.8rem;
+            font-weight: 500;
+        }
+
+        .custom-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: white;
+            font-size: 0.9rem;
+            min-width: 200px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .custom-select:hover,
+        .custom-select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(74, 105, 189, 0.1);
+        }
+
+        .visualization-toggle {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .viz-button {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .viz-button:hover {
+            background-color: #f8f9fa;
+        }
+
+        .viz-button.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .graph-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            height: 500px;
+        }
+
+        .performance-legend {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .legend-group h4 {
+            margin-top: 0;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+
+        .legend-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem 2rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            border-radius: 3px;
+        }
+
+        .baseline-legend .legend-color {
+            background-color: rgba(54, 162, 235, 0.7);
+        }
+
+        .finetune-legend .legend-color {
+            background-color: rgba(75, 192, 192, 0.7);
+        }
+
+        .pass8-legend .legend-color {
+            background-color: rgba(153, 102, 255, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .performance-controls {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .benchmark-selector {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .visualization-toggle {
+                width: 100%;
+            }
+
+            .viz-button {
+                flex: 1;
+                text-align: center;
+            }
+        }
+
+        /*Distribution*/
+
+        /* 为图表容器添加美观的样式 */
+        .graph-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        /* 标题样式 */
+        #distribution h3 {
+            color: #333;
+            font-size: 22px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        /* 描述文本样式 */
+        #distribution p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* 确保图表容器有正确的比例 */
+        .graph-container>div {
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #f9fbfd;
+        }
+
+        /* 添加响应式样式 */
+        @media (max-width: 768px) {
+            .graph-container {
+                padding: 15px;
+                margin: 15px 0;
+            }
+
+            #distribution h3 {
+                font-size: 18px;
+            }
+
+            #distribution p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>OptMATH</h1>
+            <p>A Scalable Bidirectional Data Synthesis Framework for Optimization Modeling</p>
+
+            <div class="authors">
+                <div class="author-list">
+                    <span>Hongliang Lu<sup>1,∗</sup></span>
+                    <span>Zhonglin Xie<sup>2,∗</sup></span>
+                    <span>Yaoyu Wu<sup>1</sup></span>
+                    <span>Can Ren<sup>3</sup></span>
+                    <span>Yuxuan Chen<sup>3</sup></span>
+                    <span>Zaiwen Wen<sup>2,†</sup></span>
+                </div>
+                <div class="affiliations">
+                    <sup>1</sup>College of Engineering, Peking University &nbsp;
+                    <sup>2</sup>Beijing International Center for Mathematical Research, Peking University &nbsp;
+                    <sup>3</sup>School of Mathematics Science, Peking University
+                </div>
+                <div class="notes">
+                    <sup>∗</sup>Equal contribution &nbsp;
+                    <sup>†</sup>Corresponding author: <a href="mailto:wenzw@pku.edu.cn"
+                        style="color:inherit; text-decoration:underline;">wenzw@pku.edu.cn</a>
+                </div>
+            </div>
+
+            <div class="badges">
+                <a href="https://arxiv.org/abs/2502.11102" class="badge">
+                    <img src="https://img.shields.io/badge/📝_Paper-arXiv:2502.11102-b31b1b" alt="Paper">
+                </a>
+                <a href="https://github.com/optsuite/OptMATH" class="badge">
+                    <img src="https://img.shields.io/badge/💻_Code-GitHub-4078c0" alt="Code">
+                </a>
+                <a href="https://huggingface.co/datasets/Aurora-Gem/OptMATH-Train" class="badge">
+                    <img src="https://img.shields.io/badge/🤗_Dataset-HuggingFace-ffb7c5" alt="Dataset">
+                </a>
+                <a href="https://github.com/optsuite/OptMATH/stargazers" class="badge">
+                    <img src="https://img.shields.io/github/stars/optsuite/OptMATH?style=social" alt="GitHub stars">
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <ul>
+                <li><a href="#news">News</a></li>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#key-features">Features</a></li>
+                <li><a href="#dataset">Dataset</a></li>
+                <li><a href="#results">Results</a></li>
+                <li><a href="#interactive">Interactive</a></li>
+                <li><a href="#citation">Citation</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="news">
+            <h2>News</h2>
+            <div class="news-section">
+                <div class="news-item">
+                    <span class="news-date">2025/05/01</span> - Our paper has been accepted as a poster presentation at
+                    <strong>ICML 2025 </strong>!
+                </div>
+                <div class="news-item">
+                    <span class="news-date">2025/04/15</span> - We have expanded our problem coverage to 60+ diverse
+                    optimization problem types. <strong> We will continue to expand the dataset with more problem types
+                        and quantities, stay tuned!</strong>
+                </div>
+                <div class="news-item">
+                    <span class="news-date">2025/02/21</span> - We have released our 200K training dataset
+                    (OptMATH-Train) and OptMATH-Bench.
+                </div>
+            </div>
+        </section>
+
+        <section id="overview">
+            <h2>Overview</h2>
+            <p>OptMATH is a scalable framework for synthesizing high-quality optimization modeling datasets. Large
+                language models (LLMs) have shown remarkable capabilities in understanding natural language and
+                performing complex reasoning tasks, but translating natural language descriptions of optimization
+                problems into solver-ready formats remains a significant challenge.</p>
+
+            <div class="card">
+                <p>The framework consists of a bidirectional pipeline that:</p>
+                <ol class="steps">
+                    <li>Generates problem data (PD) with controllable complexity from seed mathematical formulations
+                        (MF)</li>
+                    <li>Creates natural language (NL) descriptions through backtranslation</li>
+                    <li>Validates the correspondence between NL and PD through forward modeling and rejection sampling
+                    </li>
+                </ol>
+                <div class="image-container">
+                    <img src="assets/img/pipeline.png" alt="Framework Overview" style="max-width: 100%; height: auto;">
+                </div>
+            </div>
+        </section>
+
+        <section id="key-features">
+            <h2>Key Features</h2>
+            <ul class="feature-list">
+                <li><strong>Bidirectional Data Synthesis:</strong> A novel pipeline that generates high-quality
+                    optimization modeling data through both forward and reverse processes</li>
+                <li><strong>Comprehensive Problem Coverage:</strong> Spans 60+ diverse optimization problem types across
+                    multiple domains including logistics, supply chain, manufacturing, and finance</li>
+                <li><strong>Controllable Complexity:</strong> Generates problems with adjustable difficulty levels
+                    through feedback-driven parameter tuning</li>
+                <li><strong>Mathematical Validation:</strong> Employs rigorous rejection sampling based on solution
+                    equivalence to ensure dataset quality</li>
+                <li><strong>Proven Effectiveness:</strong> Models fine-tuned on OptMATH achieve state-of-the-art
+                    performance across multiple benchmarks</li>
+            </ul>
+        </section>
+
+        <section id="dataset">
+            <h2>Dataset</h2>
+            <p>OptMATH consists of two main components designed for training and evaluation:</p>
+
+            <div class="dataset-comparison">
+                <div class="dataset-card">
+                    <div class="dataset-header">
+                        <h3>OptMATH-Train</h3>
+                    </div>
+                    <div class="dataset-content">
+                        <ul class="feature-list">
+                            <li>Over <strong>200k</strong> high-quality and diverse optimization problems</li>
+                            <li>Covers <strong>diverse optimization scenarios</strong> including logistics, supply
+                                chain, manufacturing, etc.</li>
+                        </ul>
+                        <div class="image-container">
+                            <img src="assets/img/scenarios.jpg" alt="Application Scenarios Distribution"
+                                style="width: 100%; max-width: 450px;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dataset-card">
+                    <div class="dataset-header">
+                        <h3>OptMATH-Bench</h3>
+                    </div>
+                    <div class="dataset-content">
+                        <ul class="feature-list">
+                            <li><strong>Coverage of various problem types (LP, MILP, IP, NLP, SOCP)</strong></li>
+                        </ul>
+                        <div class="problem-types-visualization">
+                            <div class="benchmark-table-container">
+                                <table class="benchmark-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="type-col">Problem Type</th>
+                                            <th>NL4OPT</th>
+                                            <th>MAMO EasyLP</th>
+                                            <th>MAMO ComplexLP</th>
+                                            <th>OptMATH-Bench</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="type-col">IP</td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar ip" style="width: 26.94%"></div>
+                                                    <span class="progress-text">26.94%</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar ip" style="width: 58.74%"></div>
+                                                    <span class="progress-text">58.74%</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar ip" style="width: 15.64%"></div>
+                                                    <span class="progress-text">15.64%</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar ip" style="width: 11.92%"></div>
+                                                    <span class="progress-text">11.92%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="type-col">LP</td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar lp" style="width: 61.63%"></div>
+                                                    <span class="progress-text">61.63%</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar lp" style="width: 0.61%"></div>
+                                                    <span class="progress-text">0.61%</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar lp" style="width: 62.08%"></div>
+                                                    <span class="progress-text">62.08%</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar lp" style="width: 8.81%"></div>
+                                                    <span class="progress-text">8.81%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="type-col">MILP</td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar milp" style="width: 11.43%"></div>
+                                                    <span class="progress-text">11.43%</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar milp" style="width: 40.65%"></div>
+                                                    <span class="progress-text">40.65%</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar milp" style="width: 22.28%"></div>
+                                                    <span class="progress-text">22.28%</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar milp highlight" style="width: 67.87%">
+                                                    </div>
+                                                    <span class="progress-text">67.87%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="type-col">NLP</td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar nlp" style="width: 0%"></div>
+                                                    <span class="progress-text">0.00%</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar nlp" style="width: 0%"></div>
+                                                    <span class="progress-text">0.00%</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar nlp" style="width: 0%"></div>
+                                                    <span class="progress-text">0.00%</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar nlp highlight" style="width: 5.18%"></div>
+                                                    <span class="progress-text">5.18%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="type-col">SOCP</td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar socp" style="width: 0%"></div>
+                                                    <span class="progress-text">0.00%</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar socp" style="width: 0%"></div>
+                                                    <span class="progress-text">0.00%</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar socp" style="width: 0%"></div>
+                                                    <span class="progress-text">0.00%</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="progress-cell">
+                                                    <div class="progress-bar socp highlight" style="width: 6.22%"></div>
+                                                    <span class="progress-text">6.22%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="benchmark-legend">
+                                <div class="legend-item"><span class="legend-color ip"></span>IP: Integer Programming
+                                </div>
+                                <div class="legend-item"><span class="legend-color lp"></span>LP: Linear Programming
+                                </div>
+                                <div class="legend-item"><span class="legend-color milp"></span>MILP: Mixed Integer
+                                    Linear Programming</div>
+                                <div class="legend-item"><span class="legend-color nlp"></span>NLP: Nonlinear
+                                    Programming</div>
+                                <div class="legend-item"><span class="legend-color socp"></span>SOCP: Second-Order Cone
+                                    Programming</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="insight-section">
+                <div class="insight-card">
+                    <h4>Problem Length Analysis</h4>
+                    <div class="image-container">
+                        <img src="assets/img/description_length.png" alt="Question Length Analysis"
+                            style="width: 100%; max-width: 400px;">
+                    </div>
+                    <ul class="feature-list">
+                        <li>OptMATH features significantly longer problem descriptions, challenging LLMs with more
+                            complex reasoning requirements.(2.9× longer than MAMO EasyLP)</li>
+                    </ul>
+                </div>
+
+                <div class="insight-card">
+                    <h4>Dataset Distribution</h4>
+                    <div class="image-container">
+                        <img src="assets/img/tsne_visualization_all_5000.png" alt="Dataset Distribution Visualization"
+                            style="width: 100%; max-width: 400px;">
+                    </div>
+                    <p>OptMATH effectively surrounds other benchmarks in the embedding space, explaining the transfer
+                        learning benefits.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="results">
+            <h2>Results</h2>
+            <p>We use the LLaMAFactory framework for fine-tuning. For more details, please refer to <a
+                    href="https://github.com/hiyouga/LLaMA-Factory"
+                    target="_blank">https://github.com/hiyouga/LLaMA-Factory</a>.</p>
+
+            <h3>Main Results</h3>
+            <p>The table below presents a comprehensive comparison of model performance across various benchmarks. Our
+                fine-tuned models, especially OptMATH-Qwen2.5-32B, consistently outperform both baseline models and
+                other fine-tuned models, demonstrating that <strong>training with OptMATH-Train significantly enhances
+                    optimization modeling capabilities.</strong></p>
+
+            <div style="overflow-x: auto;">
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>Types</th>
+                            <th>Models</th>
+                            <th>NL4OPT</th>
+                            <th>MAMO EasyLP</th>
+                            <th>MAMO ComplexLP</th>
+                            <th>OptMATH Bench</th>
+                            <th>IndustryOR</th>
+                            <th>OptiBench</th>
+                            <th>Macro AVG</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="model-type">
+                            <td rowspan="7">Baseline</td>
+                            <td>Llama3.1-8B</td>
+                            <td>0.0%</td>
+                            <td>0.2%</td>
+                            <td>0.0%</td>
+                            <td>0.0%</td>
+                            <td>0.0%</td>
+                            <td>0.0%</td>
+                            <td>0.1%</td>
+                        </tr>
+                        <tr>
+                            <td>Qwen2.5-7B</td>
+                            <td>86.9%</td>
+                            <td>83.6%</td>
+                            <td>21.8%</td>
+                            <td>1.6%</td>
+                            <td>10.0%</td>
+                            <td>36.2%</td>
+                            <td>40.0%</td>
+                        </tr>
+                        <tr>
+                            <td>GPT-3.5-turbo</td>
+                            <td>78.0%</td>
+                            <td>79.3%</td>
+                            <td>33.2%</td>
+                            <td>15.0%</td>
+                            <td>21.0%</td>
+                            <td>47.4%</td>
+                            <td>51.4%</td>
+                        </tr>
+                        <tr>
+                            <td>GPT-4</td>
+                            <td>89.0%</td>
+                            <td>87.3%</td>
+                            <td>49.3%</td>
+                            <td>16.6%</td>
+                            <td>33.3%</td>
+                            <td>68.6%</td>
+                            <td>57.4%</td>
+                        </tr>
+                        <tr>
+                            <td>Deepseek-V3</td>
+                            <td>95.9%</td>
+                            <td>88.3%</td>
+                            <td>51.1%</td>
+                            <td>32.6%</td>
+                            <td>37.0%</td>
+                            <td>71.6%</td>
+                            <td>62.8%</td>
+                        </tr>
+                        <tr>
+                            <td>OptiMUS (GPT-4o-2024-05-13)</td>
+                            <td>78.8%</td>
+                            <td>77.0%</td>
+                            <td>43.6%</td>
+                            <td>20.2%</td>
+                            <td>31.0%</td>
+                            <td>45.8%</td>
+                            <td>49.4%</td>
+                        </tr>
+                        <tr>
+                            <td>Qwen2.5-32B</td>
+                            <td>92.7%</td>
+                            <td>82.2%</td>
+                            <td>44.6%</td>
+                            <td>9.3%</td>
+                            <td>16.0%</td>
+                            <td>47.6%</td>
+                            <td>48.7%</td>
+                        </tr>
+                        <tr class="model-type">
+                            <td rowspan="5">Fine-tuning</td>
+                            <td>ORLM-Llama-3-8B (reported)</td>
+                            <td>85.7%</td>
+                            <td>82.3%</td>
+                            <td>37.4%</td>
+                            <td>*</td>
+                            <td>38.0%</td>
+                            <td>*</td>
+                            <td>60.9%</td>
+                        </tr>
+                        <tr>
+                            <td>ORLM-Llama-3-8B (reproduced)</td>
+                            <td>84.5%</td>
+                            <td>74.9%</td>
+                            <td>34.1%</td>
+                            <td>2.6%</td>
+                            <td>24.0%</td>
+                            <td>51.1%</td>
+                            <td>45.2%</td>
+                        </tr>
+                        <tr>
+                            <td>OptMATH-Llama3.1-8B (pass@1)</td>
+                            <td>55.5%</td>
+                            <td>73.9%</td>
+                            <td>40.8%</td>
+                            <td>24.4%</td>
+                            <td>18.0%</td>
+                            <td>55.5%</td>
+                            <td>44.7%</td>
+                        </tr>
+                        <tr>
+                            <td>OptMATH-Qwen2.5-7B (pass@1)</td>
+                            <td>94.7%</td>
+                            <td>86.5%</td>
+                            <td>51.2%</td>
+                            <td>24.4%</td>
+                            <td>20.0%</td>
+                            <td>57.9%</td>
+                            <td>55.8%</td>
+                        </tr>
+                        <tr>
+                            <td class="highlight">OptMATH-Qwen2.5-32B (pass@1)</td>
+                            <td class="highlight">95.9%</td>
+                            <td class="highlight">89.9%</td>
+                            <td class="highlight">54.1%</td>
+                            <td class="highlight">34.7%</td>
+                            <td class="highlight">31.0%</td>
+                            <td class="highlight">66.1%</td>
+                            <td class="highlight">62.0%</td>
+                        </tr>
+                        <tr class="model-type">
+                            <td rowspan="3">Pass@8</td>
+                            <td>OptMATH-Llama3.1-8B</td>
+                            <td>97.6%</td>
+                            <td>94.2%</td>
+                            <td>71.6%</td>
+                            <td>51.6%</td>
+                            <td>37.0%</td>
+                            <td>66.6%</td>
+                            <td>69.8%</td>
+                        </tr>
+                        <tr>
+                            <td>OptMATH-Qwen2.5-7B</td>
+                            <td>98.4%</td>
+                            <td>94.5%</td>
+                            <td>72.5%</td>
+                            <td>56.0%</td>
+                            <td>38.0%</td>
+                            <td>68.1%</td>
+                            <td>71.3%</td>
+                        </tr>
+                        <tr>
+                            <td>OptMATH-Qwen2.5-32B</td>
+                            <td>97.9%</td>
+                            <td>93.9%</td>
+                            <td>75.4%</td>
+                            <td>67.4%</td>
+                            <td>47.0%</td>
+                            <td>76.8%</td>
+                            <td>76.4%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Ablation Study</h3>
+            <div class="two-column">
+                <div class="column">
+                    <h4>Ablation study on Model Size</h4>
+                    <p>To investigate the effectiveness of OptMATH training across different model scales, we conducted
+                        experiments using Qwen2.5 models ranging from 0.5B to 32B parameters. Due to computational
+                        constraints, we used a randomly sampled subset of 100,000 training examples. As shown in the
+                        figure below, <strong>all models exhibit substantial performance improvements after
+                            OptMATH-Train fine-tuning.</strong></p>
+                    <div class="image-container">
+                        <img src="assets/img/scaling_law_on_model_size.png" alt="Model Scaling"
+                            style="width: 100%; height: auto;">
+                    </div>
+                </div>
+
+                <div class="column">
+                    <h4>Ablation study on Data Size</h4>
+                    <p>As shown in the figure below, the performance of Qwen2.5-1.5B across different benchmarks varies
+                        with the amount of training data. The model demonstrates <strong>notable improvements in
+                            optimization modeling capabilities even with a small portion of the OptMATH-Train
+                            dataset.</strong> The performance gains gradually level off as more training data is added,
+                        showing a typical diminishing returns pattern.</p>
+                    <div class="image-container">
+                        <img src="assets/img/scaling_law_on_data_size_1.5B.png" alt="Data Scaling(1.5B)"
+                            style="width: 100%; height: auto;">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="interactive" class="interactive-section">
+            <h2>Interactive Exploration</h2>
+            <div class="tabs">
+                <button class="tab active" data-tab="performance">Performance</button>
+                <button class="tab" data-tab="distribution">Data Distribution</button>
+                <button class="tab" data-tab="autoformulation">AutoFormulation</button>
+                <button class="tab" data-tab="backtranslation">Backtranslation</button>
+            </div>
+
+            <div id="performance" class="tab-content active">
+                <h3>Model Performance Across Benchmarks</h3>
+                <p>This visualization compares the performance of different models across all benchmarks. Models are
+                    grouped into three categories: Baseline models, Fine-tuned models (pass@1), and Fine-tuned models
+                    with multiple sampling (pass@8).</p>
+
+                <div class="performance-controls">
+                    <div class="benchmark-selector">
+                        <label for="benchmark-select">Select Benchmark:</label>
+                        <select id="benchmark-select" class="custom-select">
+                            <option value="all">All Benchmarks (Macro AVG)</option>
+                            <option value="nl4opt">NL4OPT</option>
+                            <option value="mamo-easy">MAMO EasyLP</option>
+                            <option value="mamo-complex">MAMO ComplexLP</option>
+                            <option value="optmath">OptMATH-Bench</option>
+                            <option value="industry">IndustryOR</option>
+                            <option value="optibench">OptiBench</option>
+                        </select>
+                    </div>
+                    <div class="visualization-toggle">
+                        <button class="viz-button active" data-viz="bar">Bar Chart</button>
+                        <button class="viz-button" data-viz="radar">Radar Chart</button>
+                    </div>
+                </div>
+
+                <div class="graph-container">
+                    <canvas id="performanceChart" height="400"></canvas>
+                </div>
+
+                <div class="performance-legend">
+                    <div class="legend-group">
+                        <h4>Model Types</h4>
+                        <div class="legend-items">
+                            <div class="legend-item baseline-legend">
+                                <span class="legend-color"></span>Baseline Models
+                            </div>
+                            <div class="legend-item finetune-legend">
+                                <span class="legend-color"></span>Fine-tuned Models (pass@1)
+                            </div>
+                            <div class="legend-item pass8-legend">
+                                <span class="legend-color"></span>Fine-tuned Models (pass@8)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="distribution" class="tab-content">
+                <h3>Benchmark Scenario Distribution</h3>
+                <p>This visualization compares the application scenario distribution across different optimization
+                    benchmarks.
+                    OptMATH-Bench stands out with the most diverse and balanced coverage of industrial scenarios,
+                    including significant representation in manufacturing, telecommunications, aviation, and other
+                    sectors
+                    that are underrepresented in other benchmarks.</p>
+                <div class="graph-container">
+                    <!-- 确保容器有足够的高度 -->
+                    <div style="height: 500px; position: relative;">
+                        <canvas id="distributionChart"></canvas>
+                    </div>
+                </div>
+
+                <h3>Data Complexity Distribution</h3>
+                <p>This visualization demonstrates the complexity of different optimization benchmarks in terms of
+                    <strong>variables and constraints.</strong> 
+                    OptMATH-Bench contains problems with significantly higher median variable and constraint counts,
+                    providing a more
+                    realistic and challenging test environment for optimization algorithms compared to other benchmarks.
+                </p>
+                <div class="graph-container">
+                    <!-- 确保容器有足够的高度 -->
+                    <div style="height: 500px; position: relative;">
+                        <canvas id="complexityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <script>
+                // 确保在页面加载后调用创建图表的函数
+                document.addEventListener('DOMContentLoaded', function () {
+                    if (typeof createDistributionChart === 'function') {
+                        createDistributionChart();
+                    }
+                });
+            </script>
+
+
+            <div id="autoformulation" class="tab-content">
+                <h3>AutoFormulation Example</h3>
+                <div class="card">
+
+                    <div class="prompt-container">
+                        <div class="highlight-box">
+                            <h5>Prompt</h5>
+                            <p>Below is an operations research question. Build a mathematical model and corresponding
+                                python code using `gurobipy` that appropriately addresses the question.</p>
+
+                            <p><strong># Question:</strong><br>
+                                {{Question}}</p>
+
+                            <p><strong># Notes:</strong><br>
+                                - First provide problem analysis and its mathematical formulation before the Python
+                                code<br>
+                                - The Python code should start with the following lines:<br>```python<br>import
+                                gurobipy as gp<br>from gurobipy import GRB<br>```<br>
+                                - Make sure the model variable is named `model`.<br>
+                                - Avoid using "<" and ">" in Gurobi constraints; instead, use "<=" or ">=" as
+                                    appropriate.<br>
+                                    - Carefully determine whether the variable is an integer or a continuous variable.
+                            </p>
+
+                            <p><strong># Response:</strong><br>
+                                (Provide your response here, keep the notes above in mind)</p>
+                        </div>
+                    </div>
+
+
+                    <div class="input-output-container">
+
+
+
+                        <div class="input-container">
+                            <div class="highlight-box">
+
+                                <h5>Input (Natural Language Description):</h5>
+                                <p>A logistics company must deliver packages to four cities: City 0, City 1,
+                                    City 2, and
+                                    City 3, minimizing the total delivery cost while ensuring each city is
+                                    visited
+                                    exactly once and the route forms a continuous loop without subtours. The
+                                    delivery
+                                    costs between cities are as follows: City 0 to City 1 costs 616 units, City
+                                    0 to
+                                    City 2 costs 567 units, City 0 to City 3 costs 143 units, City 1 to City 0
+                                    costs 388
+                                    units, City 1 to City 2 costs 947 units, City 1 to City 3 costs 628 units,
+                                    City 2 to
+                                    City 0 costs 495 units, City 2 to City 1 costs 650 units, City 2 to City 3
+                                    costs 604
+                                    units, City 3 to City 0 costs 77 units, City 3 to City 1 costs 630 units,
+                                    and City 3
+                                    to City 2 costs 23 units. The company uses binary decision variables to
+                                    indicate
+                                    whether a route is used and assigns position variables to each city to
+                                    prevent
+                                    subtours. The position variable for City 0 is fixed at 0, while the position
+                                    variables for City 1, City 2, and City 3 must be integers between 0 and 3.
+                                    The
+                                    objective is to minimize the total delivery cost, which is the sum of the
+                                    costs of
+                                    all selected routes, including the term 0 times the position variable for
+                                    City 0.
+                                    Constraints ensure each city is visited and departed exactly once. Subtour
+                                    elimination is enforced by ensuring that if a route from City i to City j is
+                                    used,
+                                    the position of City j must be greater than the position of City i, except
+                                    for City
+                                    0, which is fixed as the starting point. These constraints are implemented
+                                    through
+                                    specific relationships between the route variables and the position
+                                    variables,
+                                    guaranteeing the delivery route forms a single loop without smaller loops.
+                                    The
+                                    constraints also explicitly bound the position variables for City 1, City 2,
+                                    and
+                                    City 3 to be between 0 and 3, and ensure that the position variables are
+                                    correctly
+                                    related to the route variables to eliminate subtours.</p>
+                            </div>
+                        </div>
+
+                        <div class="output-container">
+                            <div class="highlight-box">
+                                <h5>Output (OptMATH Model Response):</h5>
+                                <div class="solution-container">
+                                    <h4>Problem Analysis:</h4>
+                                    <p>We are tasked with solving a Traveling Salesman Problem (TSP) variant where a
+                                        logistics company needs to deliver packages to four cities (City 0, City 1, City
+                                        2, and City 3) with the objective of minimizing the total delivery cost. The
+                                        company must ensure that each city is visited exactly once, and the route forms
+                                        a continuous loop without subtours. The delivery costs between cities are
+                                        provided, and we need to use binary decision variables to indicate whether a
+                                        route is used and assign position variables to each city to prevent subtours.
+                                    </p>
+
+                                    <h4>Mathematical Formulation:</h4>
+                                    <p><strong>Decision Variables:</strong></p>
+                                    <ul>
+                                        <li>x<sub>ij</sub> : Binary variable indicating whether the route from City i to
+                                            City j is used.</li>
+                                        <li>u<sub>i</sub> : Position variable for City i, where u<sub>0</sub> = 0 and
+                                            u<sub>i</sub> is an integer between 0 and 3 for i = 1, 2, 3.</li>
+                                    </ul>
+
+                                    <p><strong>Objective Function:</strong></p>
+                                    <div class="math-formula">
+                                        Minimize &sum;<sub>i=0</sub><sup>3</sup> &sum;<sub>j=0, j≠i</sub><sup>3</sup>
+                                        c<sub>ij</sub>x<sub>ij</sub>
+                                    </div>
+                                    <p>where c<sub>ij</sub> is the cost of traveling from City i to City j.</p>
+
+                                    <p><strong>Constraints:</strong></p>
+                                    <ol>
+                                        <li>Each city is visited exactly once:
+                                            <div class="math-formula">
+                                                &sum;<sub>j=0, j≠i</sub><sup>3</sup> x<sub>ij</sub> = 1 &nbsp;&nbsp; ∀i
+                                                ∈ {0, 1, 2, 3}
+                                            </div>
+                                        </li>
+                                        <li>Each city is departed exactly once:
+                                            <div class="math-formula">
+                                                &sum;<sub>i=0, i≠j</sub><sup>3</sup> x<sub>ij</sub> = 1 &nbsp;&nbsp; ∀j
+                                                ∈ {0, 1, 2, 3}
+                                            </div>
+                                        </li>
+                                        <li>Subtour elimination constraints:
+                                            <div class="math-formula">
+                                                u<sub>i</sub> - u<sub>j</sub> + 4x<sub>ij</sub> ≤ 3 &nbsp;&nbsp; ∀i, j ∈
+                                                {1, 2, 3}, i ≠ j
+                                            </div>
+                                        </li>
+                                        <li>Position variable bounds:
+                                            <div class="math-formula">
+                                                u<sub>0</sub> = 0
+                                            </div>
+                                            <div class="math-formula">
+                                                1 ≤ u<sub>i</sub> ≤ 3 &nbsp;&nbsp; ∀i ∈ {1, 2, 3}
+                                            </div>
+                                        </li>
+                                    </ol>
+
+                                    <h4>Python Code:</h4>
+                                    <pre class="tab-code"><code>import gurobipy as gp
+        from gurobipy import GRB
+          
+        # Define the cities and the cost matrix
+        cities = [0, 1, 2, 3]
+        cost = {
+        (0, 1): 616, (0, 2): 567, (0, 3): 143,
+        (1, 0): 388, (1, 2): 947, (1, 3): 628,
+        (2, 0): 495, (2, 1): 650, (2, 3): 604,
+        (3, 0): 77, (3, 1): 630, (3, 2): 23
+        }
+          
+        # Create the model
+        model = gp.Model("TSP")
+          
+        # Decision variables
+        x = model.addVars(cities, cities, vtype=GRB.BINARY, name="x")
+        u = model.addVars(cities, vtype=GRB.INTEGER, name="u")
+          
+        # Set the objective function
+        model.setObjective(gp.quicksum(cost[i, j] * x[i, j] for i, j in cost), GRB.MINIMIZE)
+          
+        # Constraints
+        # Each city is visited exactly once
+        model.addConstrs((gp.quicksum(x[i, j] for j in cities if j != i) == 1 for i in cities), name="visit_once")
+          
+        # Each city is departed exactly once
+        model.addConstrs((gp.quicksum(x[i, j] for i in cities if i != j) == 1 for j in cities), name="depart_once")
+          
+        # Subtour elimination constraints
+        model.addConstrs((u[i] - u[j] + 4 * x[i, j] <= 3 for i in cities if i != 0 for j in cities if j != 0 and i != j), name="subtour_elim")
+          
+        # Position variable bounds
+        model.addConstr(u[0] == 0, name="u0")
+        model.addConstrs((u[i] >= 1 for i in cities if i != 0), name="u_lower_bound")
+        model.addConstrs((u[i] <= 3 for i in cities if i != 0), name="u_upper_bound")
+          
+        # Optimize the model
+        model.optimize()
+          
+        # Print the solution
+        if model.status == GRB.OPTIMAL:
+        print("Optimal solution found!")
+        print(f"Total delivery cost: {model.objVal}")
+        print("Route:")
+        for i in cities:
+          for j in cities:
+           if i != j and x[i, j].x > 0.5:
+            print(f"City {i} -> City {j} (Cost: {cost[i, j]})")
+        else:
+        print("No optimal solution found.")</code></pre>
+
+                                    <h4>Explanation:</h4>
+                                    <ul>
+                                        <li><strong>Decision Variables:</strong> <code>x[i, j]</code> is a binary
+                                            variable that indicates whether the route from City <code>i</code> to City
+                                            <code>j</code> is used. <code>u[i]</code> is an integer variable
+                                            representing the position of City <code>i</code> in the route.
+                                        </li>
+                                        <li><strong>Objective Function:</strong> The objective is to minimize the total
+                                            delivery cost, which is the sum of the costs of all selected routes.</li>
+                                        <li><strong>Constraints:</strong> The constraints ensure that each city is
+                                            visited and departed exactly once, and that the route forms a single loop
+                                            without subtours. The subtour elimination constraints are implemented using
+                                            the position variables <code>u[i]</code>.</li>
+                                        <li><strong>Optimization:</strong> The model is optimized using Gurobi, and the
+                                            optimal route and total delivery cost are printed.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 新增的Backtranslation标签内容 -->
+            <div id="backtranslation" class="tab-content">
+                <h3>Backtranslation Example</h3>
+                <p>Our bidirectional framework first generates problem instances from mathematical formulations, then
+                    creates natural language descriptions through backtranslation. This example shows the transformation
+                    process.</p>
+
+                <div class="card backtranslation-diagram">
+                    <h4 class="backtranslation-title">An Example of Backtranslation</h4>
+
+                    <div class="backtranslation-flow">
+                        <!-- 左侧输入：通用公式 -->
+                        <div class="backtranslation-box input-box-left">
+                            <div class="box-header">Input-General Formulation</div>
+                            <div class="box-content formula-content">
+                                <div class="math-content">
+                                    <div class="math-line">
+                                        Minimize <span class="math-formula">\(\sum_{i=1}^{n} c_i x_i\)</span>
+                                    </div>
+
+                                    <div class="math-line">
+                                        Subject to <span class="math-formula">\(\sum_{i \in S_j} x_i \geq k_j\)</span>
+                                        <span class="math-formula">\(\forall j \in \text{Elements}\)</span>
+                                    </div>
+
+                                    <div class="math-line">
+                                        <span class="math-formula">\(x_i \in \{0,1\}\)</span> <span
+                                            class="math-formula">\(\forall i \in \text{Sets}\)</span>
+                                    </div>
+
+                                    <ul class="notation-list">
+                                        <li><span class="symbol">c<sub>i</sub></span> represents the cost coefficient
+                                            for each set</li>
+                                        <li><span class="symbol">x<sub>i</sub></span> is a binary decision variable
+                                            indicating whether set i is selected</li>
+                                        <li><span class="symbol">S<sub>j</sub></span> represents the set of all sets
+                                            containing element j</li>
+                                        <li><span class="symbol">k<sub>j</sub></span> represents the minimum number of
+                                            times element j needs to be covered</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 转换箭头和Generator标签 -->
+                        <div class="conversion-arrow horizontal-arrow">
+                            <div class="generator-label">Generator</div>
+                            <div class="arrow-body">
+                                <i class="fas fa-long-arrow-alt-right"></i>
+                            </div>
+                        </div>
+
+                        <!-- 右侧输入：LP文件 -->
+                        <div class="backtranslation-box input-box-right">
+                            <div class="box-header">Input-LP File</div>
+                            <div class="box-content code-content">
+                                <pre>Minimize
+              80000 Selected[1] + 40000 Selected[2] + 20000
+            Selected[3] + 10000Selected[4]
+               + 80000 Selected[5] + 90000 Selected[6]
+            Subject To
+             MultiCover_e1: Selected[1] + Selected[3] + Selected[5] +
+            Selected[6] >= 4
+            …………
+             MultiCover_e10: Selected[1] + Selected[4] + Selected[5] +
+            Selected[6]
+               >= 4
+            Bounds
+            Binaries
+             Selected[1] Selected[2] Selected[3] Selected[4] Selected[5]
+            Selected[6]
+            End</pre>
+                            </div>
+                        </div>
+
+                        <!-- 垂直箭头和Backtranslation标签 -->
+                        <div class="conversion-arrow vertical-arrow">
+                            <div class="backtranslation-label">Backtranslation</div>
+                            <div class="arrow-body">
+                                <i class="fas fa-long-arrow-alt-down"></i>
+                            </div>
+                        </div>
+
+                        <!-- 底部输出：自然语言描述 -->
+                        <div class="backtranslation-box output-box">
+                            <div class="box-header">Output-Natural Language Description</div>
+                            <div class="box-content description-content">
+                                <p>A city is planning the layout of emergency medical stations. There are 6 candidate
+                                    locations for building medical stations, each with different construction costs:</p>
+                                <p>Location 1: Construction cost $80,000;&nbsp;&nbsp;Location 2: Construction cost
+                                    $40,000&nbsp;&nbsp;......</p>
+                                <p>The city is divided into 10 districts, each requiring different numbers of medical
+                                    stations for coverage due to population density and emergency medical needs:</p>
+                                <p>Districts 1 and 2: require coverage by at least 4 stations;&nbsp;&nbsp;District 3:
+                                    requires coverage by at least 2 stations&nbsp;&nbsp;......</p>
+                                <p>Each candidate location can cover specific districts:</p>
+                                <p>Location 1 covers districts: 1, 2, 6, 10;&nbsp;&nbsp;Location 2 covers districts: 3,
+                                    5, 6, 9&nbsp;&nbsp;......</p>
+                                <p>The objective is to decide which locations should be selected for building medical
+                                    stations, minimizing the total construction cost while meeting the coverage
+                                    requirements for each district. Each location can only be selected or not selected
+                                    (binary decision).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <section id="citation">
+            <h2>Citation</h2>
+            <div class="card">
+                <pre><code>@misc{lu2025optmathscalablebidirectionaldata,
+      title={OptMATH: A Scalable Bidirectional Data Synthesis Framework for Optimization Modeling},
+      author={Hongliang Lu and Zhonglin Xie and Yaoyu Wu and Can Ren and Yuxuan Chen and Zaiwen Wen},
+      year={2025},
+      eprint={2502.11102},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2502.11102},
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Contact</h2>
+            <p>We hope that our work is valuable for your research or projects. If you are interested in our research or
+                have any bug reports or comments, please feel free to contact one of the authors:</p>
+            <ul class="contact-list">
+                <li><i class="fas fa-user"></i> Hongliang Lu, <a href="mailto:lhl@pku.edu.cn">lhl@pku.edu.cn</a></li>
+                <li><i class="fas fa-user"></i> Zhonglin Xie, <a href="mailto:zlxie@pku.edu.cn">zlxie@pku.edu.cn</a>
+                </li>
+                <li><i class="fas fa-user"></i> Zaiwen Wen, <a href="mailto:wenzw@pku.edu.cn">wenzw@pku.edu.cn</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 OptMATH Team. All rights reserved.</p>
+            <p>Built with <a href="https://pages.github.com/">GitHub Pages</a> | <a
+                    href="https://github.com/optsuite/OptMATH">View on GitHub</a></p>
+        </div>
+    </footer>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // Tab functionality
+            initTabs();
+
+            // Performance Chart
+            initPerformanceChart();
+
+            // Distribution Chart
+            initDistributionChart();
+
+            createComplexityChart();
+
+            // Other initialization functions
+            initSmoothScroll();
+
+            enhanceImages();
+        });
+
+        function initPerformanceChart() {
+            const performanceCtx = document.getElementById('performanceChart');
+            if (!performanceCtx) return;
+
+
+
+
+            const performanceData = {
+                // 模型名称
+                models: [
+                    // Baseline models
+                    'Llama3.1-8B', 'Qwen2.5-7B', 'GPT-3.5-turbo', 'GPT-4', 'Deepseek-V3', 'OptiMUS', 'Qwen2.5-32B',
+                    // Fine-tuned models
+                    'ORLM-Llama-3-8B (reported)', 'ORLM-Llama-3-8B (reproduced)', 'OptMATH-Llama3.1-8B', 'OptMATH-Qwen2.5-7B', 'OptMATH-Qwen2.5-32B',
+                    // Pass@8 models
+                    'OptMATH-Llama3.1-8B (pass@8)', 'OptMATH-Qwen2.5-7B (pass@8)', 'OptMATH-Qwen2.5-32B (pass@8)'
+                ],
+                // 模型类型
+                types: [
+                    'baseline', 'baseline', 'baseline', 'baseline', 'baseline', 'baseline', 'baseline',
+                    'finetune', 'finetune', 'finetune', 'finetune', 'finetune',
+                    'pass8', 'pass8', 'pass8'
+                ],
+                // 各个基准测试的准确率
+                nl4opt: [
+                    0.0, 86.9, 78.0, 89.0, 95.9, 78.8, 92.7,
+                    85.7, 84.5, 55.5, 94.7, 95.9,
+                    97.6, 98.4, 97.9
+                ],
+                mamoEasy: [
+                    0.2, 83.6, 79.3, 87.3, 88.3, 77.0, 82.2,
+                    82.3, 74.9, 73.9, 86.5, 89.9,
+                    94.2, 94.5, 93.9
+                ],
+                mamoComplex: [
+                    0.0, 21.8, 33.2, 49.3, 51.1, 43.6, 44.6,
+                    37.4, 34.1, 40.8, 51.2, 54.1,
+                    71.6, 72.5, 75.4
+                ],
+                optmathBench: [
+                    0.0, 1.6, 15.0, 16.6, 32.6, 20.2, 9.3,
+                    0.0, 2.6, 24.4, 24.4, 34.7,
+                    51.6, 56.0, 67.4
+                ],
+                industryOR: [
+                    0.0, 10.0, 21.0, 33.3, 37.0, 31.0, 16.0,
+                    38.0, 24.0, 18.0, 20.0, 31.0,
+                    37.0, 38.0, 47.0
+                ],
+                optiBench: [
+                    0.0, 36.2, 47.4, 68.6, 71.6, 45.8, 47.6,
+                    0.0, 51.1, 55.5, 57.9, 66.1,
+                    66.6, 68.1, 76.8
+                ],
+                // 宏观平均值
+                macroAVG: [
+                    0.1, 40.0, 51.4, 57.4, 62.8, 49.4, 48.7,
+                    60.9, 45.2, 44.7, 55.8, 62.0,
+                    69.8, 71.3, 76.4
+                ]
+            };
+
+            // 颜色设置
+            const colorsByType = {
+                baseline: [
+                    'rgba(54, 162, 235, 0.7)', // Llama3.1-8B
+                    'rgba(54, 162, 235, 0.6)', // Qwen2.5-7B
+                    'rgba(54, 162, 235, 0.5)', // GPT-3.5-turbo
+                    'rgba(54, 162, 235, 0.8)', // GPT-4
+                    'rgba(54, 162, 235, 0.9)', // Deepseek-V3
+                    'rgba(54, 162, 235, 0.7)', // OptiMUS
+                    'rgba(54, 162, 235, 0.7)'  // Qwen2.5-32B
+                ],
+                finetune: [
+                    'rgba(75, 192, 192, 0.6)', // ORLM-Llama-3-8B (reported)
+                    'rgba(75, 192, 192, 0.5)', // ORLM-Llama-3-8B (reproduced)
+                    'rgba(75, 192, 192, 0.7)', // OptMATH-Llama3.1-8B
+                    'rgba(75, 192, 192, 0.8)', // OptMATH-Qwen2.5-7B
+                    'rgba(75, 192, 192, 0.9)'  // OptMATH-Qwen2.5-32B (highlighted)
+                ],
+                pass8: [
+                    'rgba(153, 102, 255, 0.7)', // OptMATH-Llama3.1-8B (pass@8)
+                    'rgba(153, 102, 255, 0.8)', // OptMATH-Qwen2.5-7B (pass@8)
+                    'rgba(153, 102, 255, 0.9)'  // OptMATH-Qwen2.5-32B (pass@8)
+                ]
+            };
+
+            const bordersByType = {
+                baseline: [
+                    'rgba(54, 162, 235, 1)', // Llama3.1-8B
+                    'rgba(54, 162, 235, 0.9)', // Qwen2.5-7B
+                    'rgba(54, 162, 235, 0.8)', // GPT-3.5-turbo
+                    'rgba(54, 162, 235, 1)', // GPT-4
+                    'rgba(54, 162, 235, 1)', // Deepseek-V3
+                    'rgba(54, 162, 235, 1)', // OptiMUS
+                    'rgba(54, 162, 235, 0.9)'  // Qwen2.5-32B
+                ],
+                finetune: [
+                    'rgba(75, 192, 192, 0.9)', // ORLM-Llama-3-8B (reported)
+                    'rgba(75, 192, 192, 0.8)', // ORLM-Llama-3-8B (reproduced)
+                    'rgba(75, 192, 192, 1)', // OptMATH-Llama3.1-8B
+                    'rgba(75, 192, 192, 1)', // OptMATH-Qwen2.5-7B
+                    'rgba(75, 192, 192, 1)'  // OptMATH-Qwen2.5-32B (highlighted)
+                ],
+                pass8: [
+                    'rgba(153, 102, 255, 1)', // OptMATH-Llama3.1-8B (pass@8)
+                    'rgba(153, 102, 255, 1)', // OptMATH-Qwen2.5-7B (pass@8)
+                    'rgba(153, 102, 255, 1)'  // OptMATH-Qwen2.5-32B (pass@8)
+                ]
+            };
+
+            // 当前选中的基准测试和visualization类型
+            let currentBenchmark = 'all';
+            let currentViz = 'bar';
+
+            // 获取背景色和边框色
+            function getModelColors() {
+                const backgroundColors = [];
+                const borderColors = [];
+
+                performanceData.types.forEach((type, index) => {
+                    const typeIndex = performanceData.types.slice(0, index).filter(t => t === type).length;
+                    backgroundColors.push(colorsByType[type][typeIndex]);
+                    borderColors.push(bordersByType[type][typeIndex]);
+                });
+
+                return { backgroundColors, borderColors };
+            }
+
+            // 获取当前所选基准测试的数据
+            function getCurrentData() {
+                if (currentBenchmark === 'all') {
+                    return performanceData.macroAVG;
+                } else {
+                    switch (currentBenchmark) {
+                        case 'nl4opt': return performanceData.nl4opt;
+                        case 'mamo-easy': return performanceData.mamoEasy;
+                        case 'mamo-complex': return performanceData.mamoComplex;
+                        case 'optmath': return performanceData.optmathBench;
+                        case 'industry': return performanceData.industryOR;
+                        case 'optibench': return performanceData.optiBench;
+                        default: return performanceData.macroAVG;
+                    }
+                }
+            }
+
+            // 获取基准测试的标题
+            function getBenchmarkTitle() {
+                switch (currentBenchmark) {
+                    case 'all': return 'All Benchmarks (Macro AVG)';
+                    case 'nl4opt': return 'NL4OPT Benchmark';
+                    case 'mamo-easy': return 'MAMO EasyLP Benchmark';
+                    case 'mamo-complex': return 'MAMO ComplexLP Benchmark';
+                    case 'optmath': return 'OptMATH-Bench';
+                    case 'industry': return 'IndustryOR Benchmark';
+                    case 'optibench': return 'OptiBench';
+                    default: return 'Benchmark Performance';
+                }
+            }
+
+            // 创建柱状图
+            function createBarChart() {
+                const ctx = document.getElementById('performanceChart');
+                if (!ctx) return;
+
+                const { backgroundColors, borderColors } = getModelColors();
+                const currentData = getCurrentData();
+
+                // 创建分组
+                const baselineModels = performanceData.models.filter((_, i) => performanceData.types[i] === 'baseline');
+                const finetuneModels = performanceData.models.filter((_, i) => performanceData.types[i] === 'finetune');
+                const pass8Models = performanceData.models.filter((_, i) => performanceData.types[i] === 'pass8');
+
+                const baselineData = currentData.filter((_, i) => performanceData.types[i] === 'baseline');
+                const finetuneData = currentData.filter((_, i) => performanceData.types[i] === 'finetune');
+                const pass8Data = currentData.filter((_, i) => performanceData.types[i] === 'pass8');
+
+                const baselineColors = backgroundColors.filter((_, i) => performanceData.types[i] === 'baseline');
+                const finetuneColors = backgroundColors.filter((_, i) => performanceData.types[i] === 'finetune');
+                const pass8Colors = backgroundColors.filter((_, i) => performanceData.types[i] === 'pass8');
+
+                const baselineBorders = borderColors.filter((_, i) => performanceData.types[i] === 'baseline');
+                const finetuneBorders = borderColors.filter((_, i) => performanceData.types[i] === 'finetune');
+                const pass8Borders = borderColors.filter((_, i) => performanceData.types[i] === 'pass8');
+
+                window.performanceChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Model Performance'],
+                        datasets: [
+                            ...baselineModels.map((label, i) => ({
+                                label: label,
+                                data: [baselineData[i]],
+                                backgroundColor: baselineColors[i],
+                                borderColor: baselineBorders[i],
+                                borderWidth: 1,
+                                categoryPercentage: 0.9,
+                                barPercentage: 0.8,
+                                order: 3
+                            })),
+                            ...finetuneModels.map((label, i) => ({
+                                label: label,
+                                data: [finetuneData[i]],
+                                backgroundColor: finetuneColors[i],
+                                borderColor: finetuneBorders[i],
+                                borderWidth: 1,
+                                categoryPercentage: 0.9,
+                                barPercentage: 0.8,
+                                order: 2
+                            })),
+                            ...pass8Models.map((label, i) => ({
+                                label: label,
+                                data: [pass8Data[i]],
+                                backgroundColor: pass8Colors[i],
+                                borderColor: pass8Borders[i],
+                                borderWidth: 1,
+                                categoryPercentage: 0.9,
+                                barPercentage: 0.8,
+                                order: 1
+                            }))
+                        ]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 100,
+                                title: {
+                                    display: true,
+                                    text: 'Accuracy (%)',
+                                    font: {
+                                        weight: 'bold'
+                                    }
+                                },
+                                grid: {
+                                    color: 'rgba(200, 200, 200, 0.1)'
+                                }
+                            },
+                            y: {
+                                display: false
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'right',
+                                labels: {
+                                    boxWidth: 12,
+                                    font: {
+                                        size: 11
+                                    },
+                                    generateLabels: function (chart) {
+                                        const datasets = chart.data.datasets;
+                                        return datasets.map((dataset, i) => {
+                                            return {
+                                                text: dataset.label,
+                                                fillStyle: dataset.backgroundColor,
+                                                strokeStyle: dataset.borderColor,
+                                                lineWidth: dataset.borderWidth,
+                                                hidden: false,
+                                                index: i
+                                            };
+                                        });
+                                    }
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: getBenchmarkTitle(),
+                                font: {
+                                    size: 16,
+                                    weight: 'bold'
+                                },
+                                padding: {
+                                    top: 10,
+                                    bottom: 20
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                padding: 12,
+                                bodyFont: {
+                                    size: 14
+                                },
+                                titleFont: {
+                                    size: 16
+                                },
+                                callbacks: {
+                                    title: function () {
+                                        return getBenchmarkTitle();
+                                    },
+                                    label: function (context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.x !== null) {
+                                            label += context.parsed.x.toFixed(1) + '%';
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+
+            function createRadarChart() {
+                const ctx = document.getElementById('performanceChart');
+                if (!ctx) return;
+
+                // 如果已经存在图表，销毁它
+                if (window.performanceChart) {
+                    window.performanceChart.destroy();
+                }
+
+                // 准备雷达图数据
+                const benchmarks = ['NL4OPT', 'MAMO EasyLP', 'MAMO ComplexLP', 'OptMATH-Bench', 'IndustryOR', 'OptiBench'];
+
+                // 为每个模型创建数据集，但我们将按照不同的类别分组创建图表
+                let baselineDatasets = [];
+                let finetuneDatasets = [];
+                let pass8Datasets = [];
+
+                // 基线模型
+                let baselineCount = 0;
+                performanceData.models.forEach((model, index) => {
+                    if (performanceData.types[index] === 'baseline') {
+                        // 只选择几个有代表性的基线模型，避免过度拥挤
+                        if (model === 'GPT-4' || model === 'Deepseek-V3' || model === 'Qwen2.5-32B') {
+                            baselineDatasets.push({
+                                label: model,
+                                data: [
+                                    performanceData.nl4opt[index],
+                                    performanceData.mamoEasy[index],
+                                    performanceData.mamoComplex[index],
+                                    performanceData.optmathBench[index],
+                                    performanceData.industryOR[index],
+                                    performanceData.optiBench[index]
+                                ],
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: `rgba(54, 162, 235, ${0.7 + baselineCount * 0.1})`,
+                                pointBackgroundColor: `rgba(54, 162, 235, ${0.7 + baselineCount * 0.1})`,
+                                pointRadius: 4,
+                                borderWidth: 2,
+                                fill: true,
+                                modelType: 'baseline'
+                            });
+                            baselineCount++;
+                        }
+                    }
+                });
+
+                // 微调模型，只选择最重要的代表
+                let finetuneCount = 0;
+                performanceData.models.forEach((model, index) => {
+                    if (performanceData.types[index] === 'finetune') {
+                        // 只选择 OptMATH 系列
+                        if (model.includes('OptMATH') && !model.includes('pass@8')) {
+                            finetuneDatasets.push({
+                                label: model,
+                                data: [
+                                    performanceData.nl4opt[index],
+                                    performanceData.mamoEasy[index],
+                                    performanceData.mamoComplex[index],
+                                    performanceData.optmathBench[index],
+                                    performanceData.industryOR[index],
+                                    performanceData.optiBench[index]
+                                ],
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: `rgba(75, 192, 192, ${0.7 + finetuneCount * 0.1})`,
+                                pointBackgroundColor: `rgba(75, 192, 192, ${0.7 + finetuneCount * 0.1})`,
+                                pointRadius: 4,
+                                borderWidth: 2,
+                                fill: true,
+                                modelType: 'finetune'
+                            });
+                            finetuneCount++;
+                        }
+                    }
+                });
+
+                // Pass@8模型
+                let pass8Count = 0;
+                performanceData.models.forEach((model, index) => {
+                    if (performanceData.types[index] === 'pass8') {
+                        pass8Datasets.push({
+                            label: model,
+                            data: [
+                                performanceData.nl4opt[index],
+                                performanceData.mamoEasy[index],
+                                performanceData.mamoComplex[index],
+                                performanceData.optmathBench[index],
+                                performanceData.industryOR[index],
+                                performanceData.optiBench[index]
+                            ],
+                            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                            borderColor: `rgba(153, 102, 255, ${0.7 + pass8Count * 0.1})`,
+                            pointBackgroundColor: `rgba(153, 102, 255, ${0.7 + pass8Count * 0.1})`,
+                            pointRadius: 4,
+                            borderWidth: 2,
+                            fill: true,
+                            modelType: 'pass8'
+                        });
+                        pass8Count++;
+                    }
+                });
+
+                // 组合所有数据集
+                const combinedDatasets = [
+                    ...baselineDatasets,
+                    ...finetuneDatasets,
+                    ...pass8Datasets.slice(-1) // 只显示最好的 Pass@8 模型
+                ];
+
+                // 在创建图表之前先移除旧的样式和标签
+                const existingStyle = document.getElementById('radar-chart-style');
+                if (existingStyle) {
+                    existingStyle.remove();
+                }
+
+                // 添加全局样式以禁止所有Chart.js自动生成的标签
+                const style = document.createElement('style');
+                style.id = 'radar-chart-style';
+                style.textContent = `
+                    .chartjs-data-labels, 
+                    .chartjs-datalabels,
+                    canvas[id="performanceChart"] + .chartjs-tooltip span,
+                    .chartjs-text-label,
+                    [class*="chartjs"][class*="value"],
+                    [class*="chartjs"][class*="label"] {
+                        display: none !important;
+                        opacity: 0 !important;
+                        visibility: hidden !important;
+                    }
+                `;
+                document.head.appendChild(style);
+
+                // 创建雷达图
+                window.performanceChart = new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: benchmarks,
+                        datasets: combinedDatasets
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scale: {
+                            display: false // 禁用整个刻度
+                        },
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    display: false, // 完全禁用刻度显示
+                                    backdropColor: 'transparent',
+                                    showLabelBackdrop: false,
+                                    font: {
+                                        size: 0 // 字体大小设为0
+                                    },
+                                    z: -1,
+                                    callback: function () { return ""; } // 空字符串回调确保不显示任何文本
+                                },
+                                pointLabels: {
+                                    font: {
+                                        size: 14,
+                                        weight: 'bold'
+                                    },
+                                    color: '#333',
+                                    padding: 20
+                                },
+                                grid: {
+                                    circular: true,
+                                    color: function (context) {
+                                        if (context.index % 2 === 0) {
+                                            return 'rgba(0, 0, 0, 0.1)';
+                                        }
+                                        return 'rgba(0, 0, 0, 0.05)';
+                                    }
+                                },
+                                angleLines: {
+                                    color: 'rgba(0, 0, 0, 0.1)',
+                                    lineWidth: 1
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                                labels: {
+                                    boxWidth: 15,
+                                    font: {
+                                        size: 12
+                                    },
+                                    padding: 15
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Model Performance Across All Benchmarks',
+                                font: {
+                                    size: 18,
+                                    weight: 'bold'
+                                },
+                                padding: {
+                                    top: 10,
+                                    bottom: 20
+                                },
+                                color: '#333'
+                            },
+                            tooltip: {
+                                enabled: true, // 允许工具提示
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                padding: 12,
+                                bodyFont: {
+                                    size: 14
+                                },
+                                titleFont: {
+                                    size: 16
+                                },
+                                usePointStyle: true,
+                                callbacks: {
+                                    title: function (tooltipItems) {
+                                        return benchmarks[tooltipItems[0].dataIndex];
+                                    },
+                                    label: function (context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.raw !== null) {
+                                            label += context.raw.toFixed(1) + '%';
+                                        }
+                                        return label;
+                                    }
+                                }
+                            },
+                            datalabels: {
+                                display: false // 明确禁用datalabels插件
+                            }
+                        },
+                        elements: {
+                            line: {
+                                tension: 0.1
+                            }
+                        }
+                    },
+                    plugins: [{
+                        id: 'hideLabels',
+                        beforeDraw: function (chart) {
+                            // 在绘制之前清除可能的标签
+                            const ctx = chart.ctx;
+                            ctx.save();
+                            ctx.clearRect(0, 0, chart.width, chart.height);
+                            ctx.restore();
+                        }
+                    }]
+                });
+
+                // 移除所有旧的标签
+                const chartContainer = ctx.parentElement;
+                const oldLabels = chartContainer.querySelectorAll('.custom-label, .axis-label, .reference-label, .max-value-label');
+                oldLabels.forEach(label => label.remove());
+
+                // 计算每个轴的最大值
+                const getMaxValuesPerAxis = () => {
+                    const maxValues = [];
+
+                    for (let i = 0; i < benchmarks.length; i++) {
+                        let maxValue = 0;
+                        let maxModel = '';
+
+                        combinedDatasets.forEach(dataset => {
+                            if (dataset.data[i] > maxValue) {
+                                maxValue = dataset.data[i];
+                                maxModel = dataset.label;
+                            }
+                        });
+
+                        maxValues.push({
+                            axis: i,
+                            value: maxValue,
+                            model: maxModel
+                        });
+                    }
+
+                    return maxValues;
+                };
+
+                // 延迟添加自定义标签，确保图表渲染完毕
+                setTimeout(() => {
+                    // 确保容器有定位
+                    if (getComputedStyle(chartContainer).position === 'static') {
+                        chartContainer.style.position = 'relative';
+                    }
+
+                    // 获取画布本身的尺寸和位置
+                    const rect = ctx.getBoundingClientRect();
+                    const containerRect = chartContainer.getBoundingClientRect();
+
+                    // 计算相对于容器的位置偏移
+                    const offsetX = rect.left - containerRect.left;
+                    const offsetY = rect.top - containerRect.top;
+
+                    // 使用画布的宽高计算中心点，而不是chartArea
+                    const centerX = offsetX + ctx.width / 2;
+                    const centerY = offsetY + ctx.height / 2;
+
+                    // 雷达图的实际半径通常是画布较短边的40%左右
+                    const chartRadius = Math.min(ctx.width, ctx.height) * 0.4;
+
+                    console.log("Chart dimensions:", {
+                        canvasWidth: ctx.width,
+                        canvasHeight: ctx.height,
+                        centerX,
+                        centerY,
+                        chartRadius
+                    });
+
+                    // 添加100标记在顶部
+                    const label100 = document.createElement('div');
+                    label100.className = 'custom-label reference-label';
+                    label100.style.position = 'absolute';
+                    label100.style.top = (centerY - chartRadius * 1.2) + 'px';  // 放在雷达图顶部上方20%位置
+                    label100.style.left = centerX + 'px';
+                    label100.style.transform = 'translateX(-50%)';
+                    label100.style.fontSize = '12px';
+                    label100.style.fontWeight = 'bold';
+                    label100.style.color = '#666';
+                    label100.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+                    label100.style.padding = '1px 4px';
+                    label100.style.borderRadius = '3px';
+                    label100.style.zIndex = '1000';
+                    label100.style.pointerEvents = 'none'; // 禁止鼠标事件
+                    label100.textContent = '100';
+                    chartContainer.appendChild(label100);
+
+                    // 添加每个轴的最大值标签，确保距离适当
+                    const maxValuesPerAxis = getMaxValuesPerAxis();
+
+                    // 定义标签位置的固定偏移量（基于图像中的位置调整）
+                    const labelOffsets = [
+                        { x: 0, y: -15 },        // NL4OPT (顶部)
+                        { x: 20, y: 0 },         // MAMO EasyLP (右上)
+                        { x: 15, y: 15 },        // MAMO ComplexLP (右下)
+                        { x: 0, y: 15 },         // OptMATH-Bench (底部)
+                        { x: -15, y: 15 },       // IndustryOR (左下)
+                        { x: -20, y: 0 }         // OptiBench (左上)
+                    ];
+
+                    maxValuesPerAxis.forEach((item, index) => {
+                        const angleSlice = (Math.PI * 2) / benchmarks.length;
+                        const angle = angleSlice * item.axis - Math.PI / 2; // 从顶部开始
+
+                        // 计算标签放置位置，使用值来缩放半径
+                        const valueRatio = (item.value / 100);
+                        const radius = chartRadius * valueRatio;
+
+                        // 基础位置
+                        const baseX = centerX + radius * Math.cos(angle);
+                        const baseY = centerY + radius * Math.sin(angle);
+
+                        // 应用固定偏移
+                        const labelX = baseX + labelOffsets[index].x;
+                        const labelY = baseY + labelOffsets[index].y;
+
+                        const maxLabel = document.createElement('div');
+                        maxLabel.className = 'custom-label max-value-label';
+                        maxLabel.style.position = 'absolute';
+                        maxLabel.style.left = labelX + 'px';
+                        maxLabel.style.top = labelY + 'px';
+                        maxLabel.style.transform = 'translate(-50%, -50%)';
+                        maxLabel.style.fontSize = '11px';
+                        maxLabel.style.fontWeight = 'bold';
+                        maxLabel.style.color = '#333';
+                        maxLabel.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+                        maxLabel.style.padding = '2px 4px';
+                        maxLabel.style.borderRadius = '3px';
+                        maxLabel.style.zIndex = '1000';
+                        maxLabel.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+                        maxLabel.style.pointerEvents = 'none'; // 禁止鼠标事件
+                        maxLabel.textContent = Math.round(item.value);
+
+                        chartContainer.appendChild(maxLabel);
+                    });
+
+                    // 创建和添加自定义样式
+                    const customStyle = document.createElement('style');
+                    customStyle.id = 'radar-label-styles';
+                    customStyle.textContent = `
+                        .custom-label {
+                            position: absolute;
+                            transform: translate(-50%, -50%);
+                            font-weight: bold;
+                            background-color: rgba(255, 255, 255, 0.8);
+                            border-radius: 3px;
+                            z-index: 1000;
+                            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                            pointer-events: none;
+                        }
+                        .reference-label {
+                            font-size: 12px;
+                            color: #666;
+                            padding: 1px 4px;
+                        }
+                        .max-value-label {
+                            font-size: 11px;
+                            color: #333;
+                            padding: 2px 4px;
+                        }
+                    `;
+                    document.head.appendChild(customStyle);
+
+                    // 监听窗口resize事件，重新调整标签位置
+                    const resizeObserver = new ResizeObserver(() => {
+                        // 移除所有标签
+                        const customLabels = chartContainer.querySelectorAll('.custom-label');
+                        customLabels.forEach(label => label.remove());
+
+                        // 重新计算并添加标签 - 这部分需要重新编写，略过
+                        // 由于重新调整标签位置逻辑较复杂，建议在图表重绘时完全重新创建
+                        // 当发生resize时，updateChart函数会被调用，创建新的图表和标签
+                    });
+
+                    // 观察图表容器的大小变化
+                    resizeObserver.observe(chartContainer);
+
+                    // 在chartContainer被销毁时，断开观察器连接
+                    return () => {
+                        resizeObserver.disconnect();
+                    };
+                }, 800); // 延长等待时间为800ms，确保图表完全渲染
+            }
+
+
+            // 处理基准测试选择变化
+            document.getElementById('benchmark-select')?.addEventListener('change', function (e) {
+                currentBenchmark = e.target.value;
+                console.log("Benchmark changed to:", currentBenchmark);
+
+                // 重新渲染图表，不直接调用destroy
+                updateChart();
+            });
+
+            // 添加一个新的函数来更新图表
+            function updateChart() {
+                // 获取画布元素
+                const chartContainer = document.getElementById('performanceChart').parentElement;
+
+                // 移除旧的画布
+                const oldCanvas = document.getElementById('performanceChart');
+                if (oldCanvas) {
+                    oldCanvas.remove();
+                }
+
+                // 创建新的画布
+                const newCanvas = document.createElement('canvas');
+                newCanvas.id = 'performanceChart';
+                chartContainer.appendChild(newCanvas);
+
+                // 根据当前可视化类型重新创建图表
+                if (currentViz === 'bar') {
+                    createBarChart();
+                } else {
+                    createRadarChart();
+                }
+            }
+
+
+
+            // 处理可视化类型选择
+            document.querySelectorAll('.viz-button')?.forEach(button => {
+                button.addEventListener('click', function () {
+                    document.querySelectorAll('.viz-button').forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    currentViz = this.dataset.viz;
+
+                    console.log("Visualization changed to:", currentViz); // Updated log message
+
+                    updateChart(); // Call the updateChart function to refresh the chart
+                });
+            });
+
+            // 初始化图表
+            createBarChart();
+        }
+
+        function initDistributionChart() {
+            const distributionCtx = document.getElementById('distributionChart');
+            if (!distributionCtx) return;
+
+            // 数据准备
+            const scenarioData = {
+                'Manufacturing': [31.84, 4.91, 5.21, 36.27],
+                'Transportation': [16.73, 7.67, 19.43, 5.18],
+                'Supply Chain': [0.82, 5.06, 27.01, 7.77],
+                'Logistics': [6.53, 1.53, 14.69, 12.95],
+                'Services': [10.20, 10.89, 2.37, 4.15],
+                'Finance': [2.04, 10.74, 6.64, 5.70],
+                'Healthcare': [12.65, 5.06, 3.79, 0.00],
+                'Telecommunications': [0.00, 3.68, 1.42, 10.88],
+                'Aviation': [0.00, 0.00, 0.95, 7.25],
+                'Retail': [4.08, 5.06, 3.32, 0.00],
+                'Energy': [1.22, 4.60, 2.37, 3.63],
+                'Agriculture': [6.12, 4.60, 2.37, 0.00],
+                'Other': [4.90, 1.07, 5.69, 4.66]
+            };
+
+            // 数据集名称
+            const datasets = ['NL4OPT', 'MAMO EasyLP', 'MAMO ComplexLP', 'OptMATH-Bench'];
+
+            // 按总和排序场景（从高到低）
+            const sortedScenarios = Object.keys(scenarioData).sort((a, b) => {
+                const sumA = scenarioData[a].reduce((sum, val) => sum + val, 0);
+                const sumB = scenarioData[b].reduce((sum, val) => sum + val, 0);
+                return sumB - sumA;
+            });
+
+            // 只取前8个主要场景，其余归为"其他"
+            const mainScenarios = sortedScenarios.slice(0, 8);
+            const otherScenarios = sortedScenarios.slice(8);
+
+            // 计算其他场景的数据总和
+            const otherData = [0, 0, 0, 0];
+            otherScenarios.forEach(scenario => {
+                scenarioData[scenario].forEach((val, i) => {
+                    otherData[i] += val;
+                });
+            });
+
+            // 创建最终数据数组
+            const finalScenarios = [...mainScenarios];
+            if (otherScenarios.length > 0) {
+                finalScenarios.push('Other Industries');
+            }
+
+            // 为每个数据集准备数据
+            const chartData = {
+                labels: finalScenarios,
+                datasets: datasets.map((dataset, index) => {
+                    // 为每个数据集选择一个颜色
+                    const baseColors = [
+                        'rgba(54, 162, 235, %opacity%)', // 蓝色 - NL4OPT
+                        'rgba(75, 192, 192, %opacity%)', // 青绿色 - MAMO EasyLP
+                        'rgba(153, 102, 255, %opacity%)', // 紫色 - MAMO ComplexLP
+                        'rgba(255, 159, 64, %opacity%)' // 橙色 - OptMATH-Bench
+                    ];
+
+                    // 收集该数据集的数据点
+                    const dataPoints = mainScenarios.map(scenario => scenarioData[scenario][index]);
+
+                    // 如果有"其他"类别，添加到数据中
+                    if (otherScenarios.length > 0) {
+                        dataPoints.push(otherData[index]);
+                    }
+
+                    return {
+                        label: dataset,
+                        data: dataPoints,
+                        backgroundColor: baseColors[index].replace('%opacity%', '0.7'),
+                        borderColor: baseColors[index].replace('%opacity%', '1.0'),
+                        borderWidth: 1,
+                        borderRadius: 4
+                    };
+                })
+            };
+
+
+            // 创建堆叠条形图
+            window.distributionChart = new Chart(distributionCtx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y', // 横向条形图
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Dataset Distribution by Application Scenario',
+                            font: {
+                                size: 18,
+                                weight: 'bold'
+                            },
+                            padding: {
+                                top: 10,
+                                bottom: 20
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function (context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.x !== null) {
+                                        label += context.parsed.x.toFixed(1) + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 15,
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        datalabels: {
+                            display: function (context) {
+                                // 只显示大于阈值的标签，避免拥挤
+                                return context.dataset.data[context.dataIndex] > 10;
+                            },
+                            color: 'white',
+                            font: {
+                                weight: 'bold',
+                                size: 11
+                            },
+                            formatter: function (value) {
+                                return value.toFixed(1) + '%';
+                            },
+                            anchor: 'center',
+                            align: 'center'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Distribution (%)',
+                                font: {
+                                    weight: 'bold'
+                                }
+                            },
+                            ticks: {
+                                callback: function (value) {
+                                    return value + '%';
+                                }
+                            }
+                        },
+                        y: {
+                            stacked: true,
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: {
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeOutQuart'
+                    },
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 10,
+                            top: 0,
+                            bottom: 0
+                        }
+                    }
+                }
+            });
+
+            // 添加交互式功能: 单击图例项目切换数据集的可见性
+            distributionCtx.onclick = function (evt) {
+                const activePoints = window.distributionChart.getElementsAtEventForMode(
+                    evt, 'nearest', { intersect: true }, false
+                );
+
+                if (activePoints.length > 0) {
+                    const firstPoint = activePoints[0];
+                    const scenarioName = window.distributionChart.data.labels[firstPoint.index];
+                    const datasetName = window.distributionChart.data.datasets[firstPoint.datasetIndex].label;
+
+                    console.log(`Selected: ${scenarioName} - ${datasetName} (${window.distributionChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index].toFixed(1)}%)`);
+
+                    // 这里可以添加更多交互功能，例如显示详细信息面板等
+                }
+            };
+
+            // 在图表下方添加说明文字
+            const container = distributionCtx.parentElement;
+
+            // 移除现有说明（如果有）
+            const existingNote = container.querySelector('.chart-note');
+            if (existingNote) {
+                existingNote.remove();
+            }
+
+            const noteElement = document.createElement('div');
+            noteElement.className = 'chart-note';
+            noteElement.style.textAlign = 'center';
+            noteElement.style.fontSize = '12px';
+            noteElement.style.color = '#666';
+            noteElement.style.marginTop = '10px';
+            noteElement.innerHTML = '* 图表显示了各个数据集在不同应用场景中的分布百分比';
+
+            container.appendChild(noteElement);
+        }
+
+
+        function createComplexityChart() {
+            const ctx = document.getElementById('complexityChart');
+            if (!ctx) return;
+
+            // 数据准备 - 使用中位数值来表示典型复杂度（避免极端值的影响）
+            const benchmarks = ['IndustryOR', 'MAMO EasyLP', 'MAMO ComplexLP', 'NL4OPT', 'OptMATH-Bench', 'OptMATH-Train'];
+
+            // 变量中位数
+            const medianVars = [6, 3, 28, 2, 42, 36];
+
+            // 约束中位数
+            const medianConstrs = [7, 4, 14, 3, 47, 34];
+
+            // 问题数量（用于气泡大小）
+            const problemCount = [46, 604, 152, 237, 115, 201060];
+
+            // 最大变量和约束（用于标注）
+            const maxVars = [150000, 5, 90, 3, 504, 2401];
+            const maxConstrs = [5070, 14, 133, 7, 636, 1840];
+
+            // 计算气泡大小 - 使用对数缩放以便更好地可视化
+            const getBubbleSize = (count) => {
+                // 对数缩放，确保最小气泡也有一定大小
+                return Math.max(Math.log10(count) * 10, 5);
+            };
+
+            // 颜色设置
+            const colors = {
+                'IndustryOR': 'rgba(128, 128, 128, 0.7)',       // 灰色
+                'MAMO EasyLP': 'rgba(54, 162, 235, 0.7)',        // 蓝色
+                'MAMO ComplexLP': 'rgba(54, 162, 235, 0.9)',    // 深蓝色
+                'NL4OPT': 'rgba(255, 159, 64, 0.7)',           // 橙色
+                'OptMATH-Bench': 'rgba(255, 99, 132, 0.8)',    // 红色
+                'OptMATH-Train': 'rgba(255, 99, 132, 0.4)'     // 浅红色
+            };
+
+            const borderColors = {
+                'IndustryOR': 'rgba(128, 128, 128, 1)',
+                'MAMO EasyLP': 'rgba(54, 162, 235, 1)',
+                'MAMO ComplexLP': 'rgba(54, 162, 235, 1)',
+                'NL4OPT': 'rgba(255, 159, 64, 1)',
+                'OptMATH-Bench': 'rgba(255, 99, 132, 1)',
+                'OptMATH-Train': 'rgba(255, 99, 132, 0.7)'
+            };
+
+            // 为每个基准测试创建数据点
+            const datasets = [{
+                label: 'Benchmark Complexity',
+                data: benchmarks.map((benchmark, index) => ({
+                    x: medianVars[index],
+                    y: medianConstrs[index],
+                    r: getBubbleSize(problemCount[index]),
+                    benchmark: benchmark,
+                    problemCount: problemCount[index],
+                    maxVars: maxVars[index],
+                    maxConstrs: maxConstrs[index]
+                })),
+                backgroundColor: benchmarks.map(benchmark => colors[benchmark]),
+                borderColor: benchmarks.map(benchmark => borderColors[benchmark]),
+                borderWidth: 2
+            }];
+
+        
+
+            window.complexityChart = new Chart(ctx, {
+                type: 'bubble',
+                data: {
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    const dataPoint = context.raw;
+                                    const lines = [
+                                        `Benchmark: ${dataPoint.benchmark}`,
+                                        `Median Variables: ${medianVars[context.dataIndex]}`,
+                                        `Median Constraints: ${medianConstrs[context.dataIndex]}`,
+                                        `Problem Count: ${dataPoint.problemCount.toLocaleString()}`,
+                                        `Max Variables: ${dataPoint.maxVars.toLocaleString()}`,
+                                        `Max Constraints: ${dataPoint.maxConstrs.toLocaleString()}`
+                                    ];
+                                    return lines;
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Benchmark Complexity Comparison',
+                            font: {
+                                size: 18,
+                                weight: 'bold'
+                            },
+                            padding: {
+                                top: 10,
+                                bottom: 20
+                            }
+                        },
+                        datalabels: {
+                            display: true,
+                            color: '#333',
+                            anchor: 'end',
+                            align: 'end',
+                            offset: 5,
+                            font: {
+                                weight: 'bold'
+                            },
+                            formatter: function (value, context) {
+                                return context.dataset.data[context.dataIndex].benchmark;
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Median Number of Variables',
+                                font: {
+                                    weight: 'bold'
+                                }
+                            },
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            },
+                            ticks: {
+                                callback: function (value) {
+                                    return value;
+                                }
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Median Number of Constraints',
+                                font: {
+                                    weight: 'bold'
+                                }
+                            },
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        }
+                    },
+                    animations: {
+                        tension: {
+                            duration: 1000,
+                            easing: 'easeOutQuad',
+                            from: 0.8,
+                            to: 0.2
+                        }
+                    }
+                }
+            });
+
+            // 在图表下方添加说明
+            const container = ctx.parentElement;
+
+            // 移除现有说明
+            const existingNote = container.querySelector('.complexity-note');
+            if (existingNote) {
+                existingNote.remove();
+            }
+
+            // 添加新的说明
+            const noteElement = document.createElement('div');
+            noteElement.className = 'complexity-note';
+            noteElement.style.marginTop = '20px';
+            noteElement.style.padding = '10px';
+            noteElement.style.backgroundColor = 'rgba(249, 249, 249, 0.9)';
+            noteElement.style.borderRadius = '5px';
+            noteElement.style.fontSize = '14px';
+            noteElement.style.lineHeight = '1.5';
+            noteElement.style.color = '#333';
+            noteElement.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+
+            noteElement.innerHTML = `
+        <div style="font-weight: bold; margin-bottom: 8px;">Data Complexity Comparison:</div>
+        <p>This visualization compares the complexity of different optimization benchmarks, with bubble size representing the number of problems in each dataset.</p>
+        <p><span style="font-weight: bold; color: rgba(255, 99, 132, 1);">OptMATH-Bench</span> features significantly more complex problems with higher median variable and constraint counts, offering a more realistic and challenging test for optimization capabilities.</p>
+    `;
+
+            container.appendChild(noteElement);
+        }
+
+
+        // Tab functionality initialization
+        function initTabs() {
+            // Set the first tab as active by default
+            const firstTab = document.querySelector('.tab');
+            const firstTabContent = document.getElementById(firstTab.dataset.tab);
+
+            if (firstTab && firstTabContent) {
+                firstTab.classList.add('active');
+                firstTabContent.classList.add('active');
+            }
+
+            // Add click event listeners to all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+
+                    if (tab.dataset.tab === 'performance') {
+                        initPerformanceChart();
+                    } else if (tab.dataset.tab === 'distribution') {
+                        initDistributionChart();
+                        createComplexityChart();
+                    }
+                });
+            });
+        }
+
+        // Smooth scroll for navigation
+        function initSmoothScroll() {
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Enhance images with hover effects
+        function enhanceImages() {
+            document.querySelectorAll('.image-container img').forEach(img => {
+                img.addEventListener('mouseenter', function () {
+                    this.style.transform = 'scale(1.02)';
+                    this.style.boxShadow = '0 8px 16px rgba(0,0,0,0.15)';
+                });
+
+                img.addEventListener('mouseleave', function () {
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>
