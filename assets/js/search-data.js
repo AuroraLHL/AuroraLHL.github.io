@@ -496,6 +496,11 @@ ninja.data = [{
           description: "another project with an image 🎉",
           section: "Projects",handler: () => {
               window.location.href = "/projects/9_project/";
+            },},{id: "projects-optmath",
+          title: 'OptMATH',
+          description: "A Scalable Bidirectional Data Synthesis Framework for Optimization Modeling",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/optmath/";
             },},{
         id: 'social-email',
         title: 'email',
