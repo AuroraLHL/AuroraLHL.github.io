@@ -23,13 +23,6 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/blog/";
           },
-        },{id: "nav-projects",
-          title: "projects",
-          description: "",
-          section: "Navigation",
-          handler: () => {
-            window.location.href = "/projects/";
-          },
         },{id: "nav-cv",
           title: "cv",
           description: "",
@@ -135,7 +128,7 @@ ninja.data = [{
           description: "",
           section: "News",},{id: "projects-optmath",
           title: 'OptMATH',
-          description: "A Scalable Bidirectional Data Synthesis Framework for Optimization Modeling",
+          description: "🚀 A Scalable Bidirectional Data Synthesis Framework for Optimization Modeling - Revolutionizing LLM capabilities in mathematical optimization",
           section: "Projects",handler: () => {
               window.location.href = "/projects/optmath/";
             },},{
