@@ -6,7 +6,7 @@
     - name: Email
       value: lhl@pku.edu.cn
     - name: Research Interests
-      value: Agentic RL, WebAgent/OSAgent Systems, Self-Play Training, Large Language Models, Agent Capability Enhancement
+      value: LLM for Optimization, Agentic Reinforcement Learning, Multi-Agent Systems, Self-Play Training, Optimization Modeling
     - name: Languages
       value: Chinese (Native), English (Fluent)
 
@@ -17,8 +17,8 @@
       institution: College of Engineering, Peking University
       year: 2023 - 2026 (Expected)
       description:
-        - Research focus on Agentic RL and WebAgent systems
-        - Specialized in Self-Play training paradigms for LLM agents
+        - Research focus on LLM for Optimization and Agentic Reinforcement Learning
+        - Specialized in optimization algorithms and mathematical modeling for LLMs
         - Coursework: Python Data Science, Deep Learning, Machine Learning, Optimization, Reinforcement Learning, LLM Foundations
     - title: B.S. in Robotics Engineering
       institution: College of Engineering, Peking University
@@ -78,21 +78,21 @@
 - title: Research Interests
   type: nested_list
   contents:
+    - title: LLM for Optimization
+      items:
+        - Optimization algorithms and mathematical modeling for LLMs
+        - Optimization Modeling frameworks
+        - Mathematical optimization capabilities enhancement
     - title: Agentic Reinforcement Learning
       items:
-        - Agent-based RL training paradigms for LLMs
-        - Multi-agent interaction and coordination
-        - Self-Play training methodologies
+        - Multi-Agent systems and coordination
+        - Self-Play training methodologies for enhancing LLM agent capabilities
+        - Agent-based RL training paradigms
     - title: WebAgent & OSAgent Systems
       items:
         - Web-based autonomous agent development
         - Operating system interaction agents
         - Agent capability evaluation and benchmarking
-    - title: Large Language Model Enhancement
-      items:
-        - Tool-calling and reasoning capability improvement
-        - Search and retrieval augmentation
-        - Agent-environment interaction optimization
 
 - title: Technical Skills
   type: list
@@ -101,4 +101,4 @@
     - <u>RL Frameworks:</u> PPO, GRPO, Verl Framework, OpenAI Gym
     - <u>LLM & Agent Tools:</u> PyTorch, TensorFlow, Agent Environment Construction
     - <u>Research Tools:</u> LaTeX, Git, Linux, Cloud Computing
-    - <u>Specialized Skills:</u> Agentic RL Training, WebAgent Development, Self-Play Implementation
+    - <u>Specialized Skills:</u> LLM for Optimization, Agentic RL Training, Optimization Modeling, Self-Play Implementation
