@@ -25,7 +25,7 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-Welcome to my personal homepage! I am a third-year M.S. student in Mechanical Engineering at the [College of Engineering](https://www.coe.pku.edu.cn/), [Peking University](http://pku.edu.cn/), advised by Prof. [Zaiwen Wen](http://faculty.bicmr.pku.edu.cn/~wenzw/index.html). I received my B.S. degree in Robotics Engineering from Peking University in 2023.
+Welcome to my personal homepage! I am a third-year M.E. student in Mechanical Engineering at the [College of Engineering](https://www.coe.pku.edu.cn/), [Peking University](http://pku.edu.cn/), advised by Prof. [Zaiwen Wen](http://faculty.bicmr.pku.edu.cn/~wenzw/index.html). I received my B.E. degree in Robotics Engineering from Peking University in 2023.
 
 My research interests primarily lie at the intersection of Reinforcement Learning and Large Language Models:
 
