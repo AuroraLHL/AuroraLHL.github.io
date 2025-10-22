@@ -4,7 +4,7 @@
 @string{aps = {American Physical Society,}}
 
 @article{lu2025optmath,
-  abbr={ICML},
+  abbr={ICML 2025},
   title={OptMATH: A Scalable Bidirectional Data Synthesis Framework for Optimization Modeling},
   author={Hongliang Lu* and Zhonglin Xie* and Yaoyu Wu and Can Ren 
           and Yuxuan Chen and Zaiwen Wen},
@@ -18,23 +18,39 @@
   poster={optmath_poster.pdf},
   slides={optmath_slides.pdf},
   selected={true},
-  bibtex_show={true},
-  abstract={A novel framework for optimization modeling using bidirectional data synthesis to enhance mathematical optimization capabilities of large language models.},
+  abstract={Despite the rapid development of large language models (LLMs), a fundamental challenge persists: the lack of high-quality optimization modeling datasets hampers LLMs’ robust modeling of practical optimization problems from natural language descriptions (NL). This data scarcity also contributes to the generalization difficulties experienced by learning-based methods. To address these challenges, we propose a scalable framework for synthesizing a high-quality dataset, named OptMATH. Starting from curated seed data with mathematical formulations (MF), this framework automatically generates problem data (PD) with controllable complexity. Then, a backtranslation step is employed to obtain NL. To verify the correspondence between the NL and the PD, a forward modeling step followed by rejection sampling is used. The accepted pairs constitute the training part of OptMATH. Then a collection of rejected pairs is identified and further filtered. This collection serves as a new benchmark for optimization modeling, containing difficult instances whose lengths are much longer than these of NL4OPT and MAMO. Through extensive experiments, we demonstrate that models of various sizes (0.5B-32B parameters) trained on OptMATH achieve superior results on multiple modeling benchmarks, thereby validating the effectiveness and scalability of our approach.},
   preview={optmath_pipeline.png},
   annotation={* Equal contribution}
 }
 
 @article{lu2026searchselfplay,
-  abbr={ICLR},
+  abbr={ArXiv},
   title={Search Self-Play: Pushing the Frontier of Agent Capability without Supervision},
   author={Hongliang Lu* and Yuhang Wen* and Pengyu Cheng and Ruijin Ding and Haotian Xu 
           and Jiaqi Guo and Chutian Wang and Haonan Chen and Xiaoxi Jiang and Guanjun Jiang},
   journal={Under Review at International Conference on Learning Representations},
   year={2026},
-  publisher={ICLR},
+  publisher={ArXiv},
+  url={http://arxiv.org/abs/2510.18821},
+  arxiv={2510.18821},
+  code={https://github.com/Alibaba-Quark/SSP},
   selected={true},
-  bibtex_show={true},
-  abstract={A pioneering self-play methodology for enhancing LLM agent capabilities without traditional supervision, achieving significant improvements on multiple benchmarks.},
+  abstract={Reinforcement learning with verifiable rewards (RLVR) has become the mainstream technique for training
+LLM agents. However, RLVR highly depends on well-crafted task queries and corresponding groundtruth answers to provide accurate rewards, which requires massive human efforts and hinders the RL
+scaling processes, especially under agentic scenarios. Although a few recent works explore task synthesis
+methods, the difficulty of generated agentic tasks can hardly be controlled to provide effective RL training
+advantages. To achieve agentic RLVR with higher scalability, we explore self-play training for deep search
+agents, in which the learning LLM utilizes multi-turn search engine calling and acts simultaneously as
+both a task proposer and a problem solver. The task proposer aims to generate deep search queries with
+well-defined ground-truth answers and increasing task difficulty. The problem solver tries to handle the
+generated search queries and output the correct answer predictions. To ensure that each generated search
+query has accurate ground truth, we collect all the searching results from the proposer’s trajectory as
+external knowledge, then conduct retrieval-augmentation generation (RAG) to test whether the proposed
+query can be correctly answered with all necessary search documents provided. In this search self-play
+(SSP) game, the proposer and the solver co-evolve their agent capabilities through both competition and
+cooperation. With substantial experimental results, we find that SSP can significantly improve search
+agents’ performance uniformly on various benchmarks without any supervision under both from-scratch
+and continuous RL training setups.},
   note={Under Review},
   preview={ssp_pipeline.png},
   annotation={* Equal contribution}
