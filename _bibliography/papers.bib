@@ -3,26 +3,6 @@
 
 @string{aps = {American Physical Society,}}
 
-@article{lu2025optmath,
-  abbr={ICML 2025},
-  title={OptMATH: A Scalable Bidirectional Data Synthesis Framework for Optimization Modeling},
-  author={Hongliang Lu* and Zhonglin Xie* and Yaoyu Wu and Can Ren 
-          and Yuxuan Chen and Zaiwen Wen},
-  journal={Forty-Second International Conference on Machine Learning},
-  year={2025},
-  publisher={ICML},
-  url={https://arxiv.org/abs/2502.11102},
-  arxiv={2502.11102},
-  code={https://github.com/optsuite/OptMATH},
-  website={https://AuroraLHL.github.io/assets/projects/optmath/},
-  poster={optmath_poster.pdf},
-  slides={optmath_slides.pdf},
-  selected={true},
-  abstract={Despite the rapid development of large language models (LLMs), a fundamental challenge persists: the lack of high-quality optimization modeling datasets hampers LLMs’ robust modeling of practical optimization problems from natural language descriptions (NL). This data scarcity also contributes to the generalization difficulties experienced by learning-based methods. To address these challenges, we propose a scalable framework for synthesizing a high-quality dataset, named OptMATH. Starting from curated seed data with mathematical formulations (MF), this framework automatically generates problem data (PD) with controllable complexity. Then, a backtranslation step is employed to obtain NL. To verify the correspondence between the NL and the PD, a forward modeling step followed by rejection sampling is used. The accepted pairs constitute the training part of OptMATH. Then a collection of rejected pairs is identified and further filtered. This collection serves as a new benchmark for optimization modeling, containing difficult instances whose lengths are much longer than these of NL4OPT and MAMO. Through extensive experiments, we demonstrate that models of various sizes (0.5B-32B parameters) trained on OptMATH achieve superior results on multiple modeling benchmarks, thereby validating the effectiveness and scalability of our approach.},
-  preview={optmath_pipeline.png},
-  annotation={* Equal contribution}
-}
-
 @article{lu2026searchselfplay,
   abbr={ICLR 2026},
   title={Search Self-Play: Pushing the Frontier of Agent Capability without Supervision},
@@ -54,3 +34,25 @@ and continuous RL training setups.},
   preview={ssp_pipeline.png},
   annotation={* Equal contribution}
 }
+
+
+@article{lu2025optmath,
+  abbr={ICML 2025},
+  title={OptMATH: A Scalable Bidirectional Data Synthesis Framework for Optimization Modeling},
+  author={Hongliang Lu* and Zhonglin Xie* and Yaoyu Wu and Can Ren 
+          and Yuxuan Chen and Zaiwen Wen},
+  journal={Forty-Second International Conference on Machine Learning},
+  year={2025},
+  publisher={ICML},
+  url={https://arxiv.org/abs/2502.11102},
+  arxiv={2502.11102},
+  code={https://github.com/optsuite/OptMATH},
+  website={https://AuroraLHL.github.io/assets/projects/optmath/},
+  poster={optmath_poster.pdf},
+  slides={optmath_slides.pdf},
+  selected={true},
+  abstract={Despite the rapid development of large language models (LLMs), a fundamental challenge persists: the lack of high-quality optimization modeling datasets hampers LLMs’ robust modeling of practical optimization problems from natural language descriptions (NL). This data scarcity also contributes to the generalization difficulties experienced by learning-based methods. To address these challenges, we propose a scalable framework for synthesizing a high-quality dataset, named OptMATH. Starting from curated seed data with mathematical formulations (MF), this framework automatically generates problem data (PD) with controllable complexity. Then, a backtranslation step is employed to obtain NL. To verify the correspondence between the NL and the PD, a forward modeling step followed by rejection sampling is used. The accepted pairs constitute the training part of OptMATH. Then a collection of rejected pairs is identified and further filtered. This collection serves as a new benchmark for optimization modeling, containing difficult instances whose lengths are much longer than these of NL4OPT and MAMO. Through extensive experiments, we demonstrate that models of various sizes (0.5B-32B parameters) trained on OptMATH achieve superior results on multiple modeling benchmarks, thereby validating the effectiveness and scalability of our approach.},
+  preview={optmath_pipeline.png},
+  annotation={* Equal contribution}
+}
+
