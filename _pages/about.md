@@ -1,7 +1,7 @@
 <!--
  * @Author: LHL
  * @Date: 2025-10-14 23:08:16
- * @LastEditTime: 2026-01-30 21:26:06
+ * @LastEditTime: 2026-01-31 12:16:45
  * @FilePath: /AuroraLHL.github.io/_pages/about.md
 -->
 
@@ -11,7 +11,7 @@ layout: about
 title: about
 permalink: /
 
-# subtitle: <a href='https://www.pku.edu.cn/'>Peking University</a>. Graduate Student. RL Algorithm Engineer.
+subtitle: <a href='https://www.pku.edu.cn/'>Peking University</a>. Graduate Student. RL Algorithm Engineer.
 
 profile:
 align: right
