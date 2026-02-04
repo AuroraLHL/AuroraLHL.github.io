@@ -5,7 +5,7 @@
 title: blank # the website title (if blank, full name will be used instead)
 first_name: Hongliang
 middle_name:
-last_name: Lu
+last_name: Lu(卢红亮)
 contact_note: >
   Feel free to reach out via email for collaborations or discussions on Agentic RL, WebAgent systems, Self-Play training, and LLM agent capabilities.
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
