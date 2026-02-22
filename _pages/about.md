@@ -31,7 +31,7 @@ My research centers on the synergy between Reinforcement Learning and Large Lang
 
 - **RL for LLMs**: Developing data-efficient reinforcement learning algorithms to enhance post-training effectiveness, aiming to improve model performance and alignment with human preferences;
 
-- **Agentic RL**: Designing novel RL methods to advance autonomous agent capabilities, with a particular emphasis on self-play mechanisms that push the boundaries of agent performance through adversarial and self-improvement training;
+- **Agentic RL**: Designing novel RL methods to advance autonomous agent capabilities, with a particular emphasis on self-evolving mechanisms that push the boundaries of agent performance through continuous self-improvement and autonomous capability scaling;
 
 - **LLMs for Optimization**: Leveraging the reasoning capabilities of large language models to tackle complex optimization modeling and decision-making problems.
 
