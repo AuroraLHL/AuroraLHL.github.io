@@ -1219,7 +1219,7 @@ nav[data-toggle="toc"] {
     .toc-sidebar-aside {
       position: fixed;
       top: 5rem;
-      left: calc((100vw - #{$max-content-width}) / 2 + 15px - 10rem - 0.75rem);
+      left: calc(50vw - #{($max-content-width * 0.5) - 15px} - #{10rem + 0.75rem});
       width: 10rem;
       max-height: calc(100vh - 6rem);
       overflow-y: auto;
