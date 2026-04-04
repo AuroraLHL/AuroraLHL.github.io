@@ -1200,6 +1200,48 @@ nav[data-toggle="toc"] {
 
 #toc-sidebar {
   z-index: 1;
+
+  > ul.nav > li.toc-expanded > ul.nav {
+    display: block;
+  }
+}
+
+.toc-sidebar-layout-left {
+  position: relative;
+
+  .toc-sidebar-main {
+    min-width: 0;
+  }
+}
+
+@media (min-width: 1200px) {
+  .toc-sidebar-layout-left {
+    .toc-sidebar-aside {
+      position: fixed;
+      top: 5rem;
+      left: calc((100vw - #{$max-content-width}) / 2 + 15px - 10rem - 0.75rem);
+      width: 10rem;
+      max-height: calc(100vh - 6rem);
+      overflow-y: auto;
+    }
+
+    #toc-sidebar.sticky-top {
+      position: static;
+      top: auto;
+    }
+
+    #toc-sidebar {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .toc-sidebar-layout-left {
+    .toc-sidebar-aside {
+      display: none;
+    }
+  }
 }
 
 .echarts {

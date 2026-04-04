@@ -33,13 +33,11 @@
             </div>
           </div>
         {% else %}
-          <div class="row">
-            <!-- sidebar, which will move to the top on a small screen -->
-            <div class="col-sm-3">
+          <div class="toc-sidebar-layout toc-sidebar-layout-left">
+            <div class="toc-sidebar-main">{{ content }}</div>
+            <aside class="toc-sidebar-aside" aria-label="Table of contents">
               <nav id="toc-sidebar" class="sticky-top"></nav>
-            </div>
-            <!-- main content area -->
-            <div class="col-sm-9">{{ content }}</div>
+            </aside>
           </div>
         {% endif %}
       {% else %}
