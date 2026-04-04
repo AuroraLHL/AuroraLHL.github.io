@@ -599,8 +599,8 @@ body.blog-ledger-page .container[role="main"] {
 
 .blog-hero__panel {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(250px, 0.72fr);
-  gap: 2.25rem;
+  grid-template-columns: minmax(0, 1.55fr) minmax(210px, 0.58fr);
+  gap: 1.9rem;
   align-items: start;
   padding: 1.7rem 1.8rem;
   border: 1px solid var(--blog-border);
@@ -624,7 +624,7 @@ body.blog-ledger-page .container[role="main"] {
 .blog-hero__title {
   margin-bottom: 0.85rem;
   color: var(--blog-title);
-  font-family: "Roboto Slab", serif;
+  font-family: var(--font-editorial-display);
   font-size: clamp(3.15rem, 6vw, 5.4rem);
   line-height: 0.95;
   letter-spacing: -0.03em;
@@ -639,7 +639,10 @@ body.blog-ledger-page .container[role="main"] {
 }
 
 .blog-hero__ledger {
-  padding: 1.1rem 1.15rem;
+  width: 100%;
+  max-width: 224px;
+  justify-self: end;
+  padding: 0.9rem 0.95rem;
   border: 1px solid var(--blog-border);
   border-radius: 1rem;
   background: #ffffff;
@@ -772,7 +775,7 @@ body.blog-ledger-page .container[role="main"] {
 .blog-lead__title {
   margin-bottom: 1rem;
   color: var(--blog-title);
-  font-family: "Roboto Slab", serif;
+  font-family: var(--font-editorial-display);
   font-size: clamp(2.15rem, 4vw, 3.4rem);
   line-height: 1.02;
   letter-spacing: -0.025em;
@@ -906,7 +909,7 @@ body.blog-ledger-page .container[role="main"] {
   h2 {
     margin-bottom: 0;
     color: var(--blog-title);
-    font-family: "Roboto Slab", serif;
+    font-family: var(--font-editorial-display);
     font-size: 1.55rem;
   }
 }
@@ -966,7 +969,7 @@ body.blog-ledger-page .container[role="main"] {
 
   .post-list__day {
     color: var(--blog-title);
-    font-family: "Roboto Slab", serif;
+    font-family: var(--font-editorial-display);
     font-size: 1.75rem;
     line-height: 1;
   }
@@ -989,7 +992,7 @@ body.blog-ledger-page .container[role="main"] {
   .post-list__title {
     margin-bottom: 0.7rem;
     color: var(--blog-title);
-    font-family: "Roboto Slab", serif;
+    font-family: var(--font-editorial-display);
     font-size: 1.8rem;
     line-height: 1.12;
     letter-spacing: -0.02em;

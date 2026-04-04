@@ -2,10 +2,16 @@
  * Content
  ******************************************************************************/
 
+:root {
+  --font-editorial-text: "Source Serif 4", "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", serif;
+  --font-editorial-display: "Cormorant Garamond", "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", serif;
+}
+
 body {
   padding-bottom: 70px;
   color: var(--global-text-color);
   background-color: var(--global-bg-color);
+  font-family: var(--font-editorial-text);
 
   h1,
   h2,
@@ -14,6 +20,8 @@ body {
   h5,
   h6 {
     scroll-margin-top: 66px;
+    font-family: var(--font-editorial-display);
+    font-weight: 600;
   }
 }
 
