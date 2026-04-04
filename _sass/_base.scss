@@ -920,6 +920,46 @@ html.transition *:after {
       max-width: 100%;
       height: auto;
     }
+
+    .figure-note {
+      margin-top: -0.35rem;
+      margin-bottom: 1.5rem;
+      color: var(--global-text-color-light);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      margin: 1.5rem 0;
+      border-collapse: collapse;
+      border-top: 1px solid var(--global-divider-color);
+      border-bottom: 1px solid var(--global-divider-color);
+    }
+
+    thead tr {
+      border-bottom: 2px solid var(--global-divider-color);
+    }
+
+    tbody tr + tr {
+      border-top: 1px solid var(--global-divider-color);
+    }
+
+    th,
+    td {
+      padding: 0.65rem 0.9rem;
+      vertical-align: top;
+    }
+
+    @media (max-width: 768px) {
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
   }
 
   .post-meta {

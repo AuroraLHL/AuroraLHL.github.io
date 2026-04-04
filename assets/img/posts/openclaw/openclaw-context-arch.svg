@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="560" viewBox="0 0 860 560">
+  <defs>
+    <style>
+      text { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .title  { font-size: 20px; font-weight: 700; fill: #16324f; }
+      .tag    { font-size: 12px; font-weight: 700; fill: #fff; }
+      .bhead  { font-size: 14px; font-weight: 600; fill: #16324f; }
+      .bsub   { font-size: 11px; fill: #38556f; }
+      .albl   { font-size: 11px; fill: #38556f; }
+      .note   { font-size: 10px; fill: #888; }
+      .fhead  { font-size: 12px; font-weight: 600; fill: #16324f; }
+      .fsub   { font-size: 10px; fill: #555; }
+      .warn   { font-size: 10px; fill: #c0392b; }
+    </style>
+    <marker id="a" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#24507a"/>
+    </marker>
+    <marker id="ag" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#27ae60"/>
+    </marker>
+    <marker id="ao" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#e67e22"/>
+    </marker>
+  </defs>
+
+  <!-- 背景 -->
+  <rect x="0" y="0" width="860" height="560" rx="10" fill="#f7fbff"/>
+  <text x="430" y="40" text-anchor="middle" class="title">OpenClaw Context 架构</text>
+
+  <!-- ===== 左侧：Workspace 区域 ===== -->
+  <rect x="20" y="60" width="230" height="420" rx="14" fill="#fff8e1" stroke="#f0a500" stroke-width="2" stroke-dasharray="7,4"/>
+  <rect x="36" y="50" width="160" height="22" rx="6" fill="#f0a500"/>
+  <text x="116" y="65" text-anchor="middle" class="tag">Workspace（磁盘）</text>
+
+  <!-- 每次注入的文件 -->
+  <rect x="36" y="82" width="198" height="148" rx="10" fill="#fff3cd" stroke="#f0a500" stroke-width="1.5"/>
+  <text x="135" y="100" text-anchor="middle" class="fhead">每次自动注入</text>
+  <text x="50" y="118" class="fsub">AGENTS.md   SOUL.md</text>
+  <text x="50" y="134" class="fsub">TOOLS.md    IDENTITY.md</text>
+  <text x="50" y="150" class="fsub">USER.md     HEARTBEAT.md</text>
+  <text x="50" y="166" class="fsub">BOOTSTRAP.md（首次）</text>
+  <text x="50" y="186" class="warn">⚠ 超 20000 chars 截断</text>
+  <text x="50" y="200" class="warn">⚠ 总上限 150000 chars</text>
+  <text x="50" y="218" class="warn">⚠ 持续占用 context window</text>
+
+  <!-- 按需读取的文件 -->
+  <rect x="36" y="244" width="198" height="100" rx="10" fill="#fef9ec" stroke="#f0a500" stroke-width="1.5"/>
+  <text x="135" y="262" text-anchor="middle" class="fhead">按需读取</text>
+  <text x="50" y="280" class="fsub">memory/YYYY-MM-DD.md</text>
+  <text x="50" y="296" class="fsub">MEMORY.md（仅主会话）</text>
+  <text x="50" y="312" class="fsub">skills/SKILL.md（用到时读）</text>
+  <text x="50" y="328" class="fsub">其他工作区文件</text>
+
+  <!-- 不在 workspace 的 -->
+  <rect x="36" y="358" width="198" height="100" rx="10" fill="#fce8e8" stroke="#c0392b" stroke-width="1.5"/>
+  <text x="135" y="376" text-anchor="middle" class="fhead">不在 Workspace</text>
+  <text x="50" y="394" class="fsub">openclaw.json（配置）</text>
+  <text x="50" y="410" class="fsub">credentials/（密钥）</text>
+  <text x="50" y="426" class="fsub">agents/sessions/（会话记录）</text>
+  <text x="50" y="442" class="warn">⚠ 不要混淆，不要提交到 git</text>
+
+  <!-- ===== 中间：Context Window ===== -->
+  <rect x="290" y="60" width="280" height="420" rx="14" fill="#eaf4ff" stroke="#24507a" stroke-width="2"/>
+  <rect x="306" y="50" width="200" height="22" rx="6" fill="#24507a"/>
+  <text x="406" y="65" text-anchor="middle" class="tag">Context Window（送给模型）</text>
+
+  <!-- System Prompt -->
+  <rect x="306" y="82" width="248" height="180" rx="10" fill="#fff0b3" stroke="#f0a500" stroke-width="1.5"/>
+  <text x="430" y="100" text-anchor="middle" class="fhead">System Prompt（OpenClaw 组装）</text>
+  <text x="316" y="118" class="fsub">• Tooling：工具列表 + schema</text>
+  <text x="316" y="134" class="fsub">• Safety：行为约束</text>
+  <text x="316" y="150" class="fsub">• Skills 清单（仅路径，按需加载）</text>
+  <text x="316" y="166" class="fsub">• Workspace / Documentation</text>
+  <text x="316" y="182" class="fsub">• Runtime / 时区 / 推理可见性</text>
+  <text x="316" y="198" class="fsub">• Project Context（注入的 bootstrap 文件）</text>
+  <text x="316" y="218" class="fsub">• systemPromptAddition（引擎注入）</text>
+  <text x="316" y="238" class="fsub">• Sandbox / Heartbeats / Reply Tags</text>
+
+  <!-- 会话历史 -->
+  <rect x="306" y="276" width="248" height="90" rx="10" fill="#e6f4ff" stroke="#24507a" stroke-width="1.5"/>
+  <text x="430" y="294" text-anchor="middle" class="fhead">会话历史</text>
+  <text x="316" y="312" class="fsub">用户消息 + 助手回复</text>
+  <text x="316" y="328" class="fsub">compaction summary（压缩后的摘要）</text>
+  <text x="316" y="344" class="fsub">pruning（旧 tool result 内存裁剪）</text>
+
+  <!-- 工具调用 -->
+  <rect x="306" y="380" width="248" height="80" rx="10" fill="#f4ecff" stroke="#24507a" stroke-width="1.5"/>
+  <text x="430" y="398" text-anchor="middle" class="fhead">工具调用 / 结果 / 附件</text>
+  <text x="316" y="416" class="fsub">exec 输出、文件读取</text>
+  <text x="316" y="432" class="fsub">图片 / 音频 / 文件附件</text>
+  <text x="316" y="448" class="fsub">tool schema（JSON，不可见但计 token）</text>
+
+  <!-- ===== 右侧：Context Engine ===== -->
+  <rect x="610" y="60" width="230" height="420" rx="14" fill="#eafbea" stroke="#27ae60" stroke-width="2" stroke-dasharray="7,4"/>
+  <rect x="626" y="50" width="180" height="22" rx="6" fill="#27ae60"/>
+  <text x="716" y="65" text-anchor="middle" class="tag">Context Engine（可插拔）</text>
+
+  <!-- 四个生命周期 -->
+  <rect x="626" y="82" width="198" height="200" rx="10" fill="#d5f5e3" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="725" y="100" text-anchor="middle" class="fhead">四个生命周期钩子</text>
+  <text x="636" y="120" class="fsub">① Ingest</text>
+  <text x="650" y="136" class="fsub">新消息进来时存储/索引</text>
+  <text x="636" y="156" class="fsub">② Assemble</text>
+  <text x="650" y="172" class="fsub">每次 run 前组装 context</text>
+  <text x="650" y="188" class="fsub">返回 messages + token 估算</text>
+  <text x="650" y="204" class="fsub">可注入 systemPromptAddition</text>
+  <text x="636" y="224" class="fsub">③ Compact</text>
+  <text x="650" y="240" class="fsub">窗口满时压缩历史</text>
+  <text x="636" y="260" class="fsub">④ After Turn</text>
+  <text x="650" y="276" class="fsub">run 结束后持久化/后台压缩</text>
+
+  <!-- 两种引擎 -->
+  <rect x="626" y="296" width="198" height="120" rx="10" fill="#eafbea" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="725" y="314" text-anchor="middle" class="fhead">内置 vs 插件引擎</text>
+  <text x="636" y="332" class="fsub">legacy（默认）</text>
+  <text x="650" y="348" class="fsub">直通，委托内置压缩</text>
+  <text x="636" y="368" class="fsub">plugin engine</text>
+  <text x="650" y="384" class="fsub">自定义组装 / 压缩策略</text>
+  <text x="650" y="400" class="fsub">ownsCompaction 控制谁管压缩</text>
+
+  <!-- 配置 + Memory 说明 -->
+  <rect x="626" y="430" width="198" height="40" rx="10" fill="#eafbea" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="725" y="448" text-anchor="middle" class="fhead">配置：plugins.slots.contextEngine</text>
+  <text x="636" y="462" class="fsub">= "legacy" | "plugin-id"</text>
+
+  <!-- ===== 箭头 ===== -->
+  <!-- Workspace 自动注入 → System Prompt -->
+  <line x1="234" y1="156" x2="306" y2="156" stroke="#f0a500" stroke-width="2" marker-end="url(#ao)"/>
+  <text x="240" y="148" class="albl" fill="#e67e22">自动注入</text>
+
+  <!-- Workspace 按需读取 → 会话历史区 -->
+  <line x1="234" y1="294" x2="306" y2="310" stroke="#24507a" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#a)"/>
+  <text x="238" y="286" class="albl">按需读取</text>
+
+  <!-- Context Engine Assemble → Context Window -->
+  <line x1="610" y1="188" x2="554" y2="188" stroke="#27ae60" stroke-width="2" marker-end="url(#ag)"/>
+  <text x="556" y="180" class="albl" fill="#27ae60">assemble</text>
+
+  <!-- Context Engine systemPromptAddition → System Prompt -->
+  <line x1="610" y1="218" x2="554" y2="218" stroke="#27ae60" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ag)"/>
+
+  <!-- 底部注释 -->
+  <text x="430" y="530" text-anchor="middle" class="note">Context = System Prompt + 会话历史 + 工具调用结果，受模型 context window 限制。Context Engine 控制如何组装和压缩。</text>
+</svg>

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="860" viewBox="0 0 1400 860">
+  <defs>
+    <style>
+      text { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .title { font-size: 34px; font-weight: 700; fill: #17324f; }
+      .label { font-size: 22px; font-weight: 700; fill: #17324f; }
+      .body { font-size: 18px; fill: #2f4b65; }
+      .small { font-size: 16px; fill: #45627b; }
+      .box { stroke: #25557d; stroke-width: 2.5; rx: 18; ry: 18; }
+      .line { stroke: #25557d; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+      .dash { stroke-dasharray: 10 8; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#25557d"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="860" fill="#fbfcfe"/>
+  <text x="700" y="60" text-anchor="middle" class="title">Hermes Research and Training Stack</text>
+
+  <rect x="70" y="130" width="250" height="150" class="box" fill="#e6f4ff"/>
+  <text x="195" y="178" text-anchor="middle" class="label">Live Agent Runtime</text>
+  <text x="195" y="214" text-anchor="middle" class="body">real user tasks</text>
+  <text x="195" y="246" text-anchor="middle" class="body">tool calls and outcomes</text>
+
+  <rect x="390" y="110" width="290" height="190" class="box" fill="#eef8ec"/>
+  <text x="535" y="160" text-anchor="middle" class="label">Trajectory Capture</text>
+  <text x="535" y="196" text-anchor="middle" class="body">run_agent + batch_runner</text>
+  <text x="535" y="228" text-anchor="middle" class="body">save conversations, tool traces, reasoning</text>
+  <text x="535" y="260" text-anchor="middle" class="small">raw data for replay, SFT, and eval</text>
+
+  <rect x="760" y="110" width="280" height="190" class="box" fill="#fff6db"/>
+  <text x="900" y="160" text-anchor="middle" class="label">Compression / Curation</text>
+  <text x="900" y="196" text-anchor="middle" class="body">trajectory_compressor</text>
+  <text x="900" y="228" text-anchor="middle" class="body">filtering, cost reduction, training format</text>
+  <text x="900" y="260" text-anchor="middle" class="small">the most mature part of the research stack</text>
+
+  <rect x="1110" y="110" width="220" height="190" class="box" fill="#fcebea"/>
+  <text x="1220" y="160" text-anchor="middle" class="label">Training Targets</text>
+  <text x="1220" y="196" text-anchor="middle" class="body">SFT datasets</text>
+  <text x="1220" y="228" text-anchor="middle" class="body">judge signals</text>
+  <text x="1220" y="260" text-anchor="middle" class="body">RL rollouts</text>
+
+  <rect x="130" y="430" width="300" height="180" class="box" fill="#f4ecff"/>
+  <text x="280" y="478" text-anchor="middle" class="label">Benchmarks</text>
+  <text x="280" y="514" text-anchor="middle" class="body">TerminalBench2 / TBLite</text>
+  <text x="280" y="546" text-anchor="middle" class="body">YC-Bench / SWE-style envs</text>
+  <text x="280" y="578" text-anchor="middle" class="small">evaluate agentic capability</text>
+
+  <rect x="550" y="410" width="300" height="220" class="box" fill="#ffffff"/>
+  <text x="700" y="458" text-anchor="middle" class="label">Hermes Environments</text>
+  <text x="700" y="494" text-anchor="middle" class="body">HermesAgentBaseEnv</text>
+  <text x="700" y="526" text-anchor="middle" class="body">tool-call parsers</text>
+  <text x="700" y="558" text-anchor="middle" class="body">ToolContext + terminal backends</text>
+  <text x="700" y="594" text-anchor="middle" class="small">bridge between agent runtime and Atropos-style training/eval</text>
+
+  <rect x="970" y="410" width="300" height="220" class="box" fill="#eef2ff"/>
+  <text x="1120" y="458" text-anchor="middle" class="label">RL Orchestration</text>
+  <text x="1120" y="494" text-anchor="middle" class="body">Atropos + Tinker</text>
+  <text x="1120" y="526" text-anchor="middle" class="body">trainer / API / environment process</text>
+  <text x="1120" y="558" text-anchor="middle" class="body">W&amp;B + external infra</text>
+  <text x="1120" y="594" text-anchor="middle" class="small">real but more optional and dependency-heavy</text>
+
+  <rect x="500" y="710" width="400" height="95" class="box" fill="#ffffff"/>
+  <text x="700" y="748" text-anchor="middle" class="label">Updated Policy / New Data</text>
+  <text x="700" y="778" text-anchor="middle" class="small">fed back into eval, deployment, or another round of data generation</text>
+
+  <path class="line" d="M 320 205 L 390 205"/>
+  <path class="line" d="M 680 205 L 760 205"/>
+  <path class="line" d="M 1040 205 L 1110 205"/>
+  <path class="line" d="M 535 300 L 535 370 L 700 370 L 700 410"/>
+  <path class="line" d="M 900 300 L 900 360 L 1120 360 L 1120 410"/>
+  <path class="line" d="M 280 430 L 550 520"/>
+  <path class="line" d="M 850 520 L 970 520"/>
+  <path class="line dash" d="M 1120 630 L 1120 675 L 860 675 L 860 710"/>
+  <path class="line dash" d="M 700 630 L 700 710"/>
+  <path class="line dash" d="M 500 758 L 240 758 L 240 610"/>
+
+  <text x="700" y="835" text-anchor="middle" class="small">Hermes is unusual because the product runtime and the research runtime share a repo.</text>
+  <text x="700" y="810" text-anchor="middle" class="small">Trajectory capture and environment/eval tooling are already substantial; full RL training exists, but depends more heavily on external components.</text>
+</svg>

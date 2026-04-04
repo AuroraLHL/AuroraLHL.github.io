@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="720" viewBox="0 0 1100 720">
+  <defs>
+    <style>
+      text { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .title  { font-size: 20px; font-weight: 700; fill: #16324f; }
+      .lane   { font-size: 13px; font-weight: 700; fill: #fff; }
+      .phase  { font-size: 10px; font-weight: 700; font-style: italic; }
+      .step   { font-size: 12px; font-weight: 600; fill: #16324f; }
+      .desc   { font-size: 11px; fill: #445; }
+      .lbl    { font-size: 10px; fill: #333; }
+      .foot   { font-size: 10px; fill: #777; font-style: italic; }
+    </style>
+    <marker id="arrg" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0,8 3,0 6" fill="#27ae60"/>
+    </marker>
+    <marker id="arro" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0,8 3,0 6" fill="#e67e22"/>
+    </marker>
+    <marker id="arrb" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0,8 3,0 6" fill="#2980b9"/>
+    </marker>
+    <marker id="arrd" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0,8 3,0 6" fill="#aaa"/>
+    </marker>
+  </defs>
+
+  <rect width="1100" height="720" fill="#f8fafd"/>
+  <text x="550" y="32" text-anchor="middle" class="title">OpenClaw Memory 系统 — 时序泳道图</text>
+
+  <!-- 泳道背景 col1:0-180 col2:180-440 col3:440-700 col4:700-1100 -->
+  <rect x="0"   y="44" width="180" height="580" fill="#e8f4fd"/>
+  <rect x="180" y="44" width="260" height="580" fill="#eaf7ee"/>
+  <rect x="440" y="44" width="260" height="580" fill="#fff8e1"/>
+  <rect x="700" y="44" width="400" height="580" fill="#eef2ff"/>
+
+  <!-- 泳道标题 -->
+  <rect x="0"   y="44" width="180" height="34" fill="#5b8db8"/>
+  <text x="90"  y="66" text-anchor="middle" class="lane">用户 / 对话</text>
+  <rect x="180" y="44" width="260" height="34" fill="#27ae60"/>
+  <text x="310" y="66" text-anchor="middle" class="lane">Agent（LLM）</text>
+  <rect x="440" y="44" width="260" height="34" fill="#e6950a"/>
+  <text x="570" y="66" text-anchor="middle" class="lane">磁盘记忆文件</text>
+  <rect x="700" y="44" width="400" height="34" fill="#2980b9"/>
+  <text x="900" y="66" text-anchor="middle" class="lane">Memory 检索引擎（builtin / qmd）</text>
+
+  <!-- 分隔线 -->
+  <line x1="180" y1="44" x2="180" y2="624" stroke="#bbb" stroke-width="1"/>
+  <line x1="440" y1="44" x2="440" y2="624" stroke="#bbb" stroke-width="1"/>
+  <line x1="700" y1="44" x2="700" y2="624" stroke="#bbb" stroke-width="1"/>
+
+  <!-- ── 阶段A：Session 启动（注入流）── -->
+  <rect x="0" y="88" width="1100" height="18" fill="#fde8c8" opacity="0.9"/>
+  <text x="8" y="101" class="phase" fill="#b7600a">阶段 A：Session 启动 — 注入流（橙色箭头）</text>
+
+  <rect x="448" y="112" width="244" height="42" rx="6" fill="#fff3cd" stroke="#e6950a" stroke-width="2"/>
+  <text x="570" y="130" text-anchor="middle" class="step">读取记忆文件</text>
+  <text x="570" y="145" text-anchor="middle" class="desc">MEMORY.md + memory/今天.md + 昨天.md</text>
+
+  <line x1="448" y1="133" x2="441" y2="133" stroke="#e67e22" stroke-width="2.5" marker-end="url(#arro)"/>
+  <text x="444" y="127" text-anchor="end" class="lbl" fill="#e67e22">注入</text>
+
+  <rect x="188" y="112" width="244" height="42" rx="6" fill="#d5f5e3" stroke="#27ae60" stroke-width="2"/>
+  <text x="310" y="130" text-anchor="middle" class="step">写入 System Prompt</text>
+  <text x="310" y="145" text-anchor="middle" class="desc">Agent 启动即可见，无需主动调用</text>
+
+  <rect x="708" y="112" width="384" height="42" rx="6" fill="#ddeeff" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="900" y="130" text-anchor="middle" class="step">Chokidar 监听文件变更 → 触发索引同步</text>
+  <text x="900" y="145" text-anchor="middle" class="desc">Embedding Provider → SQLite（sqlite-vec + FTS5）</text>
+  <line x1="700" y1="133" x2="692" y2="133" stroke="#aaa" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrd)"/>
+
+  <!-- ── 阶段B：对话中写入（写入流）── -->
+  <rect x="0" y="168" width="1100" height="18" fill="#d5f5e3" opacity="0.9"/>
+  <text x="8" y="181" class="phase" fill="#1a7a40">阶段 B：对话中写入 — 写入流（绿色箭头）</text>
+
+  <rect x="8" y="196" width="164" height="42" rx="6" fill="#cce5ff" stroke="#5b8db8" stroke-width="1.5"/>
+  <text x="90" y="214" text-anchor="middle" class="step">用户说「记住这个」</text>
+  <text x="90" y="229" text-anchor="middle" class="desc">或 Agent 自主判断需要记录</text>
+  <line x1="172" y1="217" x2="188" y2="217" stroke="#27ae60" stroke-width="2" marker-end="url(#arrg)"/>
+
+  <rect x="188" y="196" width="244" height="42" rx="6" fill="#d5f5e3" stroke="#27ae60" stroke-width="2"/>
+  <text x="310" y="214" text-anchor="middle" class="step">调用文件写入工具</text>
+  <text x="310" y="229" text-anchor="middle" class="desc">write_file / edit_file 写入 MEMORY.md</text>
+  <line x1="432" y1="217" x2="448" y2="217" stroke="#27ae60" stroke-width="2.5" marker-end="url(#arrg)"/>
+  <text x="440" y="211" text-anchor="middle" class="lbl" fill="#27ae60">写入</text>
+
+  <rect x="448" y="196" width="244" height="42" rx="6" fill="#fff3cd" stroke="#e6950a" stroke-width="2.5"/>
+  <text x="570" y="214" text-anchor="middle" class="step" fill="#8a5000">MEMORY.md 更新</text>
+  <text x="570" y="229" text-anchor="middle" class="desc">长期精选记忆 · 决策 / 偏好 / 持久事实</text>
+
+  <!-- ── 阶段C：Memory Flush（写入流）── -->
+  <rect x="0" y="252" width="1100" height="18" fill="#d5f5e3" opacity="0.9"/>
+  <text x="8" y="265" class="phase" fill="#1a7a40">阶段 C：Memory Flush（压缩前自动写入）— 写入流（绿色箭头）</text>
+
+  <rect x="8" y="280" width="164" height="42" rx="6" fill="#fde8d8" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="90" y="298" text-anchor="middle" class="step">Context 接近上限</text>
+  <text x="90" y="313" text-anchor="middle" class="desc">OpenClaw 自动检测触发</text>
+  <line x1="172" y1="301" x2="188" y2="301" stroke="#27ae60" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrg)"/>
+  <text x="180" y="295" text-anchor="middle" class="lbl">静默触发</text>
+
+  <rect x="188" y="280" width="244" height="42" rx="6" fill="#d5f5e3" stroke="#27ae60" stroke-width="2"/>
+  <text x="310" y="298" text-anchor="middle" class="step">Memory Flush（静默 agentic turn）</text>
+  <text x="310" y="313" text-anchor="middle" class="desc">把重要信息写入日志，回复 NO_REPLY</text>
+  <line x1="432" y1="301" x2="448" y2="301" stroke="#27ae60" stroke-width="2.5" marker-end="url(#arrg)"/>
+  <text x="440" y="295" text-anchor="middle" class="lbl" fill="#27ae60">写入</text>
+
+  <rect x="448" y="280" width="244" height="42" rx="6" fill="#fff3cd" stroke="#e6950a" stroke-width="2.5"/>
+  <text x="570" y="298" text-anchor="middle" class="step" fill="#8a5000">memory/YYYY-MM-DD.md 追加</text>
+  <text x="570" y="313" text-anchor="middle" class="desc">每日日志 · append-only · 用户不可见</text>
+
+  <!-- ── 阶段D：主动检索（检索流）── -->
+  <rect x="0" y="336" width="1100" height="18" fill="#ddeeff" opacity="0.9"/>
+  <text x="8" y="349" class="phase" fill="#1a4a7a">阶段 D：Agent 主动检索 — 检索流（蓝色箭头）</text>
+
+  <rect x="188" y="364" width="244" height="42" rx="6" fill="#d5f5e3" stroke="#27ae60" stroke-width="2"/>
+  <text x="310" y="382" text-anchor="middle" class="step">调用 memory_search / memory_get</text>
+  <text x="310" y="397" text-anchor="middle" class="desc">按需检索，非自动注入</text>
+  <line x1="432" y1="378" x2="708" y2="378" stroke="#2980b9" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrb)"/>
+  <text x="570" y="372" text-anchor="middle" class="lbl" fill="#2980b9">查询请求</text>
+
+  <rect x="708" y="364" width="384" height="42" rx="6" fill="#ddeeff" stroke="#2980b9" stroke-width="2"/>
+  <text x="900" y="382" text-anchor="middle" class="step">混合检索（向量 + FTS5 BM25）</text>
+  <text x="900" y="397" text-anchor="middle" class="desc">mergeHybridResults → MMR 重排 → minScore 过滤</text>
+  <line x1="708" y1="394" x2="432" y2="410" stroke="#2980b9" stroke-width="2" marker-end="url(#arrb)"/>
+  <text x="570" y="424" text-anchor="middle" class="lbl" fill="#2980b9">返回 MemorySearchResult[]（path / snippet / score / source）</text>
+
+  <!-- ── 数据结构说明 ── -->
+  <rect x="0" y="432" width="1100" height="18" fill="#e8e8f0" opacity="0.8"/>
+  <text x="8" y="445" class="phase" fill="#333">关键数据结构 &amp; 配置</text>
+
+  <rect x="8" y="456" width="330" height="116" rx="8" fill="#fff8e1" stroke="#e6950a" stroke-width="1.5"/>
+  <text x="173" y="474" text-anchor="middle" class="step">磁盘记忆文件结构</text>
+  <text x="16" y="490" class="desc">workspace/</text>
+  <text x="16" y="506" class="desc">  MEMORY.md              ← 长期精选记忆（source: "memory"）</text>
+  <text x="16" y="522" class="desc">  memory/YYYY-MM-DD.md   ← 每日日志（source: "memory"）</text>
+  <text x="16" y="538" class="desc">  sessions/              ← Session 转录（source: "sessions"）</text>
+  <text x="16" y="554" class="desc" fill="#aaa">  （仅 qmd backend 支持 sessions source）</text>
+  <text x="16" y="566" class="desc" fill="#aaa">  启动注入：今天 + 昨天两个日志文件</text>
+
+  <rect x="350" y="456" width="370" height="116" rx="8" fill="#eef2ff" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="535" y="474" text-anchor="middle" class="step">MemorySearchManager 接口（两种实现）</text>
+  <text x="358" y="490" class="desc" font-weight="600">builtin（MemoryIndexManager）</text>
+  <text x="358" y="506" class="desc">  Chokidar 监听 → Embedding → SQLite（sqlite-vec + FTS5）</text>
+  <text x="358" y="522" class="desc">  未配置 Embedding 时退化为纯 FTS5 关键词检索</text>
+  <text x="358" y="538" class="desc" font-weight="600">qmd（QmdMemoryManager）</text>
+  <text x="358" y="554" class="desc">  外部 qmd CLI / mcporter 守护进程</text>
+  <text x="358" y="570" class="desc">  searchMode: query / search / vsearch</text>
+
+  <rect x="732" y="456" width="360" height="116" rx="8" fill="#f0fff4" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="912" y="474" text-anchor="middle" class="step">关键配置项</text>
+  <text x="740" y="490" class="desc">agents.defaults.memory.backend: "builtin" | "qmd"</text>
+  <text x="740" y="506" class="desc">agents.defaults.memory.sources: ["memory","sessions"]</text>
+  <text x="740" y="522" class="desc">compaction.memoryFlush.enabled: true</text>
+  <text x="740" y="538" class="desc">compaction.memoryFlush.softThresholdTokens: N</text>
+  <text x="740" y="554" class="desc">memorySearch.maxResults / minScore</text>
+  <text x="740" y="570" class="desc">memorySearch.vector.enabled / fts.enabled</text>
+
+  <!-- 图例 -->
+  <rect x="0" y="588" width="1100" height="52" fill="#eef4fb" stroke="#ccc" stroke-width="1"/>
+  <text x="8" y="606" class="phase" fill="#333">图例</text>
+  <line x1="8"  y1="626" x2="58"  y2="626" stroke="#27ae60" stroke-width="2.5" marker-end="url(#arrg)"/>
+  <text x="66"  y="630" class="desc">写入流：Agent 主动写入 / Memory Flush 自动触发</text>
+  <line x1="310" y1="626" x2="360" y2="626" stroke="#e67e22" stroke-width="2.5" marker-end="url(#arro)"/>
+  <text x="368" y="630" class="desc">注入流：Session 启动时自动注入 System Prompt（被动，无需 Agent 主动调用）</text>
+  <line x1="700" y1="626" x2="750" y2="626" stroke="#2980b9" stroke-width="2.5" marker-end="url(#arrb)"/>
+  <text x="758" y="630" class="desc">检索流：Agent 主动调用 memory_search / memory_get 按需检索</text>
+
+  <text x="550" y="656" text-anchor="middle" class="foot">MemorySource = "memory" | "sessions"  ·  workspaceAccess=ro 时 Memory Flush 跳过  ·  backend 由 agents.defaults.memory.backend 控制</text>
+</svg>

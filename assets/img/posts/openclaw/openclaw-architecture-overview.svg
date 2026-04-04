@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
+  <defs>
+    <style>
+      .title { font: 700 34px sans-serif; fill: #16324f; }
+      .label { font: 600 22px sans-serif; fill: #16324f; }
+      .body { font: 400 18px sans-serif; fill: #294661; }
+      .small { font: 400 16px sans-serif; fill: #38556f; }
+      .box { stroke: #24507a; stroke-width: 2.5; rx: 18; ry: 18; }
+      .line { stroke: #24507a; stroke-width: 3; stroke-linecap: round; fill: none; }
+      .arrowhead { fill: #24507a; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="900" fill="#f7fbff"/>
+  <text x="700" y="60" text-anchor="middle" class="title">OpenClaw Architecture Overview</text>
+
+  <rect x="70" y="120" width="250" height="240" class="box" fill="#e6f4ff"/>
+  <text x="195" y="165" text-anchor="middle" class="label">Channels</text>
+  <text x="195" y="205" text-anchor="middle" class="body">WhatsApp / Telegram</text>
+  <text x="195" y="237" text-anchor="middle" class="body">Discord / Slack / iMessage</text>
+  <text x="195" y="269" text-anchor="middle" class="body">Web UI / CLI / App</text>
+  <text x="195" y="320" text-anchor="middle" class="small">User-facing entry surfaces</text>
+
+  <rect x="370" y="100" width="660" height="310" class="box" fill="#fff6db"/>
+  <text x="700" y="145" text-anchor="middle" class="label">Gateway (control plane)</text>
+  <text x="700" y="185" text-anchor="middle" class="body">Session routing, auth, channels, pairing, automations</text>
+  <text x="700" y="217" text-anchor="middle" class="body">Control UI, websocket connections, long-lived state</text>
+
+  <rect x="425" y="250" width="240" height="115" class="box" fill="#ffffff"/>
+  <text x="545" y="292" text-anchor="middle" class="label">Sessions &amp; Memory</text>
+  <text x="545" y="325" text-anchor="middle" class="small">conversation state</text>
+  <text x="545" y="350" text-anchor="middle" class="small">MEMORY.md / daily notes</text>
+
+  <rect x="735" y="250" width="240" height="115" class="box" fill="#ffffff"/>
+  <text x="855" y="292" text-anchor="middle" class="label">Security &amp; Policy</text>
+  <text x="855" y="325" text-anchor="middle" class="small">approvals / allowlists</text>
+  <text x="855" y="350" text-anchor="middle" class="small">sandbox / trust boundaries</text>
+
+  <rect x="390" y="470" width="620" height="220" class="box" fill="#eafbea"/>
+  <text x="700" y="515" text-anchor="middle" class="label">Embedded Agent Runtime</text>
+  <text x="700" y="552" text-anchor="middle" class="body">model reasoning + tool use + serial agent loop</text>
+
+  <rect x="430" y="585" width="250" height="75" class="box" fill="#ffffff"/>
+  <text x="555" y="630" text-anchor="middle" class="small">Workspace</text>
+  <rect x="720" y="585" width="250" height="75" class="box" fill="#ffffff"/>
+  <text x="845" y="630" text-anchor="middle" class="small">Skill snapshot + system prompt</text>
+
+  <rect x="1090" y="115" width="240" height="150" class="box" fill="#f4ecff"/>
+  <text x="1210" y="160" text-anchor="middle" class="label">Providers</text>
+  <text x="1210" y="195" text-anchor="middle" class="body">OpenAI / Anthropic</text>
+  <text x="1210" y="227" text-anchor="middle" class="body">local or custom APIs</text>
+
+  <rect x="1080" y="325" width="250" height="175" class="box" fill="#fcebea"/>
+  <text x="1205" y="370" text-anchor="middle" class="label">External ACP Agents</text>
+  <text x="1205" y="405" text-anchor="middle" class="body">Claude Code</text>
+  <text x="1205" y="437" text-anchor="middle" class="body">Codex / Gemini CLI / Pi</text>
+  <text x="1205" y="470" text-anchor="middle" class="small">optional delegated runtimes</text>
+
+  <rect x="80" y="470" width="250" height="220" class="box" fill="#eef6ee"/>
+  <text x="205" y="515" text-anchor="middle" class="label">Tools / Plugins / Skills</text>
+  <text x="205" y="552" text-anchor="middle" class="body">exec / browser / files</text>
+  <text x="205" y="584" text-anchor="middle" class="body">web / canvas / nodes</text>
+  <text x="205" y="616" text-anchor="middle" class="body">SKILL.md + plugin packages</text>
+
+  <rect x="1090" y="560" width="240" height="150" class="box" fill="#e9f0ff"/>
+  <text x="1210" y="605" text-anchor="middle" class="label">Nodes &amp; Devices</text>
+  <text x="1210" y="640" text-anchor="middle" class="body">desktop / mobile / camera</text>
+  <text x="1210" y="672" text-anchor="middle" class="body">notifications / browser</text>
+
+  <path class="line" d="M 320 240 L 362 240"/>
+  <polygon class="arrowhead" points="362,240 350,234 350,246"/>
+  <path class="line" d="M 1090 190 L 1040 190"/>
+  <polygon class="arrowhead" points="1040,190 1052,184 1052,196"/>
+  <path class="line" d="M 700 410 L 700 462"/>
+  <polygon class="arrowhead" points="700,462 694,450 706,450"/>
+  <path class="line" d="M 330 580 L 382 580"/>
+  <polygon class="arrowhead" points="382,580 370,574 370,586"/>
+  <path class="line" d="M 1030 335 L 1060 335 L 1060 412 L 1072 412"/>
+  <polygon class="arrowhead" points="1072,412 1060,406 1060,418"/>
+  <path class="line" d="M 1090 635 L 1068 635 L 1068 390 L 1038 390"/>
+  <polygon class="arrowhead" points="1038,390 1050,384 1050,396"/>
+
+  <text x="700" y="810" text-anchor="middle" class="small">High-level summary based on official OpenClaw docs: channels and devices connect to a long-lived gateway,</text>
+  <text x="700" y="836" text-anchor="middle" class="small">which orchestrates sessions, memory, policy, and agent runtimes across tools, providers, and optional external coding agents.</text>
+</svg>
