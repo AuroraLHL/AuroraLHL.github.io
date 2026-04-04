@@ -941,7 +941,9 @@ body.blog-ledger-page .container[role="main"] {
   .blog-side-rail {
     position: fixed;
     top: 5.35rem;
-    left: calc(50vw + #{($max-content-width * 0.5) - 15px} + 1.75rem);
+    // Avoid calc(+/-): the production minifier strips required spaces and breaks parsing.
+    left: 50vw;
+    margin-left: #{($max-content-width * 0.5) - 15px + 28px};
     width: 11.25rem;
     max-height: calc(100vh - 6.5rem);
     overflow-y: auto;
