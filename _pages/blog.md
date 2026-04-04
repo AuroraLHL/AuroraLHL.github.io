@@ -25,156 +25,66 @@ pagination:
 {% assign postlist = site.posts %}
 {% endif %}
 
-{% assign featured_in_page = postlist | where_exp: "post", "post.featured == true" %}
-{% assign lead_post = featured_in_page | first %}
-{% if lead_post == nil %}
-{% assign lead_post = postlist | first %}
-{% endif %}
-
-{% assign is_paginated_index = false %}
-{% if page.pagination.enabled and paginator.page == 1 %}
-{% assign is_paginated_index = true %}
-{% endif %}
-{% assign show_lead_post = false %}
-{% if is_paginated_index and lead_post %}
-{% assign show_lead_post = true %}
-{% endif %}
-
 {% assign total_posts = site.posts | size %}
 {% assign latest_post = site.posts | first %}
 {% assign latest_post_date = latest_post.date | date: "%B %Y" %}
+{% assign has_blog_topics = false %}
+{% if site.display_tags and site.display_tags.size > 0 or site.display_categories and site.display_categories.size > 0 %}
+{% assign has_blog_topics = true %}
+{% endif %}
 
 <section class="blog-hero">
   <div class="blog-hero__panel">
     <div class="blog-hero__copy">
-      <p class="blog-hero__eyebrow">Research Ledger</p>
       <h1 class="blog-hero__title">Blog</h1>
       <p class="blog-hero__subtitle">
         Notes on machine learning foundations, language models, AI agents, and hands-on engineering.
       </p>
     </div>
-    <aside class="blog-hero__ledger" aria-label="Blog overview">
-      <p class="blog-hero__ledger-title">At a glance</p>
-      <div class="blog-hero__metric">
-        <span>Posts</span>
-        <strong>{{ total_posts }}</strong>
-      </div>
-      {% if latest_post %}
-        <div class="blog-hero__metric">
-          <span>Latest update</span>
-          <strong>{{ latest_post_date }}</strong>
-        </div>
-      {% endif %}
-      <p class="blog-hero__note">Technical notes, research digests, and implementation write-ups.</p>
-    </aside>
   </div>
 </section>
 
-{% if site.display_tags and site.display_tags.size > 0 or site.display_categories and site.display_categories.size > 0 %}
+{% if has_blog_topics or latest_post %}
 
-  <section class="blog-topics" aria-label="Blog topics">
-    <p class="blog-topics__label">Topics</p>
-    <div class="blog-topics__inner">
-      {% for tag in site.display_tags %}
-        <a class="blog-topics__item" href="{{ tag | slugify | prepend: '/blog/tag/' | relative_url }}">
-          <i class="fa-solid fa-hashtag fa-sm"></i> {{ tag }}
-        </a>
-      {% endfor %}
-      {% for category in site.display_categories %}
-        <a class="blog-topics__item" href="{{ category | slugify | prepend: '/blog/category/' | relative_url }}">
-          <i class="fa-solid fa-tag fa-sm"></i> {{ category }}
-        </a>
-      {% endfor %}
-    </div>
-  </section>
-{% endif %}
-
-{% if show_lead_post %}
-{% if lead_post.external_source == blank %}
-{% assign lead_read_time = lead_post.content | number_of_words | divided_by: 180 | plus: 1 %}
-{% else %}
-{% assign lead_read_time = lead_post.feed_content | strip_html | number_of_words | divided_by: 180 | plus: 1 %}
-{% endif %}
-{% assign lead_year = lead_post.date | date: "%Y" %}
-{% assign lead_tags = lead_post.tags | join: "" %}
-{% assign lead_categories = lead_post.categories | join: "" %}
-{% assign lead_href = lead_post.url | relative_url %}
-{% assign lead_external_redirect = false %}
-{% if lead_post.redirect %}
-{% if lead_post.redirect contains '://' %}
-{% assign lead_href = lead_post.redirect %}
-{% assign lead_external_redirect = true %}
-{% else %}
-{% assign lead_href = lead_post.redirect | relative_url %}
-{% endif %}
-{% endif %}
-
-  <section class="blog-lead{% unless lead_post.thumbnail %} blog-lead--text-only{% endunless %}">
-    <div class="blog-lead__content">
-      <p class="blog-lead__label">Featured Note</p>
-      <h2 class="blog-lead__title">
-        <a href="{{ lead_href }}"{% if lead_external_redirect %} target="_blank" rel="noopener noreferrer"{% endif %}>{{ lead_post.title }}</a>
-      </h2>
-      {% if lead_post.description %}
-        <p class="blog-lead__description">{{ lead_post.description }}</p>
-      {% endif %}
-      <p class="blog-lead__meta">
-        {{ lead_read_time }} min read &nbsp; &middot; &nbsp; {{ lead_post.date | date: '%B %d, %Y' }}
-        {% if lead_post.external_source %}
-          &nbsp; &middot; &nbsp; {{ lead_post.external_source }}
-        {% endif %}
-      </p>
-      <p class="blog-lead__taxonomy">
-        <a href="{{ lead_year | prepend: '/blog/' | relative_url }}">
-          <i class="fa-solid fa-calendar fa-sm"></i> {{ lead_year }}
-        </a>
-        {% if lead_tags != "" %}
-          &nbsp; &middot; &nbsp;
-          {% for tag in lead_post.tags %}
-            <a href="{{ tag | slugify | prepend: '/blog/tag/' | relative_url }}">
+  <aside class="blog-side-rail" aria-label="Blog topics and summary">
+    {% if has_blog_topics %}
+      <section class="blog-side-rail__section blog-side-rail__section--topics">
+        <p class="blog-side-rail__eyebrow">Topics</p>
+        <div class="blog-side-rail__links">
+          {% for tag in site.display_tags %}
+            <a class="blog-side-rail__link" href="{{ tag | slugify | prepend: '/blog/tag/' | relative_url }}">
               <i class="fa-solid fa-hashtag fa-sm"></i> {{ tag }}
             </a>
-            {% unless forloop.last %}
-              &nbsp;
-            {% endunless %}
           {% endfor %}
-        {% endif %}
-        {% if lead_categories != "" %}
-          &nbsp; &middot; &nbsp;
-          {% for category in lead_post.categories %}
-            <a href="{{ category | slugify | prepend: '/blog/category/' | relative_url }}">
+          {% for category in site.display_categories %}
+            <a class="blog-side-rail__link" href="{{ category | slugify | prepend: '/blog/category/' | relative_url }}">
               <i class="fa-solid fa-tag fa-sm"></i> {{ category }}
             </a>
-            {% unless forloop.last %}
-              &nbsp;
-            {% endunless %}
           {% endfor %}
-        {% endif %}
-      </p>
-    </div>
-    {% if lead_post.thumbnail %}
-      <a class="blog-lead__visual" href="{{ lead_href }}"{% if lead_external_redirect %} target="_blank" rel="noopener noreferrer"{% endif %}>
-        <img src="{{ lead_post.thumbnail | relative_url }}" alt="{{ lead_post.title }}">
-      </a>
+        </div>
+      </section>
     {% endif %}
-  </section>
+    <section class="blog-side-rail__section blog-side-rail__section--glance" aria-label="Blog overview">
+      <p class="blog-side-rail__eyebrow">At a glance</p>
+      <dl class="blog-side-rail__list">
+        <div class="blog-side-rail__metric">
+          <dt>Posts</dt>
+          <dd>{{ total_posts }}</dd>
+        </div>
+        {% if latest_post %}
+          <div class="blog-side-rail__metric">
+            <dt>Latest update</dt>
+            <dd>{{ latest_post_date }}</dd>
+          </div>
+        {% endif %}
+      </dl>
+    </section>
+  </aside>
 {% endif %}
 
   <section class="blog-archive">
-    <div class="blog-archive__header">
-      <div>
-        <p class="blog-archive__eyebrow">Archive</p>
-        <h2>Recent Essays</h2>
-      </div>
-      <p class="blog-archive__note">A running index of long-form notes on machine learning, agents, and engineering.</p>
-    </div>
-
     <ul class="post-list post-list--editorial">
       {% for post in postlist %}
-        {% if show_lead_post and post.url == lead_post.url %}
-          {% continue %}
-        {% endif %}
-
         {% if post.external_source == blank %}
           {% assign read_time = post.content | number_of_words | divided_by: 180 | plus: 1 %}
         {% else %}
