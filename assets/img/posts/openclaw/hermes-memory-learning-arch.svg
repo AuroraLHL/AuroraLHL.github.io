@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="920" viewBox="0 0 1400 920">
+  <defs>
+    <style>
+      text { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .title { font-size: 34px; font-weight: 700; fill: #16324f; }
+      .label { font-size: 22px; font-weight: 700; fill: #16324f; }
+      .body { font-size: 18px; fill: #2e4962; }
+      .small { font-size: 16px; fill: #506d86; }
+      .tiny { font-size: 14px; fill: #6a8094; }
+      .box { stroke: #24507a; stroke-width: 2.5; rx: 18; ry: 18; }
+      .line { stroke: #24507a; stroke-width: 3; fill: none; stroke-linecap: round; }
+      .green { stroke: #2c9b55; }
+      .orange { stroke: #e08b1d; }
+      .blue { stroke: #2f78b7; }
+      .arrowg { fill: #2c9b55; }
+      .arrowo { fill: #e08b1d; }
+      .arrowb { fill: #2f78b7; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="920" fill="#f8fbff"/>
+  <text x="700" y="58" text-anchor="middle" class="title">Hermes Memory and Learning Loop</text>
+
+  <rect x="70" y="110" width="1260" height="145" class="box" fill="#fff6db"/>
+  <text x="700" y="155" text-anchor="middle" class="label">Session Start: What Enters the Prompt</text>
+
+  <rect x="110" y="185" width="200" height="50" class="box" fill="#ffffff"/>
+  <text x="210" y="216" text-anchor="middle" class="small">SOUL / identity</text>
+  <rect x="340" y="185" width="220" height="50" class="box" fill="#ffffff"/>
+  <text x="450" y="216" text-anchor="middle" class="small">MEMORY.md / USER.md snapshot</text>
+  <rect x="590" y="185" width="220" height="50" class="box" fill="#ffffff"/>
+  <text x="700" y="216" text-anchor="middle" class="small">skills index</text>
+  <rect x="840" y="185" width="220" height="50" class="box" fill="#ffffff"/>
+  <text x="950" y="216" text-anchor="middle" class="small">context files</text>
+  <rect x="1090" y="185" width="200" height="50" class="box" fill="#ffffff"/>
+  <text x="1190" y="216" text-anchor="middle" class="small">platform hints</text>
+
+  <rect x="480" y="315" width="440" height="120" class="box" fill="#ffffff"/>
+  <text x="700" y="358" text-anchor="middle" class="label">AIAgent Running Turn</text>
+  <text x="700" y="390" text-anchor="middle" class="body">prompt is stable during the session; tools provide dynamic writes and recall</text>
+  <text x="700" y="416" text-anchor="middle" class="tiny">this is why memory writes persist immediately but do not mutate the current prompt snapshot</text>
+
+  <rect x="70" y="520" width="260" height="160" class="box" fill="#eafbea"/>
+  <text x="200" y="565" text-anchor="middle" class="label">Local Memory</text>
+  <text x="200" y="600" text-anchor="middle" class="body">MEMORY.md / USER.md</text>
+  <text x="200" y="630" text-anchor="middle" class="small">small, explicit, curated facts</text>
+  <text x="200" y="658" text-anchor="middle" class="tiny">written by memory tool</text>
+
+  <rect x="380" y="520" width="280" height="160" class="box" fill="#eaf0ff"/>
+  <text x="520" y="565" text-anchor="middle" class="label">Session Archive</text>
+  <text x="520" y="600" text-anchor="middle" class="body">state.db + FTS5</text>
+  <text x="520" y="630" text-anchor="middle" class="small">all conversations, lineage, recall</text>
+  <text x="520" y="658" text-anchor="middle" class="tiny">read via session_search</text>
+
+  <rect x="710" y="520" width="280" height="160" class="box" fill="#eef8ec"/>
+  <text x="850" y="565" text-anchor="middle" class="label">Skill Store</text>
+  <text x="850" y="600" text-anchor="middle" class="body">~/.hermes/skills/</text>
+  <text x="850" y="630" text-anchor="middle" class="small">procedural memory</text>
+  <text x="850" y="658" text-anchor="middle" class="tiny">created or patched by skill_manage</text>
+
+  <rect x="1040" y="520" width="290" height="160" class="box" fill="#f4ecff"/>
+  <text x="1185" y="565" text-anchor="middle" class="label">Honcho Memory</text>
+  <text x="1185" y="600" text-anchor="middle" class="body">user peer + AI peer</text>
+  <text x="1185" y="630" text-anchor="middle" class="small">cross-session and cross-device modeling</text>
+  <text x="1185" y="658" text-anchor="middle" class="tiny">prefetch at turn end, consume next turn</text>
+
+  <rect x="455" y="740" width="490" height="105" class="box" fill="#fff6db"/>
+  <text x="700" y="782" text-anchor="middle" class="label">Turn-End Review / Self-Improvement</text>
+  <text x="700" y="814" text-anchor="middle" class="body">task outcomes may be written back as memory, skills, or Honcho updates</text>
+
+  <path class="line orange" d="M 450 235 L 450 307"/>
+  <polygon class="arrowo" points="450,307 444,295 456,295"/>
+  <text x="465" y="282" class="tiny" fill="#e08b1d">startup injection</text>
+
+  <path class="line orange" d="M 700 235 L 700 307"/>
+  <polygon class="arrowo" points="700,307 694,295 706,295"/>
+
+  <path class="line orange" d="M 950 235 L 950 307"/>
+  <polygon class="arrowo" points="950,307 944,295 956,295"/>
+
+  <path class="line green" d="M 700 435 L 700 470 L 200 470 L 200 520"/>
+  <polygon class="arrowg" points="200,520 194,508 206,508"/>
+  <text x="300" y="458" class="tiny" fill="#2c9b55">memory tool writes</text>
+
+  <path class="line green" d="M 700 435 L 700 490 L 850 490 L 850 520"/>
+  <polygon class="arrowg" points="850,520 844,508 856,508"/>
+  <text x="765" y="480" class="tiny" fill="#2c9b55">skill_manage writes</text>
+
+  <path class="line green" d="M 700 435 L 700 470 L 1185 470 L 1185 520"/>
+  <polygon class="arrowg" points="1185,520 1179,508 1191,508"/>
+  <text x="1030" y="458" class="tiny" fill="#2c9b55">honcho sync</text>
+
+  <path class="line blue" d="M 380 585 L 320 585 L 320 375 L 472 375"/>
+  <polygon class="arrowb" points="472,375 460,369 460,381"/>
+  <text x="322" y="395" class="tiny" fill="#2f78b7">session_search</text>
+
+  <path class="line blue" d="M 1040 605 L 980 605 L 980 405 L 920 405"/>
+  <polygon class="arrowb" points="920,405 932,399 932,411"/>
+  <text x="982" y="425" class="tiny" fill="#2f78b7">honcho tools / prefetched recall</text>
+
+  <path class="line green" d="M 200 680 L 200 730 L 620 730 L 620 740"/>
+  <polygon class="arrowg" points="620,740 614,728 626,728"/>
+  <path class="line green" d="M 520 680 L 520 740"/>
+  <polygon class="arrowg" points="520,740 514,728 526,728"/>
+  <path class="line green" d="M 850 680 L 850 740"/>
+  <polygon class="arrowg" points="850,740 844,728 856,728"/>
+  <path class="line green" d="M 1185 680 L 1185 730 L 780 730 L 780 740"/>
+  <polygon class="arrowg" points="780,740 774,728 786,728"/>
+
+  <text x="700" y="885" text-anchor="middle" class="small">Hermes does not have one monolithic memory. It layers prompt-time identity/context, small local memory, searchable session history,</text>
+  <text x="700" y="910" text-anchor="middle" class="small">procedural skills, and optional Honcho user modeling into a practical self-improvement loop.</text>
+</svg>

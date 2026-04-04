@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="920" viewBox="0 0 1400 920">
+  <defs>
+    <style>
+      .title { font: 700 34px sans-serif; fill: #17324f; }
+      .header { font: 700 24px sans-serif; fill: #17324f; }
+      .cellh { font: 700 20px sans-serif; fill: #17324f; }
+      .body { font: 400 18px sans-serif; fill: #2f4d66; }
+      .box { stroke: #27567e; stroke-width: 2.2; rx: 16; ry: 16; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="920" fill="#f9fbfe"/>
+  <text x="700" y="56" text-anchor="middle" class="title">Pi vs Claude Code</text>
+
+  <rect x="90" y="100" width="1220" height="90" class="box" fill="#ffffff"/>
+  <text x="430" y="155" text-anchor="middle" class="header">Pi</text>
+  <text x="970" y="155" text-anchor="middle" class="header">Claude Code</text>
+
+  <rect x="90" y="220" width="220" height="110" class="box" fill="#eef5ff"/>
+  <text x="200" y="275" text-anchor="middle" class="cellh">Core identity</text>
+  <rect x="330" y="220" width="490" height="110" class="box" fill="#eef5ff"/>
+  <text x="575" y="265" text-anchor="middle" class="body">runtime stack / coding harness toolkit</text>
+  <text x="575" y="297" text-anchor="middle" class="body">minimal core, strong extensibility</text>
+  <rect x="840" y="220" width="470" height="110" class="box" fill="#eef5ff"/>
+  <text x="1075" y="265" text-anchor="middle" class="body">Anthropic first-party coding agent</text>
+  <text x="1075" y="297" text-anchor="middle" class="body">productized workflow around Claude</text>
+
+  <rect x="90" y="360" width="220" height="110" class="box" fill="#eaf8ea"/>
+  <text x="200" y="415" text-anchor="middle" class="cellh">Model strategy</text>
+  <rect x="330" y="360" width="490" height="110" class="box" fill="#eaf8ea"/>
+  <text x="575" y="405" text-anchor="middle" class="body">provider-neutral API</text>
+  <text x="575" y="437" text-anchor="middle" class="body">cross-provider session handoff</text>
+  <rect x="840" y="360" width="470" height="110" class="box" fill="#eaf8ea"/>
+  <text x="1075" y="405" text-anchor="middle" class="body">Claude-first model stack</text>
+  <text x="1075" y="437" text-anchor="middle" class="body">multiple deployment backends</text>
+
+  <rect x="90" y="500" width="220" height="110" class="box" fill="#fff4da"/>
+  <text x="200" y="555" text-anchor="middle" class="cellh">Session model</text>
+  <rect x="330" y="500" width="490" height="110" class="box" fill="#fff4da"/>
+  <text x="575" y="545" text-anchor="middle" class="body">JSONL tree, branch in place</text>
+  <text x="575" y="577" text-anchor="middle" class="body">custom messages as runtime state</text>
+  <rect x="840" y="500" width="470" height="110" class="box" fill="#fff4da"/>
+  <text x="1075" y="545" text-anchor="middle" class="body">locally persisted sessions</text>
+  <text x="1075" y="577" text-anchor="middle" class="body">resume / fork with product workflow focus</text>
+
+  <rect x="90" y="640" width="220" height="110" class="box" fill="#f5ecff"/>
+  <text x="200" y="695" text-anchor="middle" class="cellh">Extension style</text>
+  <rect x="330" y="640" width="490" height="110" class="box" fill="#f5ecff"/>
+  <text x="575" y="685" text-anchor="middle" class="body">extensions, packages, skills, custom TUI</text>
+  <text x="575" y="717" text-anchor="middle" class="body">many features intentionally not built in</text>
+  <rect x="840" y="640" width="470" height="110" class="box" fill="#f5ecff"/>
+  <text x="1075" y="685" text-anchor="middle" class="body">MCP, hooks, skills, subagents</text>
+  <text x="1075" y="717" text-anchor="middle" class="body">official product extension surface</text>
+
+  <rect x="90" y="780" width="220" height="90" class="box" fill="#ffffff"/>
+  <text x="200" y="835" text-anchor="middle" class="cellh">Best fit</text>
+  <rect x="330" y="780" width="490" height="90" class="box" fill="#ffffff"/>
+  <text x="575" y="835" text-anchor="middle" class="body">embed and reshape your own runtime</text>
+  <rect x="840" y="780" width="470" height="90" class="box" fill="#ffffff"/>
+  <text x="1075" y="835" text-anchor="middle" class="body">use a polished first-party coding product</text>
+</svg>

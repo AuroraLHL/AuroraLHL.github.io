@@ -30,7 +30,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-scaling-law",
+        },{id: "post-a-deep-dive-into-openclaw",
+        
+          title: "A Deep Dive into OpenClaw",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/openclaw-deep-research/";
+          
+        },
+      },{id: "post-scaling-law",
         
           title: "Scaling Law",
         

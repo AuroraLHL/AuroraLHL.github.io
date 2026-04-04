@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="960" viewBox="0 0 1500 960">
+  <defs>
+    <style>
+      text { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .title { font-size: 36px; font-weight: 700; fill: #16324f; }
+      .label { font-size: 23px; font-weight: 700; fill: #16324f; }
+      .body { font-size: 18px; fill: #294661; }
+      .small { font-size: 16px; fill: #4a6782; }
+      .tiny { font-size: 14px; fill: #607d96; }
+      .box { stroke: #24507a; stroke-width: 2.5; rx: 18; ry: 18; }
+      .line { stroke: #24507a; stroke-width: 3; stroke-linecap: round; fill: none; }
+      .dash { stroke-dasharray: 10 8; }
+      .arrow { fill: #24507a; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1500" height="960" fill="#f7fbff"/>
+  <text x="750" y="60" text-anchor="middle" class="title">OpenClaw and Hermes: Continuity vs Re-architecture</text>
+
+  <rect x="70" y="110" width="390" height="680" class="box" fill="#e8f4ff"/>
+  <text x="265" y="155" text-anchor="middle" class="label">OpenClaw</text>
+  <text x="265" y="185" text-anchor="middle" class="small">first-generation control plane emphasis</text>
+
+  <rect x="110" y="230" width="310" height="145" class="box" fill="#ffffff"/>
+  <text x="265" y="274" text-anchor="middle" class="label">Gateway-Centric Runtime</text>
+  <text x="265" y="308" text-anchor="middle" class="body">self-hosted, always-on gateway</text>
+  <text x="265" y="336" text-anchor="middle" class="small">channels, routing, session coordination</text>
+
+  <rect x="110" y="410" width="310" height="155" class="box" fill="#eef8ec"/>
+  <text x="265" y="454" text-anchor="middle" class="label">Plugin / Hooks / Event Bus</text>
+  <text x="265" y="488" text-anchor="middle" class="body">skills, tools, channels, memory</text>
+  <text x="265" y="516" text-anchor="middle" class="small">extension boundary is highly explicit</text>
+  <text x="265" y="542" text-anchor="middle" class="tiny">hook-based integrations such as openclaw-honcho</text>
+
+  <rect x="110" y="600" width="310" height="145" class="box" fill="#fff6db"/>
+  <text x="265" y="644" text-anchor="middle" class="label">Embedded Pi + ACP Agents</text>
+  <text x="265" y="678" text-anchor="middle" class="body">pi as inner loop, ACP agents as tools</text>
+  <text x="265" y="706" text-anchor="middle" class="small">runtime stays composable around the gateway</text>
+
+  <rect x="555" y="145" width="390" height="610" class="box" fill="#fffdf3"/>
+  <text x="750" y="190" text-anchor="middle" class="label">Shared DNA</text>
+  <text x="750" y="220" text-anchor="middle" class="small">Hermes clearly continues the OpenClaw worldview</text>
+
+  <rect x="610" y="270" width="280" height="105" class="box" fill="#ffffff"/>
+  <text x="750" y="312" text-anchor="middle" class="label">Long-Running Agent</text>
+  <text x="750" y="342" text-anchor="middle" class="small">not just a chat shell or IDE helper</text>
+
+  <rect x="610" y="410" width="280" height="105" class="box" fill="#ffffff"/>
+  <text x="750" y="452" text-anchor="middle" class="label">Multi-Surface Access</text>
+  <text x="750" y="482" text-anchor="middle" class="small">CLI, messaging, remote and local entry points</text>
+
+  <rect x="610" y="550" width="280" height="150" class="box" fill="#ffffff"/>
+  <text x="750" y="592" text-anchor="middle" class="label">Skills + Memory + Automation</text>
+  <text x="750" y="622" text-anchor="middle" class="small">procedural memory, durable context, scheduled work</text>
+  <text x="750" y="648" text-anchor="middle" class="tiny">same ecosystem vocabulary survives the migration</text>
+
+  <rect x="1040" y="110" width="390" height="680" class="box" fill="#f5ecff"/>
+  <text x="1235" y="155" text-anchor="middle" class="label">Hermes Agent</text>
+  <text x="1235" y="185" text-anchor="middle" class="small">second-generation integrated runtime emphasis</text>
+
+  <rect x="1080" y="230" width="310" height="145" class="box" fill="#ffffff"/>
+  <text x="1235" y="274" text-anchor="middle" class="label">AIAgent-Centric Core</text>
+  <text x="1235" y="308" text-anchor="middle" class="body">Python baked-in runner</text>
+  <text x="1235" y="336" text-anchor="middle" class="small">CLI, gateway, ACP, cron, API share one core</text>
+
+  <rect x="1080" y="410" width="310" height="155" class="box" fill="#eaf0ff"/>
+  <text x="1235" y="454" text-anchor="middle" class="label">Integrated Memory Stack</text>
+  <text x="1235" y="488" text-anchor="middle" class="body">local memory, session search, Honcho</text>
+  <text x="1235" y="516" text-anchor="middle" class="small">async prefetch and built-in session persistence</text>
+  <text x="1235" y="542" text-anchor="middle" class="tiny">more runtime logic lives inside the core repo</text>
+
+  <rect x="1080" y="600" width="310" height="145" class="box" fill="#fcebea"/>
+  <text x="1235" y="644" text-anchor="middle" class="label">ACP Server + Research Stack</text>
+  <text x="1235" y="678" text-anchor="middle" class="body">Hermes itself runs inside editors</text>
+  <text x="1235" y="706" text-anchor="middle" class="small">plus trajectories, benchmarks, RL environments</text>
+
+  <path class="line" d="M 420 302 L 602 322"/>
+  <polygon class="arrow" points="602,322 590,314 589,328"/>
+  <path class="line" d="M 420 488 L 602 462"/>
+  <polygon class="arrow" points="602,462 589,456 591,470"/>
+  <path class="line" d="M 420 672 L 602 626"/>
+  <polygon class="arrow" points="602,626 590,621 593,635"/>
+
+  <path class="line" d="M 898 322 L 1080 302"/>
+  <polygon class="arrow" points="1080,302 1067,297 1068,311"/>
+  <path class="line" d="M 898 462 L 1080 488"/>
+  <polygon class="arrow" points="1080,488 1068,480 1066,494"/>
+  <path class="line" d="M 898 626 L 1080 672"/>
+  <polygon class="arrow" points="1080,672 1067,663 1064,677"/>
+
+  <rect x="120" y="830" width="1260" height="78" class="box" fill="#ffffff"/>
+  <text x="750" y="865" text-anchor="middle" class="body">Migration proves lineage: `hermes claw migrate` imports SOUL, MEMORY, USER, skills, allowlists, messaging settings, API keys, and TTS assets.</text>
+  <text x="750" y="892" text-anchor="middle" class="small">The result is not a superficial rename: it is the same ecosystem lineage reorganized around a more integrated Python runtime and broader control surfaces.</text>
+</svg>

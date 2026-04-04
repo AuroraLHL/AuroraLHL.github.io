@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
+  <defs>
+    <style>
+      .title { font: 700 34px sans-serif; fill: #17324f; }
+      .label { font: 700 24px sans-serif; fill: #17324f; }
+      .body { font: 400 18px sans-serif; fill: #2d4a64; }
+      .small { font: 400 16px sans-serif; fill: #4a6580; }
+      .box { stroke: #24557e; stroke-width: 2.5; rx: 20; ry: 20; }
+      .line { stroke: #24557e; stroke-width: 3; stroke-linecap: round; fill: none; }
+      .arrow { fill: #24557e; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="900" fill="#f7fbff"/>
+  <text x="700" y="58" text-anchor="middle" class="title">Pi Layered Architecture</text>
+
+  <rect x="220" y="110" width="960" height="140" class="box" fill="#e8f4ff"/>
+  <text x="700" y="155" text-anchor="middle" class="label">pi-coding-agent</text>
+  <text x="700" y="192" text-anchor="middle" class="body">interactive CLI, sessions, skills, extensions, themes, AGENTS.md, JSON/RPC/SDK modes</text>
+  <text x="700" y="225" text-anchor="middle" class="small">the product-facing coding harness</text>
+
+  <rect x="220" y="305" width="960" height="140" class="box" fill="#eaf9ea"/>
+  <text x="700" y="350" text-anchor="middle" class="label">pi-agent-core</text>
+  <text x="700" y="387" text-anchor="middle" class="body">stateful agent loop, transformContext, convertToLlm, tool execution, hooks, event streaming</text>
+  <text x="700" y="420" text-anchor="middle" class="small">the runtime state machine</text>
+
+  <rect x="220" y="500" width="450" height="150" class="box" fill="#fff4da"/>
+  <text x="445" y="548" text-anchor="middle" class="label">pi-ai</text>
+  <text x="445" y="585" text-anchor="middle" class="body">multi-provider LLM API</text>
+  <text x="445" y="617" text-anchor="middle" class="body">tool calling, streaming, reasoning</text>
+  <text x="445" y="649" text-anchor="middle" class="small">context portability across providers</text>
+
+  <rect x="730" y="500" width="450" height="150" class="box" fill="#f6ecff"/>
+  <text x="955" y="548" text-anchor="middle" class="label">pi-tui</text>
+  <text x="955" y="585" text-anchor="middle" class="body">differential terminal rendering</text>
+  <text x="955" y="617" text-anchor="middle" class="body">editor, markdown, overlays, images</text>
+  <text x="955" y="649" text-anchor="middle" class="small">the interaction shell</text>
+
+  <rect x="240" y="715" width="920" height="110" class="box" fill="#ffffff"/>
+  <text x="700" y="757" text-anchor="middle" class="label">Session Model</text>
+  <text x="700" y="790" text-anchor="middle" class="body">JSONL tree with id/parentId, custom messages, branch summaries, compaction, model changes</text>
+
+  <path class="line" d="M 700 250 L 700 297"/>
+  <polygon class="arrow" points="700,297 694,285 706,285"/>
+  <path class="line" d="M 470 445 L 470 492"/>
+  <polygon class="arrow" points="470,492 464,480 476,480"/>
+  <path class="line" d="M 930 445 L 930 492"/>
+  <polygon class="arrow" points="930,492 924,480 936,480"/>
+  <path class="line" d="M 700 445 L 700 706"/>
+  <polygon class="arrow" points="700,706 694,694 706,694"/>
+
+  <text x="700" y="865" text-anchor="middle" class="small">Self-drawn overview based on pi-mono package READMEs and session documentation.</text>
+</svg>

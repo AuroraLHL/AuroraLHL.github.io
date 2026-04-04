@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="860" viewBox="0 0 1400 860">
+  <defs>
+    <style>
+      text { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+      .title { font-size: 34px; font-weight: 700; fill: #16324f; }
+      .label { font-size: 22px; font-weight: 700; fill: #16324f; }
+      .body { font-size: 18px; fill: #2c4862; }
+      .small { font-size: 16px; fill: #4c6982; }
+      .tiny { font-size: 14px; fill: #607d96; }
+      .box { stroke: #24507a; stroke-width: 2.5; rx: 18; ry: 18; }
+      .line { stroke: #24507a; stroke-width: 3; stroke-linecap: round; fill: none; marker-end: url(#arrow); }
+      .dash { stroke-dasharray: 10 8; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#24507a"/>
+    </marker>
+  </defs>
+
+  <rect width="1400" height="860" fill="#f8fbff"/>
+  <text x="700" y="58" text-anchor="middle" class="title">Hermes Main Control Flow</text>
+
+  <rect x="60" y="120" width="250" height="110" class="box" fill="#e6f4ff"/>
+  <text x="185" y="162" text-anchor="middle" class="label">1. User Input</text>
+  <text x="185" y="195" text-anchor="middle" class="small">CLI / gateway / ACP / API / cron</text>
+
+  <rect x="370" y="120" width="280" height="110" class="box" fill="#eef8ec"/>
+  <text x="510" y="162" text-anchor="middle" class="label">2. Session Routing</text>
+  <text x="510" y="195" text-anchor="middle" class="small">platform key -> session id -> config surface</text>
+
+  <rect x="710" y="120" width="300" height="110" class="box" fill="#fff6db"/>
+  <text x="860" y="162" text-anchor="middle" class="label">3. Build Prompt</text>
+  <text x="860" y="195" text-anchor="middle" class="small">identity + memory snapshot + skills + context</text>
+
+  <rect x="1070" y="120" width="260" height="110" class="box" fill="#f4ecff"/>
+  <text x="1200" y="162" text-anchor="middle" class="label">4. Model Call</text>
+  <text x="1200" y="195" text-anchor="middle" class="small">provider routing / interruption / retries</text>
+
+  <rect x="540" y="300" width="320" height="120" class="box" fill="#ffffff"/>
+  <text x="700" y="345" text-anchor="middle" class="label">5. Assistant Output</text>
+  <text x="700" y="378" text-anchor="middle" class="body">plain answer or tool_calls</text>
+  <text x="700" y="404" text-anchor="middle" class="tiny">AIAgent decides whether to stop or loop</text>
+
+  <rect x="180" y="500" width="300" height="135" class="box" fill="#eafbea"/>
+  <text x="330" y="545" text-anchor="middle" class="label">6A. Tool Dispatch</text>
+  <text x="330" y="578" text-anchor="middle" class="small">registry + toolsets + availability checks</text>
+  <text x="330" y="606" text-anchor="middle" class="tiny">sequential or concurrent execution</text>
+
+  <rect x="550" y="500" width="300" height="135" class="box" fill="#eaf0ff"/>
+  <text x="700" y="545" text-anchor="middle" class="label">6B. Tool Runtime</text>
+  <text x="700" y="578" text-anchor="middle" class="small">terminal / file / web / MCP / honcho / cron</text>
+  <text x="700" y="606" text-anchor="middle" class="tiny">plus agent-special tools like memory/session_search</text>
+
+  <rect x="920" y="500" width="300" height="135" class="box" fill="#fcebea"/>
+  <text x="1070" y="545" text-anchor="middle" class="label">6C. Tool Result</text>
+  <text x="1070" y="578" text-anchor="middle" class="small">role=tool appended back into history</text>
+  <text x="1070" y="606" text-anchor="middle" class="tiny">then AIAgent loops into another model call</text>
+
+  <rect x="350" y="720" width="320" height="95" class="box" fill="#fff"/>
+  <text x="510" y="758" text-anchor="middle" class="label">7. Persist</text>
+  <text x="510" y="788" text-anchor="middle" class="small">state.db / titles / lineage / usage / transcripts</text>
+
+  <rect x="740" y="720" width="320" height="95" class="box" fill="#fff"/>
+  <text x="900" y="758" text-anchor="middle" class="label">8. Deliver</text>
+  <text x="900" y="788" text-anchor="middle" class="small">render to CLI or send back to the platform</text>
+
+  <path class="line" d="M 310 175 L 370 175"/>
+  <path class="line" d="M 650 175 L 710 175"/>
+  <path class="line" d="M 1010 175 L 1070 175"/>
+  <path class="line" d="M 1200 230 L 1200 270 L 820 270 L 820 300"/>
+  <path class="line" d="M 540 360 L 400 360 L 400 500"/>
+  <path class="line" d="M 700 420 L 700 500"/>
+  <path class="line" d="M 860 360 L 1000 360 L 1000 500"/>
+  <path class="line" d="M 480 568 L 550 568"/>
+  <path class="line" d="M 850 568 L 920 568"/>
+  <path class="line dash" d="M 1070 635 L 1070 675 L 860 675 L 860 230"/>
+  <path class="line" d="M 510 635 L 510 720"/>
+  <path class="line" d="M 900 635 L 900 720"/>
+
+  <text x="700" y="848" text-anchor="middle" class="small">The core loop is simple but highly engineered: route session, assemble a cache-stable prompt, call the model,</text>
+  <text x="700" y="822" text-anchor="middle" class="small">execute tools if needed, reinsert tool results, and persist/deliver the final outcome across whichever surface invoked Hermes.</text>
+</svg>
