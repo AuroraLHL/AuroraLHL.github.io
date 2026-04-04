@@ -37,9 +37,6 @@ pagination:
   <div class="blog-hero__panel">
     <div class="blog-hero__copy">
       <h1 class="blog-hero__title">Blog</h1>
-      <p class="blog-hero__subtitle">
-        Notes on machine learning foundations, language models, AI agents, and hands-on engineering.
-      </p>
     </div>
   </div>
 </section>
