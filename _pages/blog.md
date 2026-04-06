@@ -2,6 +2,8 @@
 layout: default
 permalink: /blog/
 title: blog
+seo_title: Blog | Hongliang Lu (卢红亮) | Agentic RL, LLM Agents, Optimization
+seo_description: Research notes and technical essays by Hongliang Lu (卢红亮) at Peking University, covering Agentic RL, LLM agents, reinforcement learning, optimization, and machine learning.
 body_class: blog-ledger-page
 nav: true
 nav_order: 2
