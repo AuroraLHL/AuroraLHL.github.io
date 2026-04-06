@@ -2,6 +2,8 @@
 layout: about
 title: about
 permalink: /
+seo_title: Hongliang Lu (卢红亮) | Peking University | Agentic RL, LLM Agents, Optimization
+seo_description: Hongliang Lu (卢红亮) is a graduate student at Peking University researching Agentic RL, WebAgent/OSAgent systems, self-play training, LLM agents, and LLMs for optimization.
 # subtitle: <a href='https://www.pku.edu.cn/'>Peking University</a>. Graduate Student. RL Algorithm Engineer.
 
 profile:
