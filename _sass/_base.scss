@@ -1640,12 +1640,17 @@ nav[data-toggle="toc"] {
 }
 
 @media (min-width: 1280px) {
+  $toc-sidebar-width: 10rem;
+  $toc-sidebar-gap: 48px;
+
   .toc-sidebar-layout-left {
     .toc-sidebar-aside {
       position: fixed;
       top: 5rem;
-      left: calc(50vw - #{($max-content-width * 0.5) - 15px} - #{10rem + 0.75rem});
-      width: 10rem;
+      left: 50vw;
+      margin-left: -#{($max-content-width * 0.5) - 15px + $toc-sidebar-gap};
+      transform: translateX(-100%);
+      width: $toc-sidebar-width;
       max-height: calc(100vh - 6rem);
       overflow-y: auto;
     }
