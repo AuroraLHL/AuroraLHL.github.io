@@ -1,0 +1,86 @@
+{% assign total_posts = site.posts | size %}
+{% assign latest_post = site.posts | first %}
+{% assign latest_post_date = latest_post.date | date: '%B %Y' %}
+{% assign topic_candidates = '' | split: '' %}
+{% assign top_topics = '' | split: '' %}
+{% assign seen_topic_slugs = '|' %}
+{% assign has_blog_topics = false %}
+
+{% for tag_entry in site.tags %}
+  {% assign tag_name = tag_entry[0] %}
+  {% assign tag_posts = tag_entry[1] %}
+  {% assign tag_count = tag_posts | size %}
+  {% assign tag_slug = tag_name | slugify %}
+  {% capture tag_sort_key %}{{ 100000 | minus: tag_count | prepend: "00000" | slice: -5, 5 }}::{{ tag_slug }}::{{ tag_name }}::{{ tag_count }}::tag{% endcapture %}
+  {% assign topic_candidates = topic_candidates | push: tag_sort_key %}
+{% endfor %}
+
+{% for category_entry in site.categories %}
+  {% assign category_name = category_entry[0] %}
+  {% assign category_posts = category_entry[1] %}
+  {% assign category_count = category_posts | size %}
+  {% assign category_slug = category_name | slugify %}
+  {% capture category_sort_key %}{{ 100000 | minus: category_count | prepend: "00000" | slice: -5, 5 }}::{{ category_slug }}::{{ category_name }}::{{ category_count }}::category{% endcapture %}
+  {% assign topic_candidates = topic_candidates | push: category_sort_key %}
+{% endfor %}
+
+{% assign topic_candidates = topic_candidates | sort %}
+
+{% for topic_entry in topic_candidates %}
+  {% assign topic_parts = topic_entry | split: '::' %}
+  {% assign topic_slug = topic_parts[1] %}
+  {% capture topic_seen_token %}|{{ topic_slug }}|{% endcapture %}
+  {% unless seen_topic_slugs contains topic_seen_token %}
+    {% assign top_topics = top_topics | push: topic_entry %}
+    {% assign seen_topic_slugs = seen_topic_slugs | append: topic_slug | append: '|' %}
+  {% endunless %}
+{% endfor %}
+
+{% if top_topics.size > 0 %}
+  {% assign has_blog_topics = true %}
+{% endif %}
+
+{% if has_blog_topics or latest_post %}
+  <aside class="blog-side-rail" aria-label="Blog topics and summary">
+    {% if top_topics.size > 0 %}
+      <section class="blog-side-rail__section blog-side-rail__section--topics">
+        <p class="blog-side-rail__eyebrow">Top Topics</p>
+        <div class="blog-side-rail__links">
+          {% for topic_entry in top_topics limit: 8 %}
+            {% assign topic_parts = topic_entry | split: '::' %}
+            {% assign topic_slug = topic_parts[1] %}
+            {% assign topic_name = topic_parts[2] %}
+            {% assign topic_count = topic_parts[3] %}
+            {% assign topic_type = topic_parts[4] %}
+            {% if topic_type == 'category' %}
+              {% assign topic_prefix = '/blog/category/' %}
+              {% assign topic_icon = 'fa-tag' %}
+            {% else %}
+              {% assign topic_prefix = '/blog/tag/' %}
+              {% assign topic_icon = 'fa-hashtag' %}
+            {% endif %}
+            <a class="blog-side-rail__link" href="{{ topic_slug | prepend: topic_prefix | relative_url }}">
+              <span class="blog-side-rail__link-label"> <i class="fa-solid {{ topic_icon }} fa-sm"></i> {{ topic_name }} </span>
+              <span class="blog-side-rail__link-count">{{ topic_count }}</span>
+            </a>
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+    <section class="blog-side-rail__section blog-side-rail__section--glance" aria-label="Blog overview">
+      <p class="blog-side-rail__eyebrow">At a glance</p>
+      <dl class="blog-side-rail__list">
+        <div class="blog-side-rail__metric">
+          <dt>Posts</dt>
+          <dd>{{ total_posts }}</dd>
+        </div>
+        {% if latest_post %}
+          <div class="blog-side-rail__metric">
+            <dt>Latest update</dt>
+            <dd>{{ latest_post_date }}</dd>
+          </div>
+        {% endif %}
+      </dl>
+    </section>
+  </aside>
+{% endif %}

@@ -25,14 +25,6 @@ pagination:
 {% assign postlist = site.posts %}
 {% endif %}
 
-{% assign total_posts = site.posts | size %}
-{% assign latest_post = site.posts | first %}
-{% assign latest_post_date = latest_post.date | date: "%B %Y" %}
-{% assign has_blog_topics = false %}
-{% if site.display_tags and site.display_tags.size > 0 or site.display_categories and site.display_categories.size > 0 %}
-{% assign has_blog_topics = true %}
-{% endif %}
-
 <section class="blog-hero">
   <div class="blog-hero__panel">
     <div class="blog-hero__copy">
@@ -41,43 +33,7 @@ pagination:
   </div>
 </section>
 
-{% if has_blog_topics or latest_post %}
-
-  <aside class="blog-side-rail" aria-label="Blog topics and summary">
-    {% if has_blog_topics %}
-      <section class="blog-side-rail__section blog-side-rail__section--topics">
-        <p class="blog-side-rail__eyebrow">Topics</p>
-        <div class="blog-side-rail__links">
-          {% for tag in site.display_tags %}
-            <a class="blog-side-rail__link" href="{{ tag | slugify | prepend: '/blog/tag/' | relative_url }}">
-              <i class="fa-solid fa-hashtag fa-sm"></i> {{ tag }}
-            </a>
-          {% endfor %}
-          {% for category in site.display_categories %}
-            <a class="blog-side-rail__link" href="{{ category | slugify | prepend: '/blog/category/' | relative_url }}">
-              <i class="fa-solid fa-tag fa-sm"></i> {{ category }}
-            </a>
-          {% endfor %}
-        </div>
-      </section>
-    {% endif %}
-    <section class="blog-side-rail__section blog-side-rail__section--glance" aria-label="Blog overview">
-      <p class="blog-side-rail__eyebrow">At a glance</p>
-      <dl class="blog-side-rail__list">
-        <div class="blog-side-rail__metric">
-          <dt>Posts</dt>
-          <dd>{{ total_posts }}</dd>
-        </div>
-        {% if latest_post %}
-          <div class="blog-side-rail__metric">
-            <dt>Latest update</dt>
-            <dd>{{ latest_post_date }}</dd>
-          </div>
-        {% endif %}
-      </dl>
-    </section>
-  </aside>
-{% endif %}
+{% include blog_side_rail.liquid %}
 
   <section class="blog-archive">
     <ul class="post-list post-list--editorial">
