@@ -56,3 +56,16 @@ and continuous RL training setups.},
   annotation={* Equal contribution}
 }
 
+@article{li2026miplibnl,
+  abbr={arXiv 2026},
+  title={Constructing Industrial-Scale Optimization Modeling Benchmark},
+  author={Zhong Li* and Hongliang Lu* and Tao Wei* and Wenyu Liu and Yuxuan Chen and Yuan Lan and Fan Zhang and Zaiwen Wen},
+  journal={arXiv preprint arXiv:2602.10450},
+  year={2026},
+  url={https://arxiv.org/abs/2602.10450},
+  arxiv={2602.10450},
+  doi={10.48550/arXiv.2602.10450},
+  preview={miplib-nl-workflow.jpg},
+  abstract={Optimization modeling underpins decision-making in logistics, manufacturing, energy, and finance, yet translating natural-language requirements into correct optimization formulations and solver-executable code remains labor-intensive. Although large language models (LLMs) have been explored for this task, evaluation is still dominated by toy-sized or synthetic benchmarks, masking the difficulty of industrial problems with $10^{3}$--$10^{6}$ (or more) variables and constraints. A key bottleneck is the lack of benchmarks that align natural-language specifications with reference formulations/solver code grounded in real optimization models. To fill in this gap, we introduce MIPLIB-NL, built via a structure-aware reverse construction methodology from real mixed-integer linear programs in MIPLIB~2017. Our pipeline (i) recovers compact, reusable model structure from flat solver formulations, (ii) reverse-generates natural-language specifications explicitly tied to this recovered structure under a unified model--data separation format, and (iii) performs iterative semantic validation through expert review and human--LLM interaction with independent reconstruction checks. This yields 223 one-to-one reconstructions that preserve the mathematical content of the original instances while enabling realistic natural-language-to-optimization evaluation. Experiments show substantial performance degradation on MIPLIB-NL for systems that perform strongly on existing benchmarks, exposing failure modes invisible at toy scale.},
+  annotation={* Equal contribution}
+}
