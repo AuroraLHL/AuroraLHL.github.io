@@ -984,26 +984,76 @@ body.blog-ledger-page .container[role="main"] {
   }
 }
 
-@media (max-width: 1379.98px) {
-  .blog-side-rail {
+@media (min-width: 992px) and (max-width: 1379.98px) {
+  .blog-page--ledger {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.4rem;
-    max-width: 44rem;
-    margin: 0 0 2rem;
-    padding: 1rem 0 1.15rem;
-    border-top: 1px solid var(--blog-border);
-    border-bottom: 1px solid var(--blog-border);
+    grid-template-columns: minmax(0, 1fr) 15rem;
+    column-gap: clamp(1.5rem, 3vw, 2.4rem);
+    align-items: start;
+  }
+
+  .blog-hero {
+    grid-column: 1 / -1;
+  }
+
+  .blog-side-rail {
+    grid-column: 2;
+    grid-row: 2;
+    position: sticky;
+    top: 5.35rem;
+    align-self: start;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    max-width: none;
+  }
+
+  .blog-archive {
+    grid-column: 1;
+    grid-row: 2;
+    min-width: 0;
+    padding: 0 0 0 1.25rem;
   }
 
   .blog-side-rail__section {
     margin-bottom: 0;
-    padding-bottom: 0;
-    border-bottom: 0;
   }
 
-  .blog-side-rail__links {
-    gap: 0.35rem 0.4rem;
+  .blog-post-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 15rem;
+    column-gap: clamp(1.5rem, 3vw, 2.4rem);
+    align-items: start;
+  }
+
+  .blog-post-layout > .post-header {
+    grid-column: 1 / -1;
+  }
+
+  .blog-post-layout > .blog-side-rail {
+    grid-column: 2;
+    grid-row: 2;
+    position: sticky;
+    top: 5.35rem;
+    align-self: start;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    max-width: none;
+  }
+
+  .blog-post-layout > .post-content {
+    grid-column: 1;
+    grid-row: 2;
+    min-width: 0;
+  }
+
+  .blog-post-layout > *:not(.post-header):not(.blog-side-rail):not(.post-content) {
+    grid-column: 1 / -1;
   }
 }
 
@@ -1013,9 +1063,7 @@ body.blog-ledger-page .container[role="main"] {
   }
 
   .blog-side-rail {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    max-width: 32rem;
+    display: none;
   }
 
   .post-list--editorial {
