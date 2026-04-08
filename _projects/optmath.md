@@ -7,6 +7,10 @@ importance: 1
 category: work
 related_publications: lu2025optmath
 redirect: /assets/projects/optmath/
+redirect_delay: 0
+canonical_url: /assets/projects/optmath/
+sitemap: false
+robots: noindex, follow
 github: https://github.com/optsuite/OptMATH
 github_stars: optsuite/OptMATH
 ---

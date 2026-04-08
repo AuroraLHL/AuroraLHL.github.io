@@ -67,7 +67,13 @@
   <link rel="shortcut icon" href="{{ site.icon | prepend: '/assets/img/' | relative_url | bust_file_cache}}">
 {% endif %}
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url | bust_css_cache }}">
-<link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
+{% assign canonical_source = page.canonical_url | default: page.url | replace: 'index.html', '' %}
+{% if canonical_source contains '://' %}
+  {% assign canonical_href = canonical_source %}
+{% else %}
+  {% assign canonical_href = canonical_source | absolute_url %}
+{% endif %}
+<link rel="canonical" href="{{ canonical_href }}">
 
 {% if site.enable_darkmode %}
   <!-- Dark Mode -->
