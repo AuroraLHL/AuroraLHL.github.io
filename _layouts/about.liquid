@@ -56,6 +56,78 @@ layout: default
       {% include news.liquid limit=true %}
     {% endif %}
 
+    <!-- Education -->
+    {% if page.education %}
+      <h2>education</h2>
+      <div class="edu-exp-section">
+        {% for edu in page.education %}
+          <div class="edu-exp-item">
+            <div class="edu-exp-logo">
+              {% if edu.url %}
+                <a href="{{ edu.url }}" target="_blank">
+                  <img src="{{ edu.image | prepend: 'assets/img/' | relative_url }}" alt="{{ edu.institution }}">
+                </a>
+              {% else %}
+                <img src="{{ edu.image | prepend: 'assets/img/' | relative_url }}" alt="{{ edu.institution }}">
+              {% endif %}
+            </div>
+            <div class="edu-exp-info">
+              <div class="edu-exp-top">
+                <h3>
+                  {% if edu.url %}
+                    <a href="{{ edu.url }}" target="_blank">{{ edu.institution }}</a>
+                  {% else %}
+                    {{ edu.institution }}
+                  {% endif %}
+                  {% if edu.department %}
+                    <span class="edu-exp-inline-meta">&middot; {{ edu.department }}</span>
+                  {% endif %}
+                </h3>
+                <span class="edu-exp-date">{{ edu.year_start }} — {{ edu.year_end }}</span>
+              </div>
+              <div class="edu-exp-detail">{{ edu.degree }}</div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Experience -->
+    {% if page.experience %}
+      <h2>experience</h2>
+      <div class="edu-exp-section">
+        {% for exp in page.experience %}
+          <div class="edu-exp-item">
+            <div class="edu-exp-logo">
+              {% if exp.url %}
+                <a href="{{ exp.url }}" target="_blank">
+                  <img src="{{ exp.image | prepend: 'assets/img/' | relative_url }}" alt="{{ exp.company }}">
+                </a>
+              {% else %}
+                <img src="{{ exp.image | prepend: 'assets/img/' | relative_url }}" alt="{{ exp.company }}">
+              {% endif %}
+            </div>
+            <div class="edu-exp-info">
+              <div class="edu-exp-top">
+                <h3>
+                  {% if exp.url %}
+                    <a href="{{ exp.url }}" target="_blank">{{ exp.company }}</a>
+                  {% else %}
+                    {{ exp.company }}
+                  {% endif %}
+                  {% if exp.team %}
+                    <span class="edu-exp-inline-meta">&middot; {{ exp.team }}</span>
+                  {% endif %}
+                </h3>
+                <span class="edu-exp-date">{{ exp.year_start }} — {{ exp.year_end }}</span>
+              </div>
+              <div class="edu-exp-detail">{{ exp.role }}</div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
     <!-- Selected papers -->
     {% if page.selected_papers %}
       <h2>
