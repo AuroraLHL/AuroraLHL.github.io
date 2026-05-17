@@ -23,7 +23,29 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/blog/";
           },
-        },{id: "post-a-deep-dive-into-openclaw",
+        },{id: "post-opd-mathematical-foundations",
+        
+          title: "OPD: Mathematical Foundations",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/opd-math-principles/";
+          
+        },
+      },{id: "post-a-deep-dive-into-opd",
+        
+          title: "A Deep Dive into OPD",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/opd-deep-research/";
+          
+        },
+      },{id: "post-a-deep-dive-into-openclaw",
         
           title: "A Deep Dive into OpenClaw",
         
