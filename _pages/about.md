@@ -36,10 +36,10 @@ education:
 
 experience:
   - company: Alibaba Group
-    role: Research Intern
+    role: Research Intern (校招提前实习)
     team: Tongyi Lab
     year_start: Mar 2026
-    year_end: Present
+    year_end: Jun 2026
     image: qwen-color.png
     url: https://tongyi.aliyun.com/
 
