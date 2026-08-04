@@ -1347,6 +1347,13 @@ body.blog-ledger-page .container[role="main"] {
         > em {
           border-bottom: 1px solid;
           font-style: normal;
+          font-weight: 700;
+        }
+
+        > span.more-authors em {
+          border-bottom: 1px solid;
+          font-style: normal;
+          font-weight: 700;
         }
 
         > span.more-authors {

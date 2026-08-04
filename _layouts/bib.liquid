@@ -109,10 +109,31 @@
           {% assign more_authors_hide = more_authors_hide | append: 's' %}
         {%- endif -%}
         {% assign more_authors_show = '' %}
+        {% assign more_authors_show_html = '' %}
         {%- for author in entry.author_array offset: author_array_limit -%}
+          {%- assign author_last_name = author.last | regex_replace: '[*∗†‡§¶‖&^]', '' -%}
+          {%- assign author_last_html = author.last | regex_replace: '([*∗†‡§¶‖&^]+)', '<sup>\1</sup>' -%}
+          {%- assign author_is_self = false -%}
+          {% if site.scholar.last_name contains author_last_name %}
+            {% if site.scholar.first_name contains author.first %}
+              {% assign author_is_self = true %}
+            {% endif %}
+          {% endif %}
           {% assign more_authors_show = more_authors_show | append: author.first | append: ' ' | append: author.last %}
+          {% if author_is_self %}
+            {% assign more_authors_show_html = more_authors_show_html
+              | append: '<em>'
+              | append: author.first
+              | append: ' '
+              | append: author_last_html
+              | append: '</em>'
+            %}
+          {% else %}
+            {% assign more_authors_show_html = more_authors_show_html | append: author.first | append: ' ' | append: author_last_html %}
+          {% endif %}
           {% unless forloop.last %}
             {% assign more_authors_show = more_authors_show | append: ', ' %}
+            {% assign more_authors_show_html = more_authors_show_html | append: ', ' %}
           {% endunless %}
         {%- endfor -%}
         {%- assign more_authors_show = more_authors_show | regex_replace: '([*∗†‡§¶‖&^]+)', '<sup>\1</sup>' -%}
@@ -123,12 +144,15 @@
           onclick="
               var element = $(this);
               element.attr('title', '');
-              var more_authors_text = element.text() == '{{ more_authors_hide }}' ? '{{ more_authors_show }}' : '{{ more_authors_hide }}';
+              var is_collapsed = element.text() == {{ more_authors_hide | jsonify | escape }};
+              var more_authors_text = is_collapsed ? {{ more_authors_show | jsonify | escape }} : {{ more_authors_hide | jsonify | escape }};
+              var more_authors_html = is_collapsed ? {{ more_authors_show_html | jsonify | escape }} : {{ more_authors_hide | jsonify | escape }};
               var cursorPosition = 0;
               var textAdder = setInterval(function(){
                 element.html(more_authors_text.substring(0, cursorPosition + 1));
                 if (++cursorPosition == more_authors_text.length){
                   clearInterval(textAdder);
+                  element.html(more_authors_html);
                 }
             }, '{{ site.more_authors_animation_delay }}');
           "
