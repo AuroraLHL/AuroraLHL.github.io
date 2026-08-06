@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-The technical report I contributed to, "**Qwen-UI-Agent Technical Report: Toward Next-Generation Real-World Centric Foundation GUI Agents**", is now available on [arXiv](https://arxiv.org/pdf/2607.28227)! Learn more on the [Qwen-UI-Agent project page](https://tongyi-mai.github.io/Qwen-UI-Agent/). 🤖
+We have released our technical report "**Qwen-UI-Agent Technical Report: Toward Next-Generation Real-World Centric Foundation GUI Agents**" on [arXiv](https://arxiv.org/pdf/2607.28227)! Learn more on the [Qwen-UI-Agent project page](https://tongyi-mai.github.io/Qwen-UI-Agent/). 🤖
