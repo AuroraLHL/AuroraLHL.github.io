@@ -70,14 +70,6 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-Welcome to my personal homepage! My name is Lu Hongliang (卢红亮), and I am a third-year M.E. student in Mechanical Engineering at the [College of Engineering](https://www.coe.pku.edu.cn/), [Peking University](http://pku.edu.cn/), advised by Prof. [Zaiwen Wen](http://faculty.bicmr.pku.edu.cn/~wenzw/index.html). I received my B.E. degree in Robotics Engineering from Peking University in 2023.
+Welcome to my personal website. I’m Lu Hongliang (卢红亮), and I received an M.E. in Mechanical Engineering from [Peking University](http://pku.edu.cn/) (2023–2026), where I was advised by Prof. [Zaiwen Wen](http://faculty.bicmr.pku.edu.cn/~wenzw/index.html). I also hold a B.E. in Robotics Engineering from PKU (2019–2023).
 
-My research centers on the synergy between Reinforcement Learning and Large Language Models, focusing on three key directions:
-
-- **RL for LLMs**: Developing data-efficient reinforcement learning algorithms to enhance post-training effectiveness, aiming to improve model performance and alignment with human preferences;
-
-- **Agentic RL**: Designing novel RL methods to advance autonomous agent capabilities, with a particular emphasis on self-evolving mechanisms that push the boundaries of agent performance through continuous self-improvement and autonomous capability scaling;
-
-- **LLMs for Optimization**: Leveraging the reasoning capabilities of large language models to tackle complex optimization modeling and decision-making problems.
-
-I have interned at two leading AI companies. At [Alibaba](https://www.alibaba.com/showroom/pepper-spray-lipstick.html?cps=6bo8b0ce&bm=cps&src=saf&gad_source=1&gad_campaignid=20938423336&gbraid=0AAAAAqukZgrfH6pgy6bm7gNT0ece6Z_T0&gclid=EAIaIQobChMIrtfNxremkAMV2DxECB3InSZeEAAYASAAEgKqjPD_BwE)’s QuarkLLM team (May to September 2025), I contributed to the Deep Search project, designing RL algorithms to strengthen the Deep Search agent's performance on tasks requiring multi-step reasoning and complex retrieval. Previously, at [Moonshot AI](https://www.moonshot.cn/) (January to May 2025), I worked on data synthesis and RL training for their WebAgent.
+My research lies at the intersection of Reinforcement Learning and Large Language Models, with a focus on RL for LLMs, Agentic RL, self-evolving and multi-agent systems, and LLMs for optimization modeling and decision-making. My recent work has been accepted at NeurIPS, ICLR, and ICML. I am currently at Tencent, where I focus on enhancing foundation models’ coding capabilities and their ability to complete long-horizon tasks.
