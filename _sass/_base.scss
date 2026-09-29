@@ -204,15 +204,31 @@ ul.task-list input[type="checkbox"] {
   .about-profile {
     margin-bottom: 1.25rem;
 
-    .figure {
-      max-width: 180px;
+    > figure {
+      width: 140px;
+      height: 140px;
+      max-width: 140px;
       margin-bottom: 0;
+
+      picture {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+      }
     }
   }
 
   .about-sidebar-title {
     margin-bottom: 0.5rem;
-    font-size: clamp(1.45rem, 3vw, 1.85rem);
+    font-size: clamp(1.25rem, 2.5vw, 1.6rem);
   }
 
   .about-sidebar-subtitle {
